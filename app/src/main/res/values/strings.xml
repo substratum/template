@@ -1,4 +1,5 @@
 <resources>
     <string name="ThemeName">Substratum Theme Template</string>
     <string name="ThemeAuthor">Nicholas Chum</string>
+    <string name="toast_substratum">Please install Substratum before continuing!</string>
 </resources>

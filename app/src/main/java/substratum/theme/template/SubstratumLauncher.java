@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class SubstratumLauncher extends Activity {
 
@@ -28,6 +29,11 @@ public class SubstratumLauncher extends Activity {
             String playURL =
                     "https://play.google.com/store/apps/details?id=projekt.substratum&hl=en";
             Intent i = new Intent(Intent.ACTION_VIEW);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getString(R.string
+                            .toast_substratum),
+                    Toast.LENGTH_SHORT);
+            toast.show();
             i.setData(Uri.parse(playURL));
             startActivity(i);
         }
