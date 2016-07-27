@@ -104,6 +104,8 @@ If you would like to theme an application, first you need their package identifi
 assets/overlays/projekt.substratum/res/values/colors.xml
 ```
 
+![Alt text](http://i.imgur.com/wXNQjc0.jpg)
+
 #### Type 1 Overlays
 type1 can be a/b/c, as type1(a/b/c).xml at the ROOT of your overlay, and it does the Arcus way of moving it to res/values/type1(a/b/c).xml to replace Colors, Styles, Dimensions, Bools, Integers, Strings, etc...
 
