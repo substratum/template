@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="substratum.theme.template">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/ThemeName"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoDisplay">
+
+        <activity android:name=".SubstratumLauncher">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="Substratum_Legacy" android:value="true"/>
+        <meta-data android:name="Substratum_Theme" android:value="@string/ThemeName"/>
+        <meta-data android:name="Substratum_Author" android:value="@string/ThemeAuthor"/>
+
+    </application>
+
+</manifest>
