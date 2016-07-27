@@ -128,3 +128,10 @@ If you would like to rename the spinner names, you just need to create a file wi
 
 For example, if I wanted to change the type1a spinner's name for a specific overlay, I would put it like this:
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/assets/overlays/android/type1a
+
+## Step 4: Finalize your theme!
+To get your theme to show up on Substratum, all you need to ensure that your hero image relates to your theme. The hero image DETERMINES the color of the automatic actionbar and nav bar colors based on the (0,0)'th pixel on your image.
+
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/drawable-xxhdpi/heroimage.png
+
+If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
