@@ -15,9 +15,15 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="Substratum_Legacy" android:value="true"/>
-        <meta-data android:name="Substratum_Theme" android:value="@string/ThemeName"/>
-        <meta-data android:name="Substratum_Author" android:value="@string/ThemeAuthor"/>
+        <meta-data
+            android:name="Substratum_Legacy"
+            android:value="true"/>
+        <meta-data
+            android:name="Substratum_Theme"
+            android:value="@string/ThemeName"/>
+        <meta-data
+            android:name="Substratum_Author"
+            android:value="@string/ThemeAuthor"/>
 
     </application>
 

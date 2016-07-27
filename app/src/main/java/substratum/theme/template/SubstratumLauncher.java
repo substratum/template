@@ -22,7 +22,7 @@ public class SubstratumLauncher extends Activity {
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("theme_name", getString(R.string.theme_name));
+            intent.putExtra("theme_name", getString(R.string.ThemeName));
             intent.putExtra("theme_pid", getApplicationContext().getPackageName());
             startActivity(intent);
         } else {
