@@ -14,6 +14,10 @@ import com.github.javiersantos.piracychecker.enums.InstallerID;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 
+/**
+ * @author Nicholas Chum (nicholaschum)
+ */
+
 public class SubstratumLauncher extends Activity {
 
     // THEMERS: Control whether Anti-Piracy should be activated while testing
@@ -23,20 +27,22 @@ public class SubstratumLauncher extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // In order to retrieve your BASE64 license key your app must be uploaded to the Google
-        // Play Developer Console. Then access to your app -> Services and APIs.
-
-        // This method will print your app signature in the console
-        // Build your signed APK using your signature, and run the app once.
-        // You will need to do this ONCE only when submitting to Play.
-        // Copy what you get into APK_SIGNATURE_PRODUCTION below (SubstratumAntiPiracyLog).
+        // ATTENTION!!!!!!!
         Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
         // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING TWO DASHES --> //
+        // Build your signed APK using your signature, and run the app once. Check your logcat!
+        // You will need to do this only when submitting to Play.
+        // Copy what you get into APK_SIGNATURE_PRODUCTION below (SubstratumAntiPiracyLog).
 
         if (ENABLE_ANTI_PIRACY) {
             new PiracyChecker(this)
+                    // To disable certain piracy features, just remove the whole line, or comment it
+                    // out so that it doesn't trigger antipiracy.
                     .enableInstallerId(InstallerID.GOOGLE_PLAY)
                     //.enableInstallerId(InstallerID.AMAZON_APP_STORE)
+
+                    // In order to retrieve your BASE64 license key your app must be uploaded to the
+                    // Play Developer Console. Then access to your app -> Services and APIs.
                     .enableGooglePlayLicensing("BASE_64_LICENSE_KEY")
                     .enableSigningCertificate("APK_SIGNATURE_PRODUCTION")
                     .callback(new PiracyCheckerCallback() {
