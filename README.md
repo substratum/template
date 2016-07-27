@@ -137,3 +137,23 @@ To get your theme to show up on Substratum, all you need to ensure that your her
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/drawable-xxhdpi/heroimage.png
 
 If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
+
+## Step 5: Safeguard your theme! Don't let the pirates win!
+[BETA] Has not been merged yet to the Substratum repo so the antipiracy isn't essentially doing much except telling the user it isn't licensed.
+
+### DURING THEME DEBUGGING ON YOUR OWN PHONE
+While debugging your application, you should be setting this to false so that it doesn't keep triggering antipiracy when you are working: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L24
+
+### If you don't want to activate AntiPiracy
+Set this value to false and the antipiracy check will report back true to Substratum every time:
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L24
+
+### Getting started with AntiPiracy
+
+If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 47: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L47
+
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 46: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L46
+
+Finally, if you would like to change where it checks for piracy, you should just comment out the .enable lines such as if you would not like to have Amazon App Store piracy checking, just disable it below this line: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L41
+
+# DO NOT SHARE YOUR SUBSTRATUMLAUNCHER.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP PIRACY!
