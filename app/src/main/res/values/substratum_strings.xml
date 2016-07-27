@@ -1,0 +1,4 @@
+<resources>
+    <string name="toast_substratum">Please install Substratum before continuing!</string>
+    <string name="toast_unlicensed">This copy of %s is not licensed!</string>
+</resources>
