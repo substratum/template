@@ -36,6 +36,7 @@ public class SubstratumLauncher extends Activity {
         if (ENABLE_ANTI_PIRACY) {
             new PiracyChecker(this)
                     .enableInstallerId(InstallerID.GOOGLE_PLAY)
+                    //.enableInstallerId(InstallerID.AMAZON_APP_STORE)
                     .enableGooglePlayLicensing("BASE_64_LICENSE_KEY")
                     .enableSigningCertificate("APK_SIGNATURE_PRODUCTION")
                     .callback(new PiracyCheckerCallback() {

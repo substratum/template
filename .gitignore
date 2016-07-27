@@ -6,3 +6,8 @@
 .DS_Store
 /build
 /captures
+
+*.apk
+
+.idea/misc.xml
+app/google-services.json
