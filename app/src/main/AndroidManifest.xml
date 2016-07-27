@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/ThemeName"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoDisplay">
+        android:theme="@style/AppTheme">
 
         <activity android:name=".SubstratumLauncher">
             <intent-filter>

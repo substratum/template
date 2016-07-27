@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn org.apache.**
+-keep class com.google.**
+-dontwarn com.google.**
+-keep public class com.android.vending.licensing.ILicensingService
