@@ -29,6 +29,16 @@ public class SubstratumLauncher extends Activity {
 
     private String theme_mode = "";
 
+    private static boolean isPackageInstalled(Context context, String package_name) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(package_name, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +82,7 @@ public class SubstratumLauncher extends Activity {
                 // ATTENTION!!!!!!!
                 Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
                 // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
-                // TWO DASHES > //
-
+                // TWO DASHES --> //
                 // Build your signed APK using your signature, and run the app once. Check your
                 // logcat!
                 // You will need to do this only when submitting to Play.
@@ -95,7 +104,8 @@ public class SubstratumLauncher extends Activity {
                             public void allow() {
                                 // If Substratum is found, then launch it with specific parameters
                                 Intent launchIntent = new Intent("projekt.substratum");
-                                if (launchIntent != null) {
+                                if (isPackageInstalled(getApplicationContext(),
+                                        "projekt.substratum") && launchIntent != null) {
                                     // Substratum is found, launch it directly
                                     Intent intent = new Intent(Intent.ACTION_MAIN);
                                     intent.setComponent(ComponentName.unflattenFromString(
@@ -110,6 +120,11 @@ public class SubstratumLauncher extends Activity {
                                     intent.putExtra("theme_legacy", theme_legacy);
                                     intent.putExtra("theme_mode", theme_mode);
                                     intent.putExtra("refresh_mode", refresh_mode);
+                                    PackageManager p = getPackageManager();
+                                    p.setComponentEnabledSetting(
+                                            getComponentName(),
+                                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                                            PackageManager.DONT_KILL_APP);
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -147,7 +162,8 @@ public class SubstratumLauncher extends Activity {
             } else {
                 // If Substratum is found, then launch it with specific parameters
                 Intent launchIntent = new Intent("projekt.substratum");
-                if (launchIntent != null) {
+                if (isPackageInstalled(getApplicationContext(),
+                        "projekt.substratum") && launchIntent != null) {
                     // Substratum is found, launch it directly
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.setComponent(ComponentName.unflattenFromString(
