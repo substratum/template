@@ -5,8 +5,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 public class SubstratumLauncher extends Activity {
 
     // THEMERS: Control whether Anti-Piracy should be activated while testing
-    public static Boolean ENABLE_ANTI_PIRACY = true;
+    public static Boolean ENABLE_ANTI_PIRACY = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,13 @@ public class SubstratumLauncher extends Activity {
                     Toast.LENGTH_SHORT);
             toast.show();
             this.finish();
-            System.exit(0);
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    System.exit(0);
+                }
+            };
+            handler.postDelayed(runnable, 2000);
         } else {
             // ATTENTION!!!!!!!
             Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
@@ -90,7 +98,6 @@ public class SubstratumLauncher extends Activity {
                                             .getPackageName());
                                     startActivity(intent);
                                     finish();
-                                    System.exit(0);
                                 } else {
                                     String playURL =
                                             "https://play.google.com/store/apps/details?" +
@@ -104,19 +111,22 @@ public class SubstratumLauncher extends Activity {
                                     i.setData(Uri.parse(playURL));
                                     startActivity(i);
                                     finish();
-                                    System.exit(0);
                                 }
                             }
 
                             @Override
                             public void dontAllow(PiracyCheckerError error) {
+                                PackageManager p = getPackageManager();
+                                p.setComponentEnabledSetting(
+                                        getComponentName(),
+                                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                                        PackageManager.DONT_KILL_APP);
                                 String parse = String.format(getString(R.string.toast_unlicensed),
                                         getString(R.string.ThemeName));
                                 Toast toast = Toast.makeText(getApplicationContext(), parse,
                                         Toast.LENGTH_SHORT);
                                 toast.show();
                                 finish();
-                                System.exit(0);
                             }
                         })
                         .start();
@@ -137,7 +147,6 @@ public class SubstratumLauncher extends Activity {
                             .getPackageName());
                     startActivity(intent);
                     finish();
-                    System.exit(0);
                 } else {
                     String playURL =
                             "https://play.google.com/store/apps/details?" +
@@ -151,10 +160,8 @@ public class SubstratumLauncher extends Activity {
                     i.setData(Uri.parse(playURL));
                     startActivity(i);
                     finish();
-                    System.exit(0);
                 }
             }
         }
-
     }
 }

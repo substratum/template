@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 /**
@@ -34,7 +35,13 @@ public class LauncherActivity extends Activity {
                     Toast.LENGTH_SHORT);
             toast.show();
             this.finish();
-            System.exit(0);
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    System.exit(0);
+                }
+            };
+            handler.postDelayed(runnable, 2000);
         } else {
             // Hide the app icon automatically if the theme isn't updating, we don't need the icon
             // anymore!
@@ -46,8 +53,6 @@ public class LauncherActivity extends Activity {
             Intent intent = new Intent(this, SubstratumLauncher.class);
             startActivity(intent);
             this.finish();
-            System.exit(0);
         }
-        finish();
     }
 }
