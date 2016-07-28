@@ -139,7 +139,6 @@ https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/ma
 If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
 
 ## Step 5: Safeguard your theme! Don't let the pirates win!
-[BETA] Has not been merged yet to the Substratum repo so the antipiracy isn't essentially doing much except telling the user it isn't licensed.
 
 ### DURING THEME DEBUGGING ON YOUR OWN PHONE
 While debugging your application, you should be setting this to false so that it doesn't keep triggering antipiracy when you are working: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L24
