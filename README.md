@@ -147,11 +147,11 @@ If you have a completely white image, your actionbar and nav bar will change to 
 ## Step 5: Safeguard your theme! Don't let the pirates win!
 
 ### DURING THEME DEBUGGING ON YOUR OWN PHONE
-While debugging your application, you should be setting this to false so that it doesn't keep triggering antipiracy when you are working: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L24
+While debugging your application, you should be setting this to false so that it doesn't keep triggering antipiracy when you are working: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L28
 
 ### If you don't want to activate AntiPiracy
 Set this value to false and the antipiracy check will report back true to Substratum every time:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L24
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L28
 
 ### Getting started with AntiPiracy
 
