@@ -32,7 +32,7 @@
             android:value="@string/ThemeAuthor"/>
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="1.0"/>
+            android:value="1.0.0"/>
 
     </application>
 
