@@ -25,11 +25,21 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 public class SubstratumLauncher extends Activity {
 
     // THEMERS: Control whether Anti-Piracy should be activated while testing
-    public static Boolean ENABLE_ANTI_PIRACY = true;
+    public static Boolean ENABLE_ANTI_PIRACY = false;
+
+    private String theme_mode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent currentIntent = getIntent();
+        theme_mode = currentIntent.getStringExtra("theme_mode");
+        final Boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
+        final Boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
+        if (theme_mode == null) {
+            theme_mode = "";
+        }
 
         Boolean is_updating = false;
 
@@ -89,13 +99,15 @@ public class SubstratumLauncher extends Activity {
                                     intent.setComponent(ComponentName.unflattenFromString(
                                             "projekt.substratum/projekt.substratum" +
                                                     ".InformationActivity"));
-
                                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("theme_name", getString(R.string.ThemeName));
                                     intent.putExtra("theme_pid", getApplicationContext()
                                             .getPackageName());
+                                    intent.putExtra("theme_legacy", theme_legacy);
+                                    intent.putExtra("theme_mode", theme_mode);
+                                    intent.putExtra("refresh_mode", refresh_mode);
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -134,17 +146,20 @@ public class SubstratumLauncher extends Activity {
                 // If Substratum is found, then launch it with specific parameters
                 Intent launchIntent = new Intent("projekt.substratum");
                 if (launchIntent != null) {
-                    // Substratum is found, launch it directly into InformationActivity
+                    // Substratum is found, launch it directly
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.setComponent(ComponentName.unflattenFromString(
-                            "projekt.substratum/projekt.substratum.InformationActivity"));
-
+                            "projekt.substratum/projekt.substratum" +
+                                    ".InformationActivity"));
                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("theme_name", getString(R.string.ThemeName));
                     intent.putExtra("theme_pid", getApplicationContext()
                             .getPackageName());
+                    intent.putExtra("theme_legacy", theme_legacy);
+                    intent.putExtra("theme_mode", theme_mode);
+                    intent.putExtra("refresh_mode", refresh_mode);
                     startActivity(intent);
                     finish();
                 } else {
