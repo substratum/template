@@ -68,15 +68,17 @@ public class SubstratumLauncher extends Activity {
             };
             handler.postDelayed(runnable, 2000);
         } else {
-            // ATTENTION!!!!!!!
-            Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
-            // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING TWO DASHES > //
-
-            // Build your signed APK using your signature, and run the app once. Check your logcat!
-            // You will need to do this only when submitting to Play.
-            // Copy what you get into APK_SIGNATURE_PRODUCTION below (SubstratumAntiPiracyLog).
-
             if (ENABLE_ANTI_PIRACY) {
+                // ATTENTION!!!!!!!
+                Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
+                // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
+                // TWO DASHES > //
+
+                // Build your signed APK using your signature, and run the app once. Check your
+                // logcat!
+                // You will need to do this only when submitting to Play.
+                // Copy what you get into APK_SIGNATURE_PRODUCTION below (SubstratumAntiPiracyLog).
+
                 new PiracyChecker(this)
                         // To disable certain piracy features, just remove the whole line, or
                         // comment it
