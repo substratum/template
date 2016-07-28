@@ -20,7 +20,7 @@ Change this to:
 applicationId "com.yourname.themename"
 ```
 
-* **Change Package Name in the project structure:**
+* **Change Package Name in the project structure: (optional)**
 ```
   * Look at the "project panel" in android studio (the one on the left). 
   * In the top right corner you will see a little "gear icon". 
