@@ -25,7 +25,7 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 public class SubstratumLauncher extends Activity {
 
     // THEMERS: Control whether Anti-Piracy should be activated while testing
-    public static Boolean ENABLE_ANTI_PIRACY = false;
+    public static Boolean ENABLE_ANTI_PIRACY = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
