@@ -44,6 +44,12 @@ https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/ma
 <string name="ThemeAuthor">Nicholas Chum</string>
 ```
 
+If you want to keep the Play Store shortcut turned off (to disable the launcher icon by default), open this file: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/AndroidManifest.xml
+and delete line 15.
+```
+<category android:name="android.intent.category.LAUNCHER"/>
+```
+
 ## Step 3: Start theming!
 ### Audio
 To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/audio
