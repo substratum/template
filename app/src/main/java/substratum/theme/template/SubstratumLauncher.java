@@ -52,7 +52,6 @@ public class SubstratumLauncher extends Activity {
         }
 
         Boolean is_updating = false;
-
         try {
             Context myContext = getApplicationContext().createPackageContext
                     ("projekt.substratum", Context.CONTEXT_IGNORE_SECURITY);
