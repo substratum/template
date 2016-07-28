@@ -33,7 +33,8 @@ public class LauncherActivity extends Activity {
                             .toast_updating),
                     Toast.LENGTH_SHORT);
             toast.show();
-            finish();
+            this.finish();
+            System.exit(0);
         } else {
             // Hide the app icon automatically if the theme isn't updating, we don't need the icon
             // anymore!
@@ -44,6 +45,8 @@ public class LauncherActivity extends Activity {
                     PackageManager.DONT_KILL_APP);
             Intent intent = new Intent(this, SubstratumLauncher.class);
             startActivity(intent);
+            this.finish();
+            System.exit(0);
         }
         finish();
     }

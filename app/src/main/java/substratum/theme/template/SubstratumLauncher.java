@@ -37,7 +37,6 @@ public class SubstratumLauncher extends Activity {
             SharedPreferences testPrefs = myContext.getSharedPreferences
                     ("substratum_state", Context.MODE_WORLD_READABLE);
             is_updating = testPrefs.getBoolean("is_updating", true);
-            Log.e("isUpdating", is_updating + "");
         } catch (Exception e) {
             // Exception
         }
@@ -48,7 +47,8 @@ public class SubstratumLauncher extends Activity {
                             .toast_updating),
                     Toast.LENGTH_SHORT);
             toast.show();
-            finish();
+            this.finish();
+            System.exit(0);
         } else {
             // ATTENTION!!!!!!!
             Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
@@ -89,6 +89,8 @@ public class SubstratumLauncher extends Activity {
                                     intent.putExtra("theme_pid", getApplicationContext()
                                             .getPackageName());
                                     startActivity(intent);
+                                    finish();
+                                    System.exit(0);
                                 } else {
                                     String playURL =
                                             "https://play.google.com/store/apps/details?" +
@@ -101,6 +103,8 @@ public class SubstratumLauncher extends Activity {
                                     toast.show();
                                     i.setData(Uri.parse(playURL));
                                     startActivity(i);
+                                    finish();
+                                    System.exit(0);
                                 }
                             }
 
@@ -112,6 +116,7 @@ public class SubstratumLauncher extends Activity {
                                         Toast.LENGTH_SHORT);
                                 toast.show();
                                 finish();
+                                System.exit(0);
                             }
                         })
                         .start();
@@ -131,6 +136,8 @@ public class SubstratumLauncher extends Activity {
                     intent.putExtra("theme_pid", getApplicationContext()
                             .getPackageName());
                     startActivity(intent);
+                    finish();
+                    System.exit(0);
                 } else {
                     String playURL =
                             "https://play.google.com/store/apps/details?" +
@@ -143,6 +150,8 @@ public class SubstratumLauncher extends Activity {
                     toast.show();
                     i.setData(Uri.parse(playURL));
                     startActivity(i);
+                    finish();
+                    System.exit(0);
                 }
             }
         }
