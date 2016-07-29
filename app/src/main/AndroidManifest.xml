@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="substratum.theme.template">
+          package="substratum.theme.template"
+          android:sharedUserId="projekt.substratum">
 
     <application
         android:allowBackup="true"
@@ -30,9 +31,11 @@
         <meta-data
             android:name="Substratum_Author"
             android:value="@string/ThemeAuthor"/>
+
+        <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="1.0.0"/>
+            android:value="2.0.0"/>
 
     </application>
 
