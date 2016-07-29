@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -65,7 +63,7 @@ public class SubstratumLauncher extends Activity {
         // TODO: Themers, this is your FOURTH step
         Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
         // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
-        // TWO DASHES --> //
+        // TWO DASHES (LIKE THIS EXACT LINE)
 
         new PiracyChecker(this)
 
@@ -100,13 +98,6 @@ public class SubstratumLauncher extends Activity {
                             intent.putExtra("theme_legacy", theme_legacy);
                             intent.putExtra("theme_mode", theme_mode);
                             intent.putExtra("refresh_mode", refresh_mode);
-                            PackageManager p = getPackageManager();
-                            ComponentName componentName = new ComponentName(
-                                    getApplicationContext(), LauncherActivity.class);
-                            p.setComponentEnabledSetting(
-                                    componentName,
-                                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                    PackageManager.DONT_KILL_APP);
                             startActivity(intent);
                             finish();
                         } else {
@@ -127,11 +118,6 @@ public class SubstratumLauncher extends Activity {
 
                     @Override
                     public void dontAllow(PiracyCheckerError error) {
-                        PackageManager p = getPackageManager();
-                        p.setComponentEnabledSetting(
-                                getComponentName(),
-                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                                PackageManager.DONT_KILL_APP);
                         String parse = String.format(getString(R.string.toast_unlicensed),
                                 getString(R.string.ThemeName));
                         Toast toast = Toast.makeText(getApplicationContext(), parse,
@@ -147,73 +133,37 @@ public class SubstratumLauncher extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Boolean is_updating = false;
         Boolean is_substratum_installed = isPackageInstalled(getApplicationContext(),
                 "projekt.substratum");
 
         if (is_substratum_installed) {
-            try {
-                Context mContext = getApplicationContext().createPackageContext(
-                        "projekt.substratum", Context.CONTEXT_IGNORE_SECURITY);
-                SharedPreferences mPrefs = mContext.getSharedPreferences("substratum_state",
-                        Activity.MODE_PRIVATE);
-                is_updating = mPrefs.getBoolean("is_updating", false);
-            } catch (Exception e) {
-                // Exception
+            Intent currentIntent = getIntent();
+            theme_mode = currentIntent.getStringExtra("theme_mode");
+            final Boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
+            final Boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
+            if (theme_mode == null) {
+                theme_mode = "";
             }
-
-            if (is_updating) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        getString(R.string
-                                .toast_updating),
-                        Toast.LENGTH_SHORT);
-                toast.show();
-                this.finish();
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        System.exit(0);
-                    }
-                };
-                handler.postDelayed(runnable, 2000);
+            if (ENABLE_ANTI_PIRACY) {
+                startAntiPiracyCheck(theme_legacy, refresh_mode);
             } else {
-                Intent currentIntent = getIntent();
-                theme_mode = currentIntent.getStringExtra("theme_mode");
-                final Boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
-                final Boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
-                if (theme_mode == null) {
-                    theme_mode = "";
-                }
-                if (ENABLE_ANTI_PIRACY) {
-                    startAntiPiracyCheck(theme_legacy, refresh_mode);
-                } else {
-                    // If Substratum is found, then launch it with specific parameters
-                    Intent launchIntent = new Intent("projekt.substratum");
-                    if (launchIntent != null) {
-                        // Substratum is found, launch it directly
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.setComponent(ComponentName.unflattenFromString(
-                                "projekt.substratum/projekt.substratum" +
-                                        ".InformationActivity"));
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("theme_name", getString(R.string.ThemeName));
-                        intent.putExtra("theme_pid", getApplicationContext()
-                                .getPackageName());
-                        intent.putExtra("theme_legacy", theme_legacy);
-                        intent.putExtra("theme_mode", theme_mode);
-                        intent.putExtra("refresh_mode", refresh_mode);
-                        PackageManager p = getPackageManager();
-                        ComponentName componentName = new ComponentName(this,
-                                LauncherActivity.class);
-                        p.setComponentEnabledSetting(
-                                componentName,
-                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                PackageManager.DONT_KILL_APP);
-                        startActivity(intent);
-                        finish();
-                    }
+                // If Substratum is found, then launch it with specific parameters
+                Intent launchIntent = new Intent("projekt.substratum");
+                if (launchIntent != null) {
+                    // Substratum is found, launch it directly
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.setComponent(ComponentName.unflattenFromString(
+                            "projekt.substratum/projekt.substratum.InformationActivity"));
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("theme_name", getString(R.string.ThemeName));
+                    intent.putExtra("theme_pid", getApplicationContext().getPackageName());
+                    intent.putExtra("theme_legacy", theme_legacy);
+                    intent.putExtra("theme_mode", theme_mode);
+                    intent.putExtra("refresh_mode", refresh_mode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         } else {

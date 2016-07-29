@@ -1,5 +1,4 @@
 <resources>
     <string name="toast_substratum">Please install Substratum before continuing!</string>
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
-    <string name="toast_updating">The theme is upgrading in the background, please wait for this to finish!</string>
 </resources>
