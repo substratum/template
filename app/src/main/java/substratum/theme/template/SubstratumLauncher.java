@@ -36,7 +36,8 @@ public class SubstratumLauncher extends Activity {
     // NOTE: THIS STEP IS SKIPPABLE, BUT YOU WILL NEED TO COMMENT OUT LINE 77!
     // TODO: Themers, this is your SECOND step
     private static String BASE_64_LICENSE_KEY = "";
-    // Build your signed APK using your signature, and run the app once. Check your logcat!
+    // Build your signed APK using your signature, and run the app once in Substratum
+    // (open your theme). Check your logcat!
     // You will need to do this only when submitting to Play. Locate "SubstratumAntiPiracyLog" and
     // head down to line 66. You will need to replace "" with the code you obtained from your
     // logcat.
