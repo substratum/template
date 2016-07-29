@@ -45,7 +45,7 @@ Now configure it to your liking:
     android:name="Substratum_Legacy"
     android:value="true"/>
 <meta-data
-    android:name="Substratum_Theme"
+    android:name="Substratum_Name"
     android:value="@string/ThemeName"/>
 <meta-data
     android:name="Substratum_Author"

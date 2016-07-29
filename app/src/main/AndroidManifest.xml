@@ -19,7 +19,7 @@
             android:name="Substratum_Legacy"
             android:value="true"/>
         <meta-data
-            android:name="Substratum_Theme"
+            android:name="Substratum_Name"
             android:value="@string/ThemeName"/>
         <meta-data
             android:name="Substratum_Author"
@@ -28,7 +28,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="2.1.0"/>
+            android:value="2.1.1"/>
 
     </application>
 
