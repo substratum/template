@@ -73,8 +73,7 @@ public class SubstratumLauncher extends Activity {
                     public void dontAllow(PiracyCheckerError error) {
                         String parse = String.format(getString(R.string.toast_unlicensed),
                                 getString(R.string.ThemeName));
-                        Toast toast = Toast.makeText(getApplicationContext(), parse,
-                                Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT);
                         toast.show();
                         finish();
                     }
@@ -134,10 +133,7 @@ public class SubstratumLauncher extends Activity {
                 "https://play.google.com/store/apps/details?" +
                         "id=projekt.substratum&hl=en";
         Intent i = new Intent(Intent.ACTION_VIEW);
-        Toast toast = Toast.makeText(getApplicationContext(),
-                getString(R.string
-                        .toast_substratum),
-                Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, getString(R.string.toast_substratum), Toast.LENGTH_SHORT);
         toast.show();
         i.setData(Uri.parse(playURL));
         startActivity(i);
@@ -158,7 +154,7 @@ public class SubstratumLauncher extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("theme_name", getString(R.string.ThemeName));
-        intent.putExtra("theme_pid", getApplicationContext().getPackageName());
+        intent.putExtra("theme_pid", getPackageName());
         intent.putExtra("theme_legacy", theme_legacy);
         intent.putExtra("theme_mode", theme_mode);
         intent.putExtra("refresh_mode", refresh_mode);
