@@ -38,7 +38,7 @@ public class SubstratumLauncher extends Activity {
     // Build your signed APK using your signature, and run the app once in Substratum
     // (open your theme). Check your logcat!
     // You will need to do this only when submitting to Play. Locate "SubstratumAntiPiracyLog" and
-    // head down to line 66. You will need to replace "" with the code you obtained from your
+    // head down to line 51. You will need to replace "" with the code you obtained from your
     // logcat.
     // If ENABLE_ANTI_PIRACY is false, you may skip this
     // TODO: Themers, this is your THIRD step
