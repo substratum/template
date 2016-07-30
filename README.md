@@ -160,9 +160,6 @@ If you have a completely white image, your actionbar and nav bar will change to 
 
 ## Step 5: Safeguard your theme! Don't let the pirates win!
 
-### DURING THEME DEBUGGING ON YOUR OWN PHONE
-While debugging your application, you should be setting this to false so that it doesn't keep triggering antipiracy when you are working: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L34
-
 ### If you don't want to activate AntiPiracy
 Set this value to false and the antipiracy check will report back true to Substratum every time:
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L34
@@ -175,4 +172,4 @@ Then you would need to go to Play Developer Console. Then access to your app -> 
 
 Finally, if you would like to change where it checks for piracy, you should just comment out the .enable lines such as if you would not like to have Amazon App Store piracy checking, just disable it below this line: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L76
 
-# DO NOT SHARE YOUR SUBSTRATUMLAUNCHER.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP PIRACY!
+# DO NOT SHARE YOUR SUBSTRATUMLAUNCHER.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!

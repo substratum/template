@@ -2,8 +2,8 @@ package substratum.theme.template;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,29 +29,73 @@ public class SubstratumLauncher extends Activity {
     //
     // TODO: Themers, this is your FIRST step
     // UNIVERSAL SWITCH: Control whether Anti-Piracy should be activated while testing
-    public static Boolean ENABLE_ANTI_PIRACY = false;
+    private static final boolean ENABLE_ANTI_PIRACY = false;
     // In order to retrieve your BASE64 license key your app must be uploaded to
     // Play Developer Console. Then access to your app -> Services and APIs.
     // You will need to replace "" with the code you obtained from the Play Developer Console.
-    // NOTE: THIS STEP IS SKIPPABLE, BUT YOU WILL NEED TO COMMENT OUT LINE 77!
+    // If ENABLE_ANTI_PIRACY is false, you may skip this
     // TODO: Themers, this is your SECOND step
-    private static String BASE_64_LICENSE_KEY = "";
+    private static final String BASE_64_LICENSE_KEY = "";
     // Build your signed APK using your signature, and run the app once in Substratum
     // (open your theme). Check your logcat!
     // You will need to do this only when submitting to Play. Locate "SubstratumAntiPiracyLog" and
     // head down to line 66. You will need to replace "" with the code you obtained from your
     // logcat.
-    // NOTE: THIS STEP IS SKIPPABLE, BUT YOU WILL NEED TO COMMENT OUT LINE 78!
+    // If ENABLE_ANTI_PIRACY is false, you may skip this
     // TODO: Themers, this is your THIRD step
-    private static String APK_SIGNATURE_PRODUCTION = "";
+    private static final String APK_SIGNATURE_PRODUCTION = "";
     //
     // END OF STATIC THEMER CRUISE CONTROL
 
+    private void startAntiPiracyCheck() {
+        // TODO: Themers, this is your FOURTH step
+        Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
+        // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
+        // TWO DASHES (LIKE THIS EXACT LINE)
 
-    private String theme_mode = "";  // SUBSTRATUM INTERNAL USE: DO NOT TOUCH
+        PiracyChecker piracyChecker = new PiracyChecker(this)
 
-    private static boolean isPackageInstalled(Context context, String package_name) {
-        PackageManager pm = context.getPackageManager();
+                // TODO: Themers, this is your FINAL step
+                // To disable certain piracy features, comment it out so that it doesn't
+                // trigger anti-piracy.
+                .enableInstallerId(InstallerID.GOOGLE_PLAY)
+                //.enableInstallerId(InstallerID.AMAZON_APP_STORE)
+                // END OF THEMER TOUCHABLE OPTIONS
+                // TO RETAIN INTEGRITY, PLEASE DO NOT MODIFY ANY OTHER LINES
+
+                .callback(new PiracyCheckerCallback() {
+                    @Override
+                    public void allow() {
+                        beginSubstratumLaunch();
+                    }
+
+                    @Override
+                    public void dontAllow(PiracyCheckerError error) {
+                        String parse = String.format(getString(R.string.toast_unlicensed),
+                                getString(R.string.ThemeName));
+                        Toast toast = Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT);
+                        toast.show();
+                        finish();
+                    }
+                });
+
+        if (BASE_64_LICENSE_KEY.length() > 0) {
+            piracyChecker.enableGooglePlayLicensing(BASE_64_LICENSE_KEY);
+        }
+        if (APK_SIGNATURE_PRODUCTION.length() > 0) {
+            piracyChecker.enableSigningCertificate(APK_SIGNATURE_PRODUCTION);
+        }
+        piracyChecker.start();
+    }
+
+    /**
+     * Other variables/methods; do not modify
+     */
+
+    private static final String PROJEKT_SUBSTRATUM = "projekt.substratum";
+
+    private boolean isPackageInstalled(String package_name) {
+        PackageManager pm = getPackageManager();
         try {
             pm.getPackageInfo(package_name, PackageManager.GET_ACTIVITIES);
             return true;
@@ -60,126 +104,71 @@ public class SubstratumLauncher extends Activity {
         }
     }
 
-    private void startAntiPiracyCheck(final Boolean theme_legacy, final Boolean refresh_mode) {
-        // TODO: Themers, this is your FOURTH step
-        Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
-        // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
-        // TWO DASHES (LIKE THIS EXACT LINE)
+    private boolean isPackageEnabled(String package_name) {
+        try {
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(package_name, 0);
+            return ai.enabled;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-        new PiracyChecker(this)
+    private void beginSubstratumLaunch() {
+        // If Substratum is found, then launch it with specific parameters
+        if (isPackageInstalled(PROJEKT_SUBSTRATUM)) {
+            if (!isPackageEnabled(PROJEKT_SUBSTRATUM)) {
+                //TODO tell user to enable/defrost app
+                return;
+            }
+            // Substratum is found, launch it directly
+            launchSubstratum();
+        } else {
+            getSubstratumFromPlayStore();
+        }
+    }
 
-                // TODO: Themers, this is your FINAL step
-                // To disable certain piracy features, comment it out so that it doesn't
-                // trigger anti-piracy.
-                .enableInstallerId(InstallerID.GOOGLE_PLAY)
-                //.enableInstallerId(InstallerID.AMAZON_APP_STORE)
-                .enableGooglePlayLicensing(BASE_64_LICENSE_KEY)
-                .enableSigningCertificate(APK_SIGNATURE_PRODUCTION)
-                // END OF THEMER TOUCHABLE OPTIONS
-                // TO RETAIN INTEGRITY, PLEASE DO NOT MODIFY ANY OTHER LINES
+    private void getSubstratumFromPlayStore() {
+        String playURL =
+                "https://play.google.com/store/apps/details?" +
+                        "id=projekt.substratum&hl=en";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Toast toast = Toast.makeText(this, getString(R.string.toast_substratum), Toast.LENGTH_SHORT);
+        toast.show();
+        i.setData(Uri.parse(playURL));
+        startActivity(i);
+        finish();
+    }
 
-                .callback(new PiracyCheckerCallback() {
-                    @Override
-                    public void allow() {
-                        // If Substratum is found, then launch it with specific parameters
-                        Intent launchIntent = new Intent("projekt.substratum");
-                        if (isPackageInstalled(getApplicationContext(),
-                                "projekt.substratum") && launchIntent != null) {
-                            // Substratum is found, launch it directly
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
-                            intent.setComponent(ComponentName.unflattenFromString(
-                                    "projekt.substratum/projekt.substratum" +
-                                            ".InformationActivity"));
-                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("theme_name", getString(R.string.ThemeName));
-                            intent.putExtra("theme_pid", getApplicationContext()
-                                    .getPackageName());
-                            intent.putExtra("theme_legacy", theme_legacy);
-                            intent.putExtra("theme_mode", theme_mode);
-                            intent.putExtra("refresh_mode", refresh_mode);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            String playURL =
-                                    "https://play.google.com/store/apps/details?" +
-                                            "id=projekt.substratum&hl=en";
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    getString(R.string
-                                            .toast_substratum),
-                                    Toast.LENGTH_SHORT);
-                            toast.show();
-                            i.setData(Uri.parse(playURL));
-                            startActivity(i);
-                            finish();
-                        }
-                    }
+    private void launchSubstratum() {
+        Intent currentIntent = getIntent();
+        String theme_mode = currentIntent.getStringExtra("theme_mode");
+        if (theme_mode == null) theme_mode = "";
+        final boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
+        final boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
 
-                    @Override
-                    public void dontAllow(PiracyCheckerError error) {
-                        String parse = String.format(getString(R.string.toast_unlicensed),
-                                getString(R.string.ThemeName));
-                        Toast toast = Toast.makeText(getApplicationContext(), parse,
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        finish();
-                    }
-                })
-                .start();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(ComponentName.unflattenFromString(
+                "projekt.substratum/projekt.substratum.InformationActivity"));
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("theme_name", getString(R.string.ThemeName));
+        intent.putExtra("theme_pid", getPackageName());
+        intent.putExtra("theme_legacy", theme_legacy);
+        intent.putExtra("theme_mode", theme_mode);
+        intent.putExtra("refresh_mode", refresh_mode);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Boolean is_substratum_installed = isPackageInstalled(getApplicationContext(),
-                "projekt.substratum");
-
-        if (is_substratum_installed) {
-            Intent currentIntent = getIntent();
-            theme_mode = currentIntent.getStringExtra("theme_mode");
-            final Boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
-            final Boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
-            if (theme_mode == null) {
-                theme_mode = "";
-            }
-            if (ENABLE_ANTI_PIRACY) {
-                startAntiPiracyCheck(theme_legacy, refresh_mode);
-            } else {
-                // If Substratum is found, then launch it with specific parameters
-                Intent launchIntent = new Intent("projekt.substratum");
-                if (launchIntent != null) {
-                    // Substratum is found, launch it directly
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.setComponent(ComponentName.unflattenFromString(
-                            "projekt.substratum/projekt.substratum.InformationActivity"));
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("theme_name", getString(R.string.ThemeName));
-                    intent.putExtra("theme_pid", getApplicationContext().getPackageName());
-                    intent.putExtra("theme_legacy", theme_legacy);
-                    intent.putExtra("theme_mode", theme_mode);
-                    intent.putExtra("refresh_mode", refresh_mode);
-                    startActivity(intent);
-                    finish();
-                }
-            }
+        if (ENABLE_ANTI_PIRACY && !BuildConfig.DEBUG) {
+            startAntiPiracyCheck();
         } else {
-            String playURL =
-                    "https://play.google.com/store/apps/details?" +
-                            "id=projekt.substratum&hl=en";
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getString(R.string
-                            .toast_substratum),
-                    Toast.LENGTH_SHORT);
-            toast.show();
-            i.setData(Uri.parse(playURL));
-            startActivity(i);
-            finish();
+            beginSubstratumLaunch();
         }
     }
 }
