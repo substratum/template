@@ -1,4 +1,5 @@
 <resources>
     <string name="toast_substratum">Please install Substratum before continuing!</string>
+    <string name="toast_substratum_frozen">Substratum is installed, but disabled. Please re-enable Substratum in Settings to continue!</string>
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
 </resources>

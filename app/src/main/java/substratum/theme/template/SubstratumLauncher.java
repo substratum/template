@@ -22,7 +22,6 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 
 public class SubstratumLauncher extends Activity {
 
-
     // < STATIC THEMER CRUISE CONTROL >
     // On Android Studio, please open the bottom window tab before continuing: TODO
     // You MUST complete ALL 5 steps!
@@ -39,7 +38,7 @@ public class SubstratumLauncher extends Activity {
     // Build your signed APK using your signature, and run the app once in Substratum
     // (open your theme). Check your logcat!
     // You will need to do this only when submitting to Play. Locate "SubstratumAntiPiracyLog" and
-    // head down to line 66. You will need to replace "" with the code you obtained from your
+    // head down to line 51. You will need to replace "" with the code you obtained from your
     // logcat.
     // If ENABLE_ANTI_PIRACY is false, you may skip this
     // TODO: Themers, this is your THIRD step
@@ -73,7 +72,8 @@ public class SubstratumLauncher extends Activity {
                     public void dontAllow(PiracyCheckerError error) {
                         String parse = String.format(getString(R.string.toast_unlicensed),
                                 getString(R.string.ThemeName));
-                        Toast toast = Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(SubstratumLauncher.this, parse,
+                                Toast.LENGTH_SHORT);
                         toast.show();
                         finish();
                     }
@@ -92,7 +92,7 @@ public class SubstratumLauncher extends Activity {
      * Other variables/methods; do not modify
      */
 
-    private static final String PROJEKT_SUBSTRATUM = "projekt.substratum";
+    private static final String SUBSTRATUM_PACKAGE_NAME = "projekt.substratum";
 
     private boolean isPackageInstalled(String package_name) {
         PackageManager pm = getPackageManager();
@@ -116,9 +116,11 @@ public class SubstratumLauncher extends Activity {
 
     private void beginSubstratumLaunch() {
         // If Substratum is found, then launch it with specific parameters
-        if (isPackageInstalled(PROJEKT_SUBSTRATUM)) {
-            if (!isPackageEnabled(PROJEKT_SUBSTRATUM)) {
-                //TODO tell user to enable/defrost app
+        if (isPackageInstalled(SUBSTRATUM_PACKAGE_NAME)) {
+            if (!isPackageEnabled(SUBSTRATUM_PACKAGE_NAME)) {
+                Toast toast = Toast.makeText(this, getString(R.string.toast_substratum_frozen),
+                        Toast.LENGTH_SHORT);
+                toast.show();
                 return;
             }
             // Substratum is found, launch it directly
@@ -133,7 +135,8 @@ public class SubstratumLauncher extends Activity {
                 "https://play.google.com/store/apps/details?" +
                         "id=projekt.substratum&hl=en";
         Intent i = new Intent(Intent.ACTION_VIEW);
-        Toast toast = Toast.makeText(this, getString(R.string.toast_substratum), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, getString(R.string.toast_substratum),
+                Toast.LENGTH_SHORT);
         toast.show();
         i.setData(Uri.parse(playURL));
         startActivity(i);
