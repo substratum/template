@@ -28,7 +28,7 @@ public class SubstratumLauncher extends Activity {
     //
     // TODO: Themers, this is your FIRST step
     // UNIVERSAL SWITCH: Control whether Anti-Piracy should be activated while testing
-    private static final boolean ENABLE_ANTI_PIRACY = false;
+    private static final boolean ENABLE_ANTI_PIRACY = BuildConfig.ENABLE_ANTI_PIRACY;
     // In order to retrieve your BASE64 license key your app must be uploaded to
     // Play Developer Console. Then access to your app -> Services and APIs.
     // You will need to replace "" with the code you obtained from the Play Developer Console.

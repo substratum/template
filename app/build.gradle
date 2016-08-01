@@ -12,9 +12,20 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        def BOOLEAN = "boolean"
+        def TRUE = "true"
+        def FALSE = "false"
+        def ANTI_PIRACY = "ENABLE_ANTI_PIRACY"
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField(BOOLEAN, ANTI_PIRACY, FALSE)
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField(BOOLEAN, ANTI_PIRACY, TRUE)
         }
     }
 }
