@@ -58,12 +58,6 @@ https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/ma
 <string name="ThemeAuthor">Nicholas Chum</string>
 ```
 
-If you want to keep the Play Store shortcut turned off (to disable the launcher icon by default), open this file: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/AndroidManifest.xml
-and delete line 15.
-```
-<category android:name="android.intent.category.LAUNCHER"/>
-```
-
 ## Step 3: Start theming!
 ### Audio
 To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/audio
@@ -161,8 +155,8 @@ If you have a completely white image, your actionbar and nav bar will change to 
 ## Step 5: Safeguard your theme! Don't let the pirates win!
 
 ### If you don't want to activate AntiPiracy
-Set this value to false and the antipiracy check will report back true to Substratum every time:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L34
+Set this value to 'false' and the antipiracy check will report back true to Substratum every time:
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L31
 
 ### Getting started with AntiPiracy
 
