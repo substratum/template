@@ -3,8 +3,8 @@
     <string name="toast_substratum_frozen">Substratum is installed, but disabled. Please re-enable Substratum in Settings to continue!</string>
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
     <string name="theme_ready_title">Attention!</string>
-    <string name="theme_ready_not_detected">Theme Ready Gapps is not detected on your system. Are you sure you want to continue and have no support?</string>
-    <string name="theme_ready_updated">Theme Ready Gapps detected on your system but you have %s updated from the Play Store. Are you sure you want to continue and have no support?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
+    <string name="theme_ready_not_detected">Theme Ready Gapps is not detected on your system. By confirming you agree that you will receive little to no support.</string>
+    <string name="theme_ready_updated">Theme Ready Gapps detected on your system but you have %s updated from the Play Store. By confirming you agree that you will receive little to no support.</string>
+    <string name="no">Cancel</string>
+    <string name="yes">Confirm</string>
 </resources>
