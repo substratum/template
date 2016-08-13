@@ -2,11 +2,13 @@ package substratum.theme.template;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +17,8 @@ import com.github.javiersantos.piracychecker.PiracyCheckerUtils;
 import com.github.javiersantos.piracychecker.enums.InstallerID;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
+
+import java.io.File;
 
 /**
  * @author Nicholas Chum (nicholaschum)
@@ -168,10 +172,74 @@ public class SubstratumLauncher extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        detectThemeReady();
+        //launch();
+    }
+
+    private void launch() {
         if (ENABLE_ANTI_PIRACY && !BuildConfig.DEBUG) {
             startAntiPiracyCheck();
         } else {
             beginSubstratumLaunch();
+        }
+    }
+
+    private void detectThemeReady() {
+        boolean stopped = false;
+        File addon = new File("/system/addon.d/80-ThemeReady.sh");
+        String data_path = "/data/app/";
+        String[] app_folder = {"com.google.android.gm",
+                "com.google.android.googlequicksearchbox",
+                "com.android.vending",
+                "com.google.android.apps.plus",
+                "com.google.android.talk",
+                "com.google.android.youtube",
+                "com.google.android.apps.photos"};
+        String folder1 = "-1";
+        String folder2 = "-2";
+        String apk_path = "/base.apk";
+
+        if (addon.exists()) {
+            for (int i = 0; i < app_folder.length; i++) {
+                File app1 = new File(data_path + app_folder[i] + folder1 + apk_path);
+                File app2 = new File(data_path + app_folder[i] + folder2 + apk_path);
+
+                if (!stopped && (app1.exists() || app2.exists())) {
+                    stopped = true;
+                    new AlertDialog.Builder(SubstratumLauncher.this)
+                            .setTitle(getString(R.string.theme_ready_title))
+                            .setMessage(getString(R.string.theme_ready_updated))
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    launch();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                            .show();
+                }
+            }
+            if (!stopped) {
+                launch();
+            }
+        } else {
+            new AlertDialog.Builder(SubstratumLauncher.this)
+                    .setTitle(getString(R.string.theme_ready_title))
+                    .setMessage(getString(R.string.theme_ready_not_detected))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            launch();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .show();
         }
     }
 }
