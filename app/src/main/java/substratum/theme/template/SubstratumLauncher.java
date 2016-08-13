@@ -238,7 +238,8 @@ public class SubstratumLauncher extends Activity {
                         app_name);
 
                 new AlertDialog.Builder(SubstratumLauncher.this)
-                        .setTitle(getString(R.string.theme_ready_title))
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setTitle(getString(R.string.ThemeName))
                         .setMessage(parse)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -254,7 +255,8 @@ public class SubstratumLauncher extends Activity {
             }
         } else {
             new AlertDialog.Builder(SubstratumLauncher.this)
-                    .setTitle(getString(R.string.theme_ready_title))
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setTitle(getString(R.string.ThemeName))
                     .setMessage(getString(R.string.theme_ready_not_detected))
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
