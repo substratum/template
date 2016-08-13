@@ -251,6 +251,12 @@ public class SubstratumLauncher extends Activity {
                                 finish();
                             }
                         })
+                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialogInterface) {
+                                finish();
+                            }
+                        })
                         .show();
             }
         } else {
@@ -265,6 +271,12 @@ public class SubstratumLauncher extends Activity {
                     })
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
                             finish();
                         }
                     })
