@@ -19,6 +19,7 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @author Nicholas Chum (nicholaschum)
@@ -185,7 +186,8 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void detectThemeReady() {
-        boolean stopped = false;
+        ArrayList<String> appname_arr = new ArrayList<>();
+        boolean updated = false;
         File addon = new File("/system/addon.d/80-ThemeReady.sh");
         String data_path = "/data/app/";
         String[] app_folder = {"com.google.android.gm",
@@ -194,36 +196,60 @@ public class SubstratumLauncher extends Activity {
                 "com.google.android.apps.plus",
                 "com.google.android.talk",
                 "com.google.android.youtube",
-                "com.google.android.apps.photos"};
+                "com.google.android.apps.photos",
+                "com.google.android.contacts",
+                "com.google.android.dialer"};
         String folder1 = "-1";
         String folder2 = "-2";
         String apk_path = "/base.apk";
+        StringBuilder app_name = new StringBuilder();
 
         if (addon.exists()) {
             for (int i = 0; i < app_folder.length; i++) {
                 File app1 = new File(data_path + app_folder[i] + folder1 + apk_path);
                 File app2 = new File(data_path + app_folder[i] + folder2 + apk_path);
+                if (app1.exists() || app2.exists()) {
+                    try {
+                        updated = true;
+                        ApplicationInfo app = this.getPackageManager().getApplicationInfo(app_folder[i], 0);
+                        String label = getPackageManager().getApplicationLabel(app).toString();
 
-                if (!stopped && (app1.exists() || app2.exists())) {
-                    stopped = true;
-                    new AlertDialog.Builder(SubstratumLauncher.this)
-                            .setTitle(getString(R.string.theme_ready_title))
-                            .setMessage(getString(R.string.theme_ready_updated))
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    launch();
-                                }
-                            })
-                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                            .show();
+                        appname_arr.add(label);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        //gotta catch them all
+                    }
                 }
             }
-            if (!stopped) {
+
+            for (int i = 0; i < appname_arr.size(); i++) {
+                app_name.append(appname_arr.get(i));
+                if(i <= appname_arr.size() - 3) {
+                    app_name.append(", ");
+                } else if (i == appname_arr.size() - 2) {
+                    app_name.append(" and ");
+                }
+            }
+
+            if (!updated) {
                 launch();
+            } else {
+                String parse = String.format(getString(R.string.theme_ready_updated),
+                        app_name);
+
+                new AlertDialog.Builder(SubstratumLauncher.this)
+                        .setTitle(getString(R.string.theme_ready_title))
+                        .setMessage(parse)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                launch();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .show();
             }
         } else {
             new AlertDialog.Builder(SubstratumLauncher.this)
