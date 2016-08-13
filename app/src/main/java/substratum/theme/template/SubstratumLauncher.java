@@ -186,25 +186,26 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void detectThemeReady() {
-        ArrayList<String> appname_arr = new ArrayList<>();
-        boolean updated = false;
         File addon = new File("/system/addon.d/80-ThemeReady.sh");
-        String data_path = "/data/app/";
-        String[] app_folder = {"com.google.android.gm",
-                "com.google.android.googlequicksearchbox",
-                "com.android.vending",
-                "com.google.android.apps.plus",
-                "com.google.android.talk",
-                "com.google.android.youtube",
-                "com.google.android.apps.photos",
-                "com.google.android.contacts",
-                "com.google.android.dialer"};
-        String folder1 = "-1";
-        String folder2 = "-2";
-        String apk_path = "/base.apk";
-        StringBuilder app_name = new StringBuilder();
 
         if (addon.exists()) {
+            ArrayList<String> appname_arr = new ArrayList<>();
+            boolean updated = false;
+            String data_path = "/data/app/";
+            String[] app_folder = {"com.google.android.gm",
+                    "com.google.android.googlequicksearchbox",
+                    "com.android.vending",
+                    "com.google.android.apps.plus",
+                    "com.google.android.talk",
+                    "com.google.android.youtube",
+                    "com.google.android.apps.photos",
+                    "com.google.android.contacts",
+                    "com.google.android.dialer"};
+            String folder1 = "-1";
+            String folder2 = "-2";
+            String apk_path = "/base.apk";
+            StringBuilder app_name = new StringBuilder();
+
             for (int i = 0; i < app_folder.length; i++) {
                 File app1 = new File(data_path + app_folder[i] + folder1 + apk_path);
                 File app2 = new File(data_path + app_folder[i] + folder2 + apk_path);
