@@ -2,10 +2,14 @@ package substratum.theme.template;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -173,8 +177,15 @@ public class SubstratumLauncher extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        detectThemeReady();
-        //launch();
+        SharedPreferences sharedPref = SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
+        int lastVersion = sharedPref.getInt("last_version", 0);
+
+        if (lastVersion == BuildConfig.VERSION_CODE) {
+            detectThemeReady();
+            //launch();
+        } else {
+            checkConnection();
+        }
     }
 
     private void launch() {
@@ -283,4 +294,27 @@ public class SubstratumLauncher extends Activity {
                     .show();
         }
     }
+
+    private void checkConnection() {
+        ConnectivityManager cm =
+                (ConnectivityManager)SubstratumLauncher.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        
+        if (!isConnected) {
+            Toast toast = Toast.makeText(this, R.string.toast_internet,
+                    Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        } else {
+            SharedPreferences sharedPref = SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("last_version", BuildConfig.VERSION_CODE);
+            editor.apply();
+            
+            detectThemeReady();
+        }
+    }
+
 }
