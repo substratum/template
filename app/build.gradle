@@ -15,7 +15,7 @@ android {
         def BOOLEAN = "boolean"
         def TRUE = "true"
         def FALSE = "false"
-        def ANTI_PIRACY = "ENABLE_ANTI_PIRACY"
+        def ANTI_PIRACY = "DISABLE_ANTI_PIRACY"
 
         debug {
             minifyEnabled false
@@ -25,7 +25,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField(BOOLEAN, ANTI_PIRACY, TRUE)
+            buildConfigField(BOOLEAN, ANTI_PIRACY, FALSE)
         }
     }
 }
