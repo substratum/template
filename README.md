@@ -1,6 +1,7 @@
 # SubstratumThemeTemplate
 
 The official Substratum Theme Template from the team, for every prospective/current themer who wishes to join the Substratum game!
+TEST!
 
 There are two types of Substratum as of this date (27/7/16)
   - Substratum OMS
