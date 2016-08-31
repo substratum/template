@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="substratum.theme.template">
+          package="substratum.theme.elgrosptheme">
 
     <uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
 
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SubstratumLauncher">
+        <activity android:name="substratum.theme.elgrosptheme.SubstratumLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
@@ -22,10 +22,10 @@
             android:value="true"/>
         <meta-data
             android:name="Substratum_Name"
-            android:value="@string/ThemeName"/>
+            android:value="Elgrosp's Theme"/>
         <meta-data
             android:name="Substratum_Author"
-            android:value="@string/ThemeAuthor"/>
+            android:value="Elgrosp"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
