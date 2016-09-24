@@ -26,11 +26,17 @@
         <meta-data
             android:name="Substratum_Author"
             android:value="@string/ThemeAuthor"/>
+        <!-- Do you support Stock and Theme Ready Gapps? -> all -->
+        <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
+        <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+        <meta-data
+            android:name="Substratum_ThemeReady"
+            android:value="all|ready|stock"/> <!-- Only pick one! -->
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="2.1.3"/>
+            android:value="2.1.4"/>
 
     </application>
 

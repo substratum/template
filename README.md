@@ -50,6 +50,12 @@ Now configure it to your liking:
 <meta-data
     android:name="Substratum_Author"
     android:value="@string/ThemeAuthor"/>
+<!-- Do you support Stock and Theme Ready Gapps? -> all -->
+<!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
+<!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+<meta-data
+    android:name="Substratum_ThemeReady"
+    android:value="all|ready|stock"/> <!-- Only pick one! -->
 ```
 These files link back to the strings.xml inside the res/values folder, here: 
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/values/strings.xml
