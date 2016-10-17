@@ -33,10 +33,14 @@
             android:name="Substratum_ThemeReady"
             android:value="all|ready|stock"/> <!-- Only pick one! -->
 
+        <meta-data
+            android:name="Substratum_Wallpapers"
+            android:value="http://pastebin.com/raw/TG4mFdXz"/>
+
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="2.1.4"/>
+            android:value="2.2"/>
 
     </application>
 

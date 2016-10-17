@@ -56,9 +56,15 @@ Now configure it to your liking:
 <meta-data
     android:name="Substratum_ThemeReady"
     android:value="all|ready|stock"/> <!-- Only pick one! -->
+<meta-data
+    android:name="Substratum_Wallpapers"
+    android:value="http://pastebin.com/raw/3scTbGep"/> <!-- Must be raw -->
 ```
 These files link back to the strings.xml inside the res/values folder, here: 
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/values/strings.xml
+
+For wallpapers, make sure you use DIRECT LINKS for everything you see in the pastebin template. I would recommend using pastebin, 
+but you could use Google Drive (for the XML file). Pictures must be located in a public area so that people can download them freely.
 ```
 <string name="ThemeName">My New Theme</string>
 <string name="ThemeAuthor">Nicholas Chum</string>
