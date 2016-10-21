@@ -50,6 +50,9 @@ Now configure it to your liking:
 <meta-data
     android:name="Substratum_Author"
     android:value="@string/ThemeAuthor"/>
+<meta-data
+    android:name="Substratum_Email"
+    android:value=""/> <!-- Insert your email for bug reports -->
 <!-- Do you support Stock and Theme Ready Gapps? -> all -->
 <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
 <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
