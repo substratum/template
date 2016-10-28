@@ -33,11 +33,13 @@ public class SubstratumLauncher extends Activity {
 
     // < STATIC THEMER CRUISE CONTROL >
     // On Android Studio, please open the bottom window tab before continuing: TODO
-    // You MUST complete ALL 5 steps!
+    // You MUST complete ALL 6 steps!
     //
     // TODO: Themers, this is your FIRST step
-    // UNIVERSAL SWITCH: Control whether Anti-Piracy should be activated while testing
-    private static final boolean ENABLE_ANTI_PIRACY = BuildConfig.ENABLE_ANTI_PIRACY;
+    // INTENSIVE EDITS: TO CONTROL ANTIPIRACY, OPEN UP BUILD.GRADLE AND CHANGE LINE 28
+    // Line 23: Should be false for debugging
+    // Line 28: Should be true if you want Anti Piracy activated
+    //
     // In order to retrieve your BASE64 license key your app must be uploaded to
     // Play Developer Console. Then access to your app -> Services and APIs.
     // You will need to replace "" with the code you obtained from the Play Developer Console.
@@ -52,11 +54,13 @@ public class SubstratumLauncher extends Activity {
     // If ENABLE_ANTI_PIRACY is false, you may skip this
     // TODO: Themers, this is your THIRD step
     private static final String APK_SIGNATURE_PRODUCTION = "";
+    // TODO: Themers, this is your FOURTH step
+    private static final Boolean THEME_READY = false;
     //
     // END OF STATIC THEMER CRUISE CONTROL
 
     private void startAntiPiracyCheck() {
-        // TODO: Themers, this is your FOURTH step
+        // TODO: Themers, this is your FIFTH step
         Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
         // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
         // TWO DASHES (LIKE THIS EXACT LINE)
@@ -181,15 +185,18 @@ public class SubstratumLauncher extends Activity {
         int lastVersion = sharedPref.getInt("last_version", 0);
 
         if (lastVersion == BuildConfig.VERSION_CODE) {
-            detectThemeReady();
-            //launch();
+            if (THEME_READY) {
+                detectThemeReady();
+            } else {
+                launch();
+            }
         } else {
             checkConnection();
         }
     }
 
     private void launch() {
-        if (ENABLE_ANTI_PIRACY && !BuildConfig.DEBUG) {
+        if (BuildConfig.ENABLE_ANTI_PIRACY && !BuildConfig.DEBUG) {
             startAntiPiracyCheck();
         } else {
             beginSubstratumLaunch();
@@ -223,7 +230,8 @@ public class SubstratumLauncher extends Activity {
                 if (app1.exists() || app2.exists()) {
                     try {
                         updated = true;
-                        ApplicationInfo app = this.getPackageManager().getApplicationInfo(app_folder[i], 0);
+                        ApplicationInfo app =
+                                this.getPackageManager().getApplicationInfo(app_folder[i], 0);
                         String label = getPackageManager().getApplicationLabel(app).toString();
 
                         appname_arr.add(label);
@@ -297,23 +305,29 @@ public class SubstratumLauncher extends Activity {
 
     private void checkConnection() {
         ConnectivityManager cm =
-                (ConnectivityManager)SubstratumLauncher.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager)
+                        SubstratumLauncher.this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
-        
+
         if (!isConnected) {
             Toast toast = Toast.makeText(this, R.string.toast_internet,
                     Toast.LENGTH_LONG);
             toast.show();
             finish();
         } else {
-            SharedPreferences sharedPref = SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref =
+                    SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("last_version", BuildConfig.VERSION_CODE);
             editor.apply();
-            
-            detectThemeReady();
+
+            if (THEME_READY) {
+                detectThemeReady();
+            } else {
+                launch();
+            }
         }
     }
 

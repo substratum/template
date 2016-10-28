@@ -43,7 +43,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="3.0.0"/>
+            android:value="4.0.0"/>
 
     </application>
 

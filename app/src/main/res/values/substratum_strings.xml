@@ -4,8 +4,8 @@
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
     <string name="toast_internet">Please connect to the internet before continuing!</string>
     <string name="theme_ready_title">Attention!</string>
-    <string name="theme_ready_not_detected">Theme Ready Gapps is not detected on your system. By confirming you agree that you will receive little to no support.</string>
-    <string name="theme_ready_updated">Theme Ready Gapps detected on your system but you have %s updated from the Play Store. By confirming you agree that you will receive little to no support.</string>
+    <string name="theme_ready_not_detected">Theme Ready Google Apps was not detected on your system.\n\nBy confirming, you agree that you will receive little to no support.</string>
+    <string name="theme_ready_updated">Theme Ready Google Apps was detected on your system, but you have %s updated from the Play Store.\n\nPlease uninstall these updates prior to confirming or you agree that you will receive little to no support.</string>
     <string name="no">Cancel</string>
     <string name="yes">Confirm</string>
 </resources>
