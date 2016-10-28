@@ -8,6 +8,8 @@ There are two types of Substratum as of this date (27/7/16)
 
 To get started, first of all, FORK this project on GitHub and open it up with Android Studio (I use Android Studio 2.1.2 and Android Studio 2.2 Preview Canary, although these versions don't matter, you should keep yourself up to date with the latest Google has to offer)
 
+## Step 0: DISABLE INSTANT RUN ON YOUR PROJECT!
+
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you:
 
