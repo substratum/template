@@ -22,13 +22,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField(BOOLEAN, ANTI_PIRACY, FALSE)
-            buildConfigField(BOOLEAN, SUBSTRATE_MODULE, TRUE)
+            buildConfigField(BOOLEAN, SUBSTRATE_MODULE, FALSE) // CHANGE FALSE TO TRUE TO ENABLE
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField(BOOLEAN, ANTI_PIRACY, TRUE)
-            buildConfigField(BOOLEAN, SUBSTRATE_MODULE, TRUE)
+            buildConfigField(BOOLEAN, SUBSTRATE_MODULE, FALSE) // CHANGE FALSE TO TRUE TO ENABLE
         }
     }
 }
