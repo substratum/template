@@ -1,7 +1,6 @@
 package substratum.theme.template;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +23,9 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import projekt.substrate.LetsGetStarted;
+
 
 /**
  * @author Nicholas Chum (nicholaschum)
@@ -58,6 +60,11 @@ public class SubstratumLauncher extends Activity {
     private static final Boolean THEME_READY = false;
     //
     // END OF STATIC THEMER CRUISE CONTROL
+    /**
+     * Other variables/methods; do not modify
+     */
+
+    private static final String SUBSTRATUM_PACKAGE_NAME = "projekt.substratum";
 
     private void startAntiPiracyCheck() {
         // TODO: Themers, this is your FIFTH step
@@ -100,12 +107,6 @@ public class SubstratumLauncher extends Activity {
         }
         piracyChecker.start();
     }
-
-    /**
-     * Other variables/methods; do not modify
-     */
-
-    private static final String SUBSTRATUM_PACKAGE_NAME = "projekt.substratum";
 
     private boolean isPackageInstalled(String package_name) {
         PackageManager pm = getPackageManager();
@@ -157,23 +158,9 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void launchSubstratum() {
-        Intent currentIntent = getIntent();
-        String theme_mode = currentIntent.getStringExtra("theme_mode");
-        if (theme_mode == null) theme_mode = "";
-        final boolean theme_legacy = currentIntent.getBooleanExtra("theme_legacy", false);
-        final boolean refresh_mode = currentIntent.getBooleanExtra("refresh_mode", false);
-
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setComponent(ComponentName.unflattenFromString(
-                "projekt.substratum/projekt.substratum.InformationActivity"));
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("theme_name", getString(R.string.ThemeName));
-        intent.putExtra("theme_pid", getPackageName());
-        intent.putExtra("theme_legacy", theme_legacy);
-        intent.putExtra("theme_mode", theme_mode);
-        intent.putExtra("refresh_mode", refresh_mode);
+        Intent intent = LetsGetStarted.begin(getApplicationContext(),
+                getIntent(), getString(R.string.ThemeName), getPackageName(),
+                getString(R.string.unauthorized), BuildConfig.SUBSTRATE_MODULE);
         startActivity(intent);
         finish();
     }
@@ -243,7 +230,7 @@ public class SubstratumLauncher extends Activity {
 
             for (int i = 0; i < appname_arr.size(); i++) {
                 app_name.append(appname_arr.get(i));
-                if(i <= appname_arr.size() - 3) {
+                if (i <= appname_arr.size() - 3) {
                     app_name.append(", ");
                 } else if (i == appname_arr.size() - 2) {
                     app_name.append(" and ");
