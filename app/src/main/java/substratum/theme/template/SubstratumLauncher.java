@@ -161,7 +161,9 @@ public class SubstratumLauncher extends Activity {
         Intent intent = LetsGetStarted.begin(getApplicationContext(),
                 getIntent(), getString(R.string.ThemeName), getPackageName(),
                 getString(R.string.unauthorized), BuildConfig.SUBSTRATE_MODULE);
-        startActivity(intent);
+        if (intent != null) {
+            startActivity(intent);
+        }
         finish();
     }
 
