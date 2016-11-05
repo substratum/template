@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="substratum.theme.template">
 
     <uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/ThemeName"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:node="replace">
 
         <activity android:name=".SubstratumLauncher">
             <intent-filter>
@@ -26,11 +29,23 @@
         <meta-data
             android:name="Substratum_Author"
             android:value="@string/ThemeAuthor"/>
+        <meta-data
+            android:name="Substratum_Email"
+            android:value=""/> <!-- Insert your email for bug reports -->
+        <!-- Do you support Stock and Theme Ready Gapps? -> all -->
+        <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
+        <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+        <meta-data
+            android:name="Substratum_ThemeReady"
+            android:value="all|ready|stock"/> <!-- Only pick one! -->
+        <meta-data
+            android:name="Substratum_Wallpapers"
+            android:value="http://pastebin.com/raw/TG4mFdXz"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="2.1.3"/>
+            android:value="5.0.4"/>
 
     </application>
 
