@@ -1,0 +1,16 @@
+<resources>
+    <bool name="ThemeLegacy">true</bool>
+    <!-- Insert the name of your theme -->
+    <string name="ThemeName">Substratum Theme Template</string>
+    <!-- Insert your name, which will be displayed in the app -->
+    <string name="ThemeAuthor">Nicholas Chum</string>
+    <!-- Insert your email for bug reports -->
+    <string name="ThemeEmail">me@example.com</string>
+    <!-- pick ONE of all|ready|stock -->
+    <!-- Do you support Stock and Theme Ready Gapps? -> all -->
+    <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
+    <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+    <string name="ThemeReady">stock</string>
+    <!-- URL to your raw wallpaper json -->
+    <string name="ThemeWallpapers">http://pastebin.com/raw/TG4mFdXz</string>
+</resources>
