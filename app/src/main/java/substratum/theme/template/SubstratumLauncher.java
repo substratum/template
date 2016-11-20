@@ -245,7 +245,8 @@ public class SubstratumLauncher extends Activity {
                 String parse = String.format(getString(R.string.theme_ready_updated),
                         app_name);
 
-                new AlertDialog.Builder(SubstratumLauncher.this)
+                new AlertDialog.Builder(SubstratumLauncher.this, android.R.style
+                        .Theme_DeviceDefault_Light_Dialog_Alert)
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle(getString(R.string.ThemeName))
                         .setMessage(parse)
@@ -268,7 +269,8 @@ public class SubstratumLauncher extends Activity {
                         .show();
             }
         } else {
-            new AlertDialog.Builder(SubstratumLauncher.this)
+            new AlertDialog.Builder(SubstratumLauncher.this, android.R.style
+                    .Theme_DeviceDefault_Light_Dialog_Alert)
                     .setIcon(R.mipmap.ic_launcher)
                     .setTitle(getString(R.string.ThemeName))
                     .setMessage(getString(R.string.theme_ready_not_detected))
