@@ -172,7 +172,7 @@ If you have a completely white image, your actionbar and nav bar will change to 
 ## Step 5: Safeguard your theme! Don't let the pirates win!
 
 ### If you don't want to activate AntiPiracy
-Open up your app level build.gradle and edit line 28 to say false instead of true.
+Open up your app level build.gradle and edit line 30 to say false instead of true.
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/build.gradle#L28
 
 ### Getting started with AntiPiracy
