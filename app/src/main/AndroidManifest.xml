@@ -16,6 +16,10 @@
 
         <activity android:name=".SubstratumLauncher">
             <intent-filter>
+                <action android:name="projekt.substratum.THEME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
@@ -45,7 +49,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="5.1.2"/>
+            android:value="6.0.0"/>
 
     </application>
 
