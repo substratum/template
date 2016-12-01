@@ -26,7 +26,7 @@
 
         <meta-data
             android:name="Substratum_Legacy"
-            android:value="true"/>
+            android:value="@bool/ThemeLegacy"/>
         <meta-data
             android:name="Substratum_Name"
             android:value="@string/ThemeName"/>
@@ -35,16 +35,13 @@
             android:value="@string/ThemeAuthor"/>
         <meta-data
             android:name="Substratum_Email"
-            android:value=""/> <!-- Insert your email for bug reports -->
-        <!-- Do you support Stock and Theme Ready Gapps? -> all -->
-        <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
-        <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+            android:value="@string/ThemeEmail"/>
         <meta-data
             android:name="Substratum_ThemeReady"
-            android:value="all|ready|stock"/> <!-- Only pick one! -->
+            android:value="@string/ThemeReady"/>
         <meta-data
             android:name="Substratum_Wallpapers"
-            android:value="http://pastebin.com/raw/TG4mFdXz"/>
+            android:value="@string/ThemeWallpapers"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
