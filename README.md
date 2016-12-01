@@ -79,7 +79,7 @@ but you could use Google Drive (for the XML file). Pictures must be located in a
 ### Audio
 To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/audio
 
-You are allowed to add multiple bootanimations and name them differently so they show up differently on the spinner dropdown in the app.
+You are allowed to add multiple audios and name them differently so they show up differently on the spinner dropdown in the app.
 
 Example:
 ```
