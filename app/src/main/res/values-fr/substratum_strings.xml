@@ -1,0 +1,12 @@
+<resources>
+    <string name="toast_substratum">Veuillez installer Substratum avant de continuer !</string>
+    <string name="toast_substratum_frozen">Substratum est installé, mais désactivé. Veuillez réactiver Substratum dans Paramètres pour pouvoir continuer !</string>
+    <string name="toast_unlicensed">Cette copie de %s n\'est pas autorisée !</string>
+    <string name="toast_internet">Veuillez vous connecter à Internet avant de continuer !</string>
+    <string name="theme_ready_title">Attention !</string>
+    <string name="theme_ready_not_detected">Google Apps \"Theme Ready\" non détectées sur votre appareil.\n\nEn confirmant, vous acceptez de ne recevoir que très peu d\'aide, voir de ne recevoir aucune aide du tout.</string>
+    <string name="theme_ready_updated">Google Apps \"Theme Ready\" détectées sur votre appareil, mais vous avez %s mis à jour depuis le Play Store.\n\nVeuillez désinstaller ces mises à jour avant de confirmer, ou vous acceptez de ne recevoir que très peu d\'aide, voir de ne recevoir aucune aide du tout.</string>
+    <string name="no">Annuler</string>
+    <string name="yes">Confirmer</string>
+    <string name="unauthorized">Ce thème est incompatible avec votre configuration actuelle.</string>
+</resources>
