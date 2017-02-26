@@ -10,6 +10,8 @@ To get started, first of all, FORK this project on GitHub and open it up with An
 
 ## Step 0: DISABLE INSTANT RUN ON YOUR PROJECT!
 
+For more information: http://stackoverflow.com/a/35169716
+
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you:
 
@@ -35,6 +37,8 @@ applicationId "com.yourname.themename"
   * At the bottom of the screen a refactoring preview will appear. Just click on "DO REFACTOR" at the left corner. <br/> <br/>
   * Do the same with the theme and template folders, name it same as the name in applicationId of build.gradle.
 ```
+
+For more information: http://stackoverflow.com/a/29092698
 
 ## Step 2: AndroidManifest Metadatas
 Now you have to pick whether your theme supports OMS or RRO, or both.
@@ -169,20 +173,23 @@ https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/ma
 
 If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
 
-## Step 5: Safeguard your theme! Don't let the pirates win!
+## Step 5: Include a built in changelog for your users!
+
+If you take a look at theme_strings.xml, you will see a <string-array> with name "ThemeChangelog" where you can add your own changelog line by line. Please do not include line breaks unless you really have to. Substratum does this automagically! You can have as many lines as you want, so don't worry about the default 5 lines in the template!
+
+## Step 6: Safeguard your theme! Don't let the pirates win!
 
 ### If you don't want to activate AntiPiracy
-Open up your app level build.gradle and edit line 30 to say false instead of true.
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/build.gradle#L28
+Then do NOT change ThemerConstants.java's line 5 from false to true! Simple as that!
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 58: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L58
+If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 9 (APK_SIGNATURE_PRODUCTION): https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L9
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 50: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L50
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 8: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L8
 
-Third, if you would like to enable INTENSIVE MODE antipiracy (LuckyPatcher module check), open up build.gradle and change lines 25 and 31's TRUE to FALSE: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/build.gradle#L25 
+Third, if you would like to enable intensive mode antipiracy (App package blacklist), open up ThemerConstants.java and add as many package names as you want under BLACKLISTED_APPLICATIONS.
 
-Finally, if you would like to change where it checks for piracy, you should just comment out the .enable lines such as if you would not like to have Google Play installation (just sideloaded APK) piracy checking, just disable this line: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/SubstratumLauncher.java#L80
+Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in ThemerConstants.java for you to simply change true and false!
 
-# DO NOT SHARE YOUR SUBSTRATUMLAUNCHER.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!
+# DO NOT SHARE YOUR THEMERCONSTANTS.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!

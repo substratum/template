@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,80 +25,46 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 import java.io.File;
 import java.util.ArrayList;
 
-import projekt.substrate.LetsGetStarted;
+import projekt.substrate.SubstratumLoader;
 
-
-/**
- * @author Nicholas Chum (nicholaschum)
- */
+import static substratum.theme.template.ThemerConstants.APK_SIGNATURE_PRODUCTION;
+import static substratum.theme.template.ThemerConstants.BASE_64_LICENSE_KEY;
+import static substratum.theme.template.ThemerConstants.BLACKLISTED_APPLICATIONS;
+import static substratum.theme.template.ThemerConstants.ENABLE_BLACKLISTED_APPLICATIONS;
+import static substratum.theme.template.ThemerConstants.ENFORCE_AMAZON_APP_STORE_INSTALL;
+import static substratum.theme.template.ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL;
+import static substratum.theme.template.ThemerConstants.ENFORCE_INTERNET_CHECK;
+import static substratum.theme.template.ThemerConstants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION;
+import static substratum.theme.template.ThemerConstants.MINIMUM_SUBSTRATUM_VERSION;
+import static substratum.theme.template.ThemerConstants.PIRACY_CHECK;
+import static substratum.theme.template.ThemerConstants.THEME_READY_GOOGLE_APPS;
 
 public class SubstratumLauncher extends Activity {
-
-    // < STATIC THEMER CRUISE CONTROL >
-    // On Android Studio, please open the bottom window tab before continuing: TODO
-    // You MUST complete ALL 6 steps!
-    //
-    // TODO: Themers, this is your FIRST step
-    // INTENSIVE EDITS: TO CONTROL ANTIPIRACY, OPEN UP BUILD.GRADLE AND CHANGE LINE 28
-    // Line 23: Should be false for debugging
-    // Line 28: Should be true if you want Anti Piracy activated
-    //
-    // In order to retrieve your BASE64 license key your app must be uploaded to
-    // Play Developer Console. Then access to your app -> Services and APIs.
-    // You will need to replace "" with the code you obtained from the Play Developer Console.
-    // If ENABLE_ANTI_PIRACY is false, you may skip this
-    // TODO: Themers, this is your SECOND step
-    private static final String BASE_64_LICENSE_KEY = "";
-    // Build your signed APK using your signature, and run the app once in Substratum
-    // (open your theme). Check your logcat!
-    // You will need to do this only when submitting to Play. Locate "SubstratumAntiPiracyLog" and
-    // head down to line 51. You will need to replace "" with the code you obtained from your
-    // logcat.
-    // If ENABLE_ANTI_PIRACY is false, you may skip this
-    // TODO: Themers, this is your THIRD step
-    private static final String APK_SIGNATURE_PRODUCTION = "";
-    // TODO: Themers, this is your FOURTH step
-    private static final Boolean THEME_READY = false;
-    //
-    // END OF STATIC THEMER CRUISE CONTROL
-    /**
-     * Other variables/methods; do not modify
-     */
 
     private static final String SUBSTRATUM_PACKAGE_NAME = "projekt.substratum";
 
     private void startAntiPiracyCheck() {
-        // TODO: Themers, this is your FIFTH step
-        Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
-        // COMMENT OUT THE ABOVE LINE ONCE YOU OBTAINED YOUR APK SIGNATURE USING
-        // TWO DASHES (LIKE THIS EXACT LINE)
+        if (PIRACY_CHECK && BASE_64_LICENSE_KEY.length() == 0)
+            Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this));
 
-        PiracyChecker piracyChecker = new PiracyChecker(this)
+        PiracyChecker piracyChecker = new PiracyChecker(this);
+        if (ENFORCE_GOOGLE_PLAY_INSTALL) piracyChecker.enableInstallerId(InstallerID.GOOGLE_PLAY);
+        if (ENFORCE_AMAZON_APP_STORE_INSTALL)
+            piracyChecker.enableInstallerId(InstallerID.AMAZON_APP_STORE);
+        piracyChecker.callback(new PiracyCheckerCallback() {
+            @Override
+            public void allow() {
+                beginSubstratumLaunch();
+            }
 
-                // TODO: Themers, this is your FINAL step
-                // To disable certain piracy features, comment it out so that it doesn't
-                // trigger anti-piracy.
-                .enableInstallerId(InstallerID.GOOGLE_PLAY)
-                //.enableInstallerId(InstallerID.AMAZON_APP_STORE)
-                // END OF THEMER TOUCHABLE OPTIONS
-                // TO RETAIN INTEGRITY, PLEASE DO NOT MODIFY ANY OTHER LINES
-
-                .callback(new PiracyCheckerCallback() {
-                    @Override
-                    public void allow() {
-                        beginSubstratumLaunch();
-                    }
-
-                    @Override
-                    public void dontAllow(PiracyCheckerError error) {
-                        String parse = String.format(getString(R.string.toast_unlicensed),
-                                getString(R.string.ThemeName));
-                        Toast toast = Toast.makeText(SubstratumLauncher.this, parse,
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        finish();
-                    }
-                });
+            @Override
+            public void dontAllow(PiracyCheckerError error) {
+                String parse = String.format(getString(R.string.toast_unlicensed),
+                        getString(R.string.ThemeName));
+                Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
 
         if (BASE_64_LICENSE_KEY.length() > 0) {
             piracyChecker.enableGooglePlayLicensing(BASE_64_LICENSE_KEY);
@@ -109,8 +76,8 @@ public class SubstratumLauncher extends Activity {
     }
 
     private boolean isPackageInstalled(String package_name) {
-        PackageManager pm = getPackageManager();
         try {
+            PackageManager pm = getPackageManager();
             pm.getPackageInfo(package_name, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (Exception e) {
@@ -122,8 +89,7 @@ public class SubstratumLauncher extends Activity {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(package_name, 0);
             return ai.enabled;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return false;
         }
     }
@@ -132,9 +98,8 @@ public class SubstratumLauncher extends Activity {
         // If Substratum is found, then launch it with specific parameters
         if (isPackageInstalled(SUBSTRATUM_PACKAGE_NAME)) {
             if (!isPackageEnabled(SUBSTRATUM_PACKAGE_NAME)) {
-                Toast toast = Toast.makeText(this, getString(R.string.toast_substratum_frozen),
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(this, getString(R.string.toast_substratum_frozen),
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
             // Substratum is found, launch it directly
@@ -145,47 +110,80 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void getSubstratumFromPlayStore() {
-        String playURL =
-                "https://play.google.com/store/apps/details?" +
-                        "id=projekt.substratum&hl=en";
+        String playURL = "https://play.google.com/store/apps/details?id=projekt.substratum";
         Intent i = new Intent(Intent.ACTION_VIEW);
-        Toast toast = Toast.makeText(this, getString(R.string.toast_substratum),
-                Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, getString(R.string.toast_substratum), Toast.LENGTH_SHORT).show();
         i.setData(Uri.parse(playURL));
         startActivity(i);
         finish();
     }
 
+    private void showOutdatedSubstratumToast() {
+        String parse = String.format(
+                getString(R.string.outdated_substratum),
+                getString(R.string.ThemeName),
+                String.valueOf(MINIMUM_SUBSTRATUM_VERSION));
+        Toast.makeText(this, parse, Toast.LENGTH_SHORT).show();
+    }
+
     private void launchSubstratum() {
-        Intent intent = LetsGetStarted.begin(getApplicationContext(),
-                getIntent(), getString(R.string.ThemeName), getPackageName(),
-                getString(R.string.unauthorized), BuildConfig.SUBSTRATE_MODULE);
-        if (intent != null) {
-            startActivity(intent);
+        if (ENABLE_BLACKLISTED_APPLICATIONS) {
+            for (String blacklistedApplication : BLACKLISTED_APPLICATIONS)
+                if (isPackageInstalled(blacklistedApplication)) {
+                    Toast.makeText(this, R.string.unauthorized,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
         }
-        finish();
+        if (ENFORCE_MINIMUM_SUBSTRATUM_VERSION) {
+            try {
+                PackageInfo packageInfo = getApplicationContext()
+                        .getPackageManager().getPackageInfo(SUBSTRATUM_PACKAGE_NAME, 0);
+                if (packageInfo.versionCode >= MINIMUM_SUBSTRATUM_VERSION) {
+                    Intent intent = SubstratumLoader.launchThemeActivity(getApplicationContext(),
+                            getIntent(), getString(R.string.ThemeName), getPackageName());
+                    startActivity(intent);
+                    finish();
+                } else {
+                    showOutdatedSubstratumToast();
+                }
+            } catch (Exception e) {
+                showOutdatedSubstratumToast();
+            }
+        } else {
+            Intent intent = SubstratumLoader.launchThemeActivity(getApplicationContext(),
+                    getIntent(), getString(R.string.ThemeName), getPackageName());
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPref = SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
-        int lastVersion = sharedPref.getInt("last_version", 0);
-
-        if (lastVersion == BuildConfig.VERSION_CODE) {
-            if (THEME_READY) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        if (ENFORCE_INTERNET_CHECK) {
+            if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
+                if (THEME_READY_GOOGLE_APPS) {
+                    detectThemeReady();
+                } else {
+                    launch();
+                }
+            } else {
+                checkConnection();
+            }
+        } else {
+            if (THEME_READY_GOOGLE_APPS) {
                 detectThemeReady();
             } else {
                 launch();
             }
-        } else {
-            checkConnection();
         }
     }
 
     private void launch() {
-        if (BuildConfig.ENABLE_ANTI_PIRACY && !BuildConfig.DEBUG) {
+        if (PIRACY_CHECK && !BuildConfig.DEBUG) {
             startAntiPiracyCheck();
         } else {
             beginSubstratumLaunch();
@@ -194,9 +192,8 @@ public class SubstratumLauncher extends Activity {
 
     private void detectThemeReady() {
         File addon = new File("/system/addon.d/80-ThemeReady.sh");
-
         if (addon.exists()) {
-            ArrayList<String> appname_arr = new ArrayList<>();
+            ArrayList<String> apps = new ArrayList<>();
             boolean updated = false;
             String data_path = "/data/app/";
             String[] app_folder = {"com.google.android.gm",
@@ -207,35 +204,35 @@ public class SubstratumLauncher extends Activity {
                     "com.google.android.youtube",
                     "com.google.android.apps.photos",
                     "com.google.android.contacts",
-                    "com.google.android.dialer"};
+                    "com.google.android.dialer",
+                    "com.google.android.inputmethod.latin"};
             String folder1 = "-1";
             String folder2 = "-2";
             String apk_path = "/base.apk";
             StringBuilder app_name = new StringBuilder();
 
-            for (int i = 0; i < app_folder.length; i++) {
-                File app1 = new File(data_path + app_folder[i] + folder1 + apk_path);
-                File app2 = new File(data_path + app_folder[i] + folder2 + apk_path);
+            for (String anApp_folder : app_folder) {
+                File app1 = new File(data_path + anApp_folder + folder1 + apk_path);
+                File app2 = new File(data_path + anApp_folder + folder2 + apk_path);
                 if (app1.exists() || app2.exists()) {
                     try {
                         updated = true;
                         ApplicationInfo app =
-                                this.getPackageManager().getApplicationInfo(app_folder[i], 0);
+                                this.getPackageManager().getApplicationInfo(anApp_folder, 0);
                         String label = getPackageManager().getApplicationLabel(app).toString();
-
-                        appname_arr.add(label);
-                    } catch (PackageManager.NameNotFoundException e) {
-                        //gotta catch them all
+                        apps.add(label);
+                    } catch (Exception e) {
+                        // Suppress warning
                     }
                 }
             }
 
-            for (int i = 0; i < appname_arr.size(); i++) {
-                app_name.append(appname_arr.get(i));
-                if (i <= appname_arr.size() - 3) {
+            for (int i = 0; i < apps.size(); i++) {
+                app_name.append(apps.get(i));
+                if (i <= apps.size() - 3) {
                     app_name.append(", ");
-                } else if (i == appname_arr.size() - 2) {
-                    app_name.append(" and ");
+                } else if (i == apps.size() - 2) {
+                    app_name.append(" ").append(getString(R.string.and)).append(" ");
                 }
             }
 
@@ -245,8 +242,7 @@ public class SubstratumLauncher extends Activity {
                 String parse = String.format(getString(R.string.theme_ready_updated),
                         app_name);
 
-                new AlertDialog.Builder(SubstratumLauncher.this, android.R.style
-                        .Theme_DeviceDefault_Light_Dialog_Alert)
+                new AlertDialog.Builder(this, R.style.DialogStyle)
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle(getString(R.string.ThemeName))
                         .setMessage(parse)
@@ -269,8 +265,7 @@ public class SubstratumLauncher extends Activity {
                         .show();
             }
         } else {
-            new AlertDialog.Builder(SubstratumLauncher.this, android.R.style
-                    .Theme_DeviceDefault_Light_Dialog_Alert)
+            new AlertDialog.Builder(this, R.style.DialogStyle)
                     .setIcon(R.mipmap.ic_launcher)
                     .setTitle(getString(R.string.ThemeName))
                     .setMessage(getString(R.string.theme_ready_not_detected))
@@ -295,31 +290,23 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void checkConnection() {
-        ConnectivityManager cm =
-                (ConnectivityManager)
-                        SubstratumLauncher.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(
+                Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         if (!isConnected) {
-            Toast toast = Toast.makeText(this, R.string.toast_internet,
-                    Toast.LENGTH_LONG);
-            toast.show();
+            Toast.makeText(this, R.string.toast_internet,
+                    Toast.LENGTH_LONG).show();
             finish();
         } else {
-            SharedPreferences sharedPref =
-                    SubstratumLauncher.this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("last_version", BuildConfig.VERSION_CODE);
-            editor.apply();
-
-            if (THEME_READY) {
+            SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+            editor.putInt("last_version", BuildConfig.VERSION_CODE).apply();
+            if (THEME_READY_GOOGLE_APPS) {
                 detectThemeReady();
             } else {
                 launch();
             }
         }
     }
-
 }

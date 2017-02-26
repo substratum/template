@@ -9,4 +9,5 @@
     <string name="no">Cancel</string>
     <string name="yes">Confirm</string>
     <string name="unauthorized">This theme is unauthorized to be used on this device\'s set up.</string>
+    <string name="outdated_substratum" formatted="false">This version of %s requires substratum version %s and up! Please upgrade!</string>
 </resources>
