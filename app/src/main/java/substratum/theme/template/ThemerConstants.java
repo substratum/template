@@ -24,5 +24,5 @@ class ThemerConstants {
     // Miscellaneous Checks
     static final Boolean THEME_READY_GOOGLE_APPS = false;
     static final Boolean ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true;
-    static final int MINIMUM_SUBSTRATUM_VERSION = 560;
+    static final int MINIMUM_SUBSTRATUM_VERSION = 510; // 510 is the final MM build
 }
