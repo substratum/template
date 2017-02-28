@@ -18,7 +18,7 @@ class ThemerConstants {
     static final String[] BLACKLISTED_APPLICATIONS = new String[]{
             "com.android.vending.billing.InAppBillingService.LOCK",
             "com.android.vending.billing.InAppBillingService.LACK",
-            "uret.jasi2169.patcher",        
+            "uret.jasi2169.patcher",
             "com.dimonvideo.luckypatcher",
             "com.chelpus.lackypatch",
             "com.forpda.lp", 
