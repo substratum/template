@@ -9,7 +9,7 @@
 	
 	<uses-feature
         android:name="projekt.substratum.theme"
-        android:required="true" />
+        android:required="false" /> <!-- Set to true for block to be enabled -->
 
     <application
         android:allowBackup="false"
