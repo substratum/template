@@ -6,6 +6,10 @@
 
     <uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	
+	<uses-feature
+        android:name="projekt.substratum.theme"
+        android:required="true" />
 
     <application
         android:allowBackup="false"
@@ -50,7 +54,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="7.0.0"/>
+            android:value="7.0.1"/>
 
     </application>
 
