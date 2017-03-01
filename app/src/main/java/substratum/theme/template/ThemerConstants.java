@@ -21,7 +21,9 @@ class ThemerConstants {
             "uret.jasi2169.patcher",
             "com.dimonvideo.luckypatcher",
             "com.chelpus.lackypatch",
-            "com.forpda.lp", 
+            "com.forpda.lp",
+            "com.android.vending.billing.InAppBillingService.LUCK",
+            "com.android.protips",
     };
 
     // Miscellaneous Checks
