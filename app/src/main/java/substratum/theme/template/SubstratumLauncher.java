@@ -212,8 +212,9 @@ public class SubstratumLauncher extends Activity {
         if (addon.exists()) {
             ArrayList<String> apps = new ArrayList<>();
             boolean updated = false;
-            String data_path = "/data/app/";
-            String[] app_folder = {"com.google.android.gm",
+            PackageManager packageManager = this.getPackageManager();
+            StringBuilder app_name = new StringBuilder();
+            String[] packageNames = {"com.google.android.gm",
                     "com.google.android.googlequicksearchbox",
                     "com.android.vending",
                     "com.google.android.apps.plus",
@@ -223,24 +224,16 @@ public class SubstratumLauncher extends Activity {
                     "com.google.android.contacts",
                     "com.google.android.dialer",
                     "com.google.android.inputmethod.latin"};
-            String folder1 = "-1";
-            String folder2 = "-2";
-            String apk_path = "/base.apk";
-            StringBuilder app_name = new StringBuilder();
 
-            for (String anApp_folder : app_folder) {
-                File app1 = new File(data_path + anApp_folder + folder1 + apk_path);
-                File app2 = new File(data_path + anApp_folder + folder2 + apk_path);
-                if (app1.exists() || app2.exists()) {
-                    try {
+            for (String packageName : packageNames) {
+                try {
+                    ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
+                    if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
                         updated = true;
-                        ApplicationInfo app =
-                                this.getPackageManager().getApplicationInfo(anApp_folder, 0);
-                        String label = getPackageManager().getApplicationLabel(app).toString();
-                        apps.add(label);
-                    } catch (Exception e) {
-                        // Suppress warning
+                        apps.add(packageManager.getApplicationLabel(appInfo).toString());
                     }
+                } catch (Exception e) {
+                    // Package not found
                 }
             }
 
