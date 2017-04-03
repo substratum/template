@@ -4,6 +4,15 @@ class ThemerConstants {
     // Simple AntiPiracy Configuration
     static final Boolean PIRACY_CHECK = false;
 
+    // Miscellaneous Checks
+    static final Boolean THEME_READY_GOOGLE_APPS = false;
+    static final Boolean ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true;
+    static final int MINIMUM_SUBSTRATUM_VERSION = 510; // 510 is the final MM build
+    static final String TARGETED_SUBSTRATUM_VERSION = "Latest"; // Erase to nullify being latest
+
+    // Dynamic filter that only works on Substratum 627+
+    static final Boolean SUBSTRATUM_FILTER_CHECK = TARGETED_SUBSTRATUM_VERSION.equals("Latest");
+
     // Play Store AntiPiracy LVL configurations (Relies on PIRACY_CHECK)
     static final String BASE_64_LICENSE_KEY = "";
     static final String APK_SIGNATURE_PRODUCTION = "";
@@ -25,9 +34,4 @@ class ThemerConstants {
             "com.android.vending.billing.InAppBillingService.LUCK",
             "com.android.protips",
     };
-
-    // Miscellaneous Checks
-    static final Boolean THEME_READY_GOOGLE_APPS = false;
-    static final Boolean ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true;
-    static final int MINIMUM_SUBSTRATUM_VERSION = 510; // 510 is the final MM build
 }

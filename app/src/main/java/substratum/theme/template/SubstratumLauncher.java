@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -38,11 +39,13 @@ import static substratum.theme.template.ThemerConstants.ENFORCE_INTERNET_CHECK;
 import static substratum.theme.template.ThemerConstants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION;
 import static substratum.theme.template.ThemerConstants.MINIMUM_SUBSTRATUM_VERSION;
 import static substratum.theme.template.ThemerConstants.PIRACY_CHECK;
+import static substratum.theme.template.ThemerConstants.SUBSTRATUM_FILTER_CHECK;
 import static substratum.theme.template.ThemerConstants.THEME_READY_GOOGLE_APPS;
 
 public class SubstratumLauncher extends Activity {
 
     private static final String SUBSTRATUM_PACKAGE_NAME = "projekt.substratum";
+    private Boolean mVerified = false;
 
     private void startAntiPiracyCheck() {
         if (PIRACY_CHECK && BASE_64_LICENSE_KEY.length() == 0)
@@ -59,7 +62,7 @@ public class SubstratumLauncher extends Activity {
             }
 
             @Override
-            public void dontAllow(PiracyCheckerError error, PirateApp pirateApp) {
+            public void dontAllow(@NonNull PiracyCheckerError error, PirateApp pirateApp) {
                 String parse = String.format(getString(R.string.toast_unlicensed),
                         getString(R.string.ThemeName));
                 Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT).show();
@@ -133,8 +136,15 @@ public class SubstratumLauncher extends Activity {
                 if (isPackageInstalled(blacklistedApplication)) {
                     Toast.makeText(this, R.string.unauthorized,
                             Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
+        }
+        if (SUBSTRATUM_FILTER_CHECK && !mVerified) {
+            Toast.makeText(this, R.string.unauthorized,
+                    Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
         if (ENFORCE_MINIMUM_SUBSTRATUM_VERSION) {
             try {
@@ -151,18 +161,24 @@ public class SubstratumLauncher extends Activity {
             } catch (Exception e) {
                 showOutdatedSubstratumToast();
             }
+            finish();
         } else {
             Intent intent = SubstratumLoader.launchThemeActivity(getApplicationContext(),
                     getIntent(), getString(R.string.ThemeName), getPackageName());
             startActivity(intent);
             finish();
         }
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        mVerified = intent.getBooleanExtra("certified", false);
+        if (SUBSTRATUM_FILTER_CHECK) Log.d("SubstratumLauncher", "This theme is " +
+                ((mVerified) ? "certified" : "uncertified") + " by substratum!");
+
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         if (ENFORCE_INTERNET_CHECK) {
             if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
