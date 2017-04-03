@@ -25,6 +25,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.github.javiersantos:PiracyChecker:0.0.3'
+    compile 'com.github.javiersantos:PiracyChecker:1.0.2'
     compile project(':substrate')
 }

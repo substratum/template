@@ -21,6 +21,7 @@ import com.github.javiersantos.piracychecker.PiracyCheckerUtils;
 import com.github.javiersantos.piracychecker.enums.InstallerID;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback;
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
+import com.github.javiersantos.piracychecker.enums.PirateApp;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class SubstratumLauncher extends Activity {
             }
 
             @Override
-            public void dontAllow(PiracyCheckerError error) {
+            public void dontAllow(PiracyCheckerError error, PirateApp pirateApp) {
                 String parse = String.format(getString(R.string.toast_unlicensed),
                         getString(R.string.ThemeName));
                 Toast.makeText(SubstratumLauncher.this, parse, Toast.LENGTH_SHORT).show();
