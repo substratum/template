@@ -6,6 +6,7 @@
     <string name="theme_ready_title">Attention!</string>
     <string name="theme_ready_not_detected">Theme Ready Google Apps was not detected on your system.\n\nBy confirming, you agree that you will receive little to no support.</string>
     <string name="theme_ready_updated">Theme Ready Google Apps was detected on your system, but you have %s updated from the Play Store.\n\nPlease uninstall these updates prior to confirming or you agree that you will receive little to no support.</string>
+    <string name="theme_ready_incomplete">Theme Ready Google Apps was detected on your system, but Theme Ready version of %s is not detected. Please install these apps with AROMA installer version prior to confirming or you agree that you will receive little to no support.</string>
     <string name="no">Cancel</string>
     <string name="yes">Confirm</string>
     <string name="unauthorized">This theme is unauthorized to be used on this device\'s set up.</string>

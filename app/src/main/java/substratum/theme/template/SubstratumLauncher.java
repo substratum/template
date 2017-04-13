@@ -212,6 +212,7 @@ public class SubstratumLauncher extends Activity {
         if (addon.exists()) {
             ArrayList<String> apps = new ArrayList<>();
             boolean updated = false;
+            boolean incomplete = false;
             PackageManager packageManager = this.getPackageManager();
             StringBuilder app_name = new StringBuilder();
             String[] packageNames = {"com.google.android.gm",
@@ -221,19 +222,44 @@ public class SubstratumLauncher extends Activity {
                     "com.google.android.talk",
                     "com.google.android.youtube",
                     "com.google.android.apps.photos",
-                    "com.google.android.contacts",
-                    "com.google.android.dialer",
                     "com.google.android.inputmethod.latin"};
+            String[] extraPackageNames = {"com.google.android.contacts",
+                    "com.google.android.dialer"};
 
-            for (String packageName : packageNames) {
+            for (String packageName : extraPackageNames) {
                 try {
                     ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
-                    if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-                        updated = true;
+                    if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                        incomplete = true;
                         apps.add(packageManager.getApplicationLabel(appInfo).toString());
                     }
                 } catch (Exception e) {
                     // Package not found
+                }
+            }
+
+            if (!incomplete) {
+                for (String packageName : packageNames) {
+                    try {
+                        ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
+                        if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                            updated = true;
+                            apps.add(packageManager.getApplicationLabel(appInfo).toString());
+                        }
+                    } catch (Exception e) {
+                        // Package not found
+                    }
+                }
+                for (String packageName : extraPackageNames) {
+                    try {
+                        ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
+                        if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                            updated = true;
+                            apps.add(packageManager.getApplicationLabel(appInfo).toString());
+                        }
+                    } catch (Exception e) {
+                        // Package not found
+                    }
                 }
             }
 
@@ -246,10 +272,12 @@ public class SubstratumLauncher extends Activity {
                 }
             }
 
-            if (!updated) {
+            if (!updated && !incomplete) {
                 launch();
             } else {
-                String parse = String.format(getString(R.string.theme_ready_updated),
+                int stringInt = incomplete ? R.string.theme_ready_incomplete :
+                        R.string.theme_ready_updated;
+                String parse = String.format(getString(stringInt),
                         app_name);
 
                 new AlertDialog.Builder(this, R.style.DialogStyle)
