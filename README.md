@@ -147,6 +147,9 @@ type1 can be a/b/c, as type1(a/b/c).xml at the ROOT of your overlay, and it does
 An example of how to set up a Type 1 overlay:
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/assets/overlays/android/type1a_PINK.xml
 
+![Alt text](http://i.imgur.com/sobtTyK.png)
+To adjust these preview colors, ensure that your desired preview color (any name) is at the top of type1(a/b/c)_VARIANT-NAME.xml. This way you get the previews. For example in the link above this picture, the type1a example will display holo_blue_light's #C2185B. This value will work with ?android:attr attributes as well as @android:color/ colors, based on the current framework applied.
+
 #### Type 2 Overlays
 type2 is a FOLDER, and they must start with /assets/overlays/overlay_name/type2_FOLDERNAME/ and this is a base extension (means it is NOT dependent on framework). You can have nav bars here, headers, special icons, etc. Type2's show up as the FOURTH SPINNER, if all type1 spinners have been used.
 
