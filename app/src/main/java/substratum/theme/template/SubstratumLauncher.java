@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -328,10 +326,14 @@ public class SubstratumLauncher extends Activity {
     }
 
     private void checkConnection() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(
-                Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = false;
+        try {
+            Process process = Runtime.getRuntime().exec("ping -c 1 www.google.com");
+            int returnVal = process.waitFor();
+            isConnected = (returnVal == 0);
+        } catch (Exception e) {
+            // Suppress error
+        }
 
         if (!isConnected) {
             Toast.makeText(this, R.string.toast_internet,

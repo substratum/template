@@ -5,7 +5,7 @@
           android:installLocation="internalOnly">
 
     <uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 	
 	<uses-feature
         android:name="projekt.substratum.theme"
@@ -17,7 +17,8 @@
         android:label="@string/ThemeName"
         android:supportsRtl="true"
         android:theme="@style/DialogStyle"
-        tools:node="replace">
+        tools:node="replace"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".SubstratumLauncher">
             <intent-filter>
