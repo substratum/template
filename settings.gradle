@@ -1,1 +1,1 @@
-include ':substrate', ':app'
+include ':app'
