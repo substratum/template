@@ -55,7 +55,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="7.0.5"/>
+            android:value="8.0.0"/>
 
     </application>
 

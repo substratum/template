@@ -9,6 +9,8 @@
     <string name="theme_ready_incomplete">Theme Ready Google Apps was detected on your system, but Theme Ready version of %s is not detected. Please install these apps with AROMA installer version prior to confirming or you agree that you will receive little to no support.</string>
     <string name="no">Cancel</string>
     <string name="yes">Confirm</string>
-    <string name="unauthorized">This theme is unauthorized to be used on this device\'s set up.</string>
+    <string name="unauthorized">This theme located a few piracy tools installed. Please uninstall them to continue.</string>
+    <string name="unauthorized_debug">This theme will not launch with debug signatures.</string>
+    <string name="unauthorized_theme_client">This theme will not launch on this unauthorized theming system.</string>
     <string name="outdated_substratum" formatted="false">This version of %s requires substratum version %s and up! Please upgrade!</string>
 </resources>
