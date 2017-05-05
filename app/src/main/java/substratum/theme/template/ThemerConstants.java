@@ -5,7 +5,6 @@ public class ThemerConstants {
     public static final Boolean PIRACY_CHECK = false;
 
     // Miscellaneous Checks
-    public static final Boolean ALLOW_DEBUG_SUBSTRATUM_BUILDS = PIRACY_CHECK;
     public static final Boolean ALLOW_OTHER_THEME_SYSTEMS = false;
     public static final Boolean ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true;
     public static final int MINIMUM_SUBSTRATUM_VERSION = 712; // 510 is the final MM build

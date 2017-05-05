@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 
-import static substratum.theme.template.ThemerConstants.ALLOW_DEBUG_SUBSTRATUM_BUILDS;
 import static substratum.theme.template.ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS;
 import static substratum.theme.template.ThemerConstants.BLACKLISTED_APPLICATIONS;
 import static substratum.theme.template.ThemerConstants.ENABLE_BLACKLISTED_APPLICATIONS;
@@ -55,7 +54,7 @@ public class SystemInformation {
     }
 
     public static Integer getSelfVerifiedIntentResponse(Context context) {
-        if (ALLOW_DEBUG_SUBSTRATUM_BUILDS || ALLOW_OTHER_THEME_SYSTEMS) {
+        if (ALLOW_OTHER_THEME_SYSTEMS) {
             return getSelfSignature(context);
         } else {
             return getSubstratumSignature(context);
