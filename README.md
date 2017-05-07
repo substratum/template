@@ -30,10 +30,10 @@ applicationId "com.yourname.themename"
   * In the top right corner you will see a little "gear icon". 
   * Click on it.
   * in the dialog which opens click on "Compact Empty Middle Packages".
-  * Select the "substratum folder" (in JAVA/com/ and rightclick it. 
+  * Select the "substratum" folder (in JAVA/com/ and rightclick it. 
   * Choose "refactor" and then "rename".
   * A warning window will pop up. Just click on "Rename package".
-  * Enter the desired first part of your package name(should be same as that in applicationId of bild.gradle) and click refactor.
+  * Enter the desired first part of your package name(should be same as that in applicationId of build.gradle) and click refactor.
   * At the bottom of the screen a refactoring preview will appear. Just click on "DO REFACTOR" at the left corner. <br/> <br/>
   * Do the same with the theme and template folders, name it same as the name in applicationId of build.gradle.
 ```
@@ -83,7 +83,7 @@ but you could use Google Drive (for the XML file). Pictures must be located in a
 ### Audio
 To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/audio
 
-You are allowed to add multiple audio files and name them differently so they show up differently on the spinner dropdown in the app.
+You are allowed to add multiple audio files and name them differently so they show up indivually on the spinner dropdown in the app.
 
 Example:
 ```
@@ -102,7 +102,7 @@ StarWarsLockUnlock.zip/notifications/notification.ogg(or mp3)
 ### Boot Animations
 To install boot animations, you will need to have a bootanimations folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/bootanimation
 
-You are allowed to add multiple bootanimations and name them differently so they show up differently on the spinner dropdown in the app.
+You are allowed to add multiple bootanimations and name them differently so they show up individually on the spinner dropdown in the app.
 
 Example:
 ```
@@ -113,7 +113,7 @@ assets/bootanimation/MarvelDC.zip
 ### Fonts
 To install fonts, you will need to have a fonts folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/fonts
 
-You are allowed to add multiple fonts and name them differently so they show up differently on the spinner dropdown in the app.
+You are allowed to add multiple fonts and name them differently so they show up individually on the spinner dropdown in the app.
 
 If you are looking to load up DOWNLOADED fonts from the internet, then download the ZIP from your source, extract it and navigate INTO the folder, until you find the folder "fonts" in "/system/fonts", and ZIP the whole contents of the folder up to form your new fonts pack.
 
