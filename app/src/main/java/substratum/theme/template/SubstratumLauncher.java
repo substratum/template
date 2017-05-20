@@ -158,6 +158,8 @@ public class SubstratumLauncher extends Activity {
         returnIntent.putExtra("theme_launch_type", theme_launch_type);
         returnIntent.putExtra("theme_debug", theme_debug);
         returnIntent.putExtra("theme_piracy_check", theme_piracy_check);
+        returnIntent.putExtra("encryption_key", BuildConfig.DECRYPTION_KEY);
+        returnIntent.putExtra("iv_encrypt_key", BuildConfig.IV_KEY);
 
         setResult(getSelfVerifiedIntentResponse(getApplicationContext()), returnIntent);
         finish();
