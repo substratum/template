@@ -70,7 +70,7 @@ task encryptAssets {
     list.each {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         SecretKey secret = new SecretKeySpec(KEY, "AES")
-        IvParameterSpec iv = new IvParameterSpec(IV_KEY);
+        IvParameterSpec iv = new IvParameterSpec(IV_KEY)
 
         cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
         String path = it.getAbsolutePath().replace("assets", "assets-encrypted")
