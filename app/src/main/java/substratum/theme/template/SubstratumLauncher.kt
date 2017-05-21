@@ -56,7 +56,7 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (PIRACY_CHECK && BASE_64_LICENSE_KEY.length == 0)
+            if (PIRACY_CHECK && BASE_64_LICENSE_KEY.isEmpty())
                 Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this))
 
             piracyChecker = PiracyChecker(this)
@@ -79,10 +79,10 @@ class SubstratumLauncher : Activity() {
                 }
             })
 
-            if (BASE_64_LICENSE_KEY.length > 0) {
+            if (BASE_64_LICENSE_KEY.isNotEmpty()) {
                 piracyChecker!!.enableGooglePlayLicensing(BASE_64_LICENSE_KEY)
             }
-            if (APK_SIGNATURE_PRODUCTION.length > 0) {
+            if (APK_SIGNATURE_PRODUCTION.isNotEmpty()) {
                 piracyChecker!!.enableSigningCertificate(APK_SIGNATURE_PRODUCTION)
             }
             piracyChecker!!.start()
@@ -269,8 +269,8 @@ class SubstratumLauncher : Activity() {
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle(getString(R.string.ThemeName))
                         .setMessage(parse)
-                        .setPositiveButton(R.string.yes) { dialog, which -> calibrateSystem() }
-                        .setNegativeButton(R.string.no) { dialog, which -> finish() }
+                        .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem() }
+                        .setNegativeButton(R.string.no) { _, _ -> finish() }
                         .setOnCancelListener { finish() }
                         .show()
             }
@@ -279,8 +279,8 @@ class SubstratumLauncher : Activity() {
                     .setIcon(R.mipmap.ic_launcher)
                     .setTitle(getString(R.string.ThemeName))
                     .setMessage(getString(R.string.theme_ready_not_detected))
-                    .setPositiveButton(R.string.yes) { dialog, which -> calibrateSystem() }
-                    .setNegativeButton(R.string.no) { dialog, which -> finish() }
+                    .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem() }
+                    .setNegativeButton(R.string.no) { _, _ -> finish() }
                     .setOnCancelListener { finish() }
                     .show()
         }
