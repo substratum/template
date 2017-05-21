@@ -1,12 +1,8 @@
-package substratum.theme.template.internal;
+package substratum.theme.template.internal
 
-/**
- * Created by Nicholas on 5/5/2017.
- */
+object TBOConstants {
 
-public class TBOConstants {
-
-    public static final String[] THEME_READY_PACKAGES = new String[]{
+    val THEME_READY_PACKAGES = arrayOf(
             "com.google.android.gm",
             "com.google.android.googlequicksearchbox",
             "com.android.vending",
@@ -15,10 +11,10 @@ public class TBOConstants {
             "com.google.android.youtube",
             "com.google.android.apps.photos",
             "com.google.android.inputmethod.latin"
-    };
+    )
 
-    public static final String[] EXTRA_PACKAGE_NAMES = new String[]{
+    val EXTRA_PACKAGE_NAMES = arrayOf(
             "com.google.android.contacts",
             "com.google.android.dialer"
-    };
+    )
 }
