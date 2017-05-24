@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.Signature
+import substratum.theme.template.ThemerConstants
 import substratum.theme.template.ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS
 import substratum.theme.template.ThemerConstants.BLACKLISTED_APPLICATIONS
 import substratum.theme.template.ThemerConstants.ENABLE_BLACKLISTED_APPLICATIONS
@@ -37,6 +38,20 @@ object SystemInformation {
             return false
         }
 
+    }
+
+    fun hasOtherThemeSystem(context: Context): Boolean {
+        if (!ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS) return false
+        try {
+            val pm = context.packageManager
+            for (s: String in ThemerConstants.OTHER_THEME_SYSTEMS) {
+                val ai = pm.getApplicationInfo(s, 0)
+                pm.getPackageInfo(s, PackageManager.GET_ACTIVITIES)
+                return ai.enabled
+            }
+        } catch (e: Exception) {
+        }
+        return false
     }
 
     fun getSubstratumUpdatedResponse(context: Context): Boolean {

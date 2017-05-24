@@ -27,6 +27,7 @@ import substratum.theme.template.ThemerConstants.SUBSTRATUM_FILTER_CHECK
 import substratum.theme.template.ThemerConstants.THEME_READY_GOOGLE_APPS
 import substratum.theme.template.internal.SystemInformation.SUBSTRATUM_PACKAGE_NAME
 import substratum.theme.template.internal.SystemInformation.checkNetworkConnection
+import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
 import substratum.theme.template.internal.SystemInformation.getSelfSignature
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedIntentResponse
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedPirateTools
@@ -99,18 +100,21 @@ class SubstratumLauncher : Activity() {
     }
 
     private fun quitSelf(): Boolean {
-        if (!isPackageInstalled(applicationContext, SUBSTRATUM_PACKAGE_NAME)) {
-            getSubstratumFromPlayStore()
-            return false
-        }
+        if (!hasOtherThemeSystem(this)) {
+            if (!isPackageInstalled(applicationContext, SUBSTRATUM_PACKAGE_NAME)) {
+                getSubstratumFromPlayStore()
+                return false
+            }
 
-        if (ENFORCE_MINIMUM_SUBSTRATUM_VERSION && !getSubstratumUpdatedResponse(applicationContext)) {
-            val parse = String.format(
-                    getString(R.string.outdated_substratum),
-                    getString(R.string.ThemeName),
-                    MINIMUM_SUBSTRATUM_VERSION.toString())
-            Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
-            return false
+            if (ENFORCE_MINIMUM_SUBSTRATUM_VERSION
+                    && !getSubstratumUpdatedResponse(applicationContext)) {
+                val parse = String.format(
+                        getString(R.string.outdated_substratum),
+                        getString(R.string.ThemeName),
+                        MINIMUM_SUBSTRATUM_VERSION.toString())
+                Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
+                return false
+            }
         }
 
         val returnIntent = Intent()
