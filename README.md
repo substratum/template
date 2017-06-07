@@ -67,7 +67,7 @@ Now configure it to your liking:
     android:value="all|ready|stock"/> <!-- Only pick one! -->
 <meta-data
     android:name="Substratum_Wallpapers"
-    android:value="http://pastebin.com/raw/3scTbGep"/> <!-- Must be raw -->
+    android:value="http://pastebin.com/raw/TG4mFdXz"/> <!-- Must be raw -->
 ```
 These files link back to the strings.xml inside the res/values folder, here: 
 https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/values/strings.xml
