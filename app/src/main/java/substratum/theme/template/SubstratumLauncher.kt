@@ -15,6 +15,7 @@ import com.github.javiersantos.piracychecker.enums.InstallerID
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError
 import com.github.javiersantos.piracychecker.enums.PirateApp
+import substratum.theme.template.ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS
 import substratum.theme.template.ThemerConstants.APK_SIGNATURE_PRODUCTION
 import substratum.theme.template.ThemerConstants.BASE_64_LICENSE_KEY
 import substratum.theme.template.ThemerConstants.ENFORCE_AMAZON_APP_STORE_INSTALL
@@ -154,7 +155,13 @@ class SubstratumLauncher : Activity() {
         returnIntent.putExtra("encryption_key", BuildConfig.DECRYPTION_KEY)
         returnIntent.putExtra("iv_encrypt_key", BuildConfig.IV_KEY)
 
-        setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
+        if (intent.action == "projekt.substratum.THEME") {
+            setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
+        } else if (intent.action == "projekt.substratum.GET_KEYS") {
+            returnIntent.`package` = intent.getStringExtra("calling_package_name")
+            returnIntent.action = "projekt.substratum.RECEIVE_KEYS"
+            sendBroadcast(returnIntent)
+        }
         finish()
         return true
     }
