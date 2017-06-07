@@ -40,7 +40,6 @@ object SystemInformation {
     }
 
     fun hasOtherThemeSystem(context: Context): Boolean {
-        if (!ALLOW_OTHER_THEME_SYSTEMS) return false
         try {
             val pm = context.packageManager
             for (s: String in OTHER_THEME_SYSTEMS) {

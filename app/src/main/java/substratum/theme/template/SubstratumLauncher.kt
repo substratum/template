@@ -116,6 +116,10 @@ class SubstratumLauncher : Activity() {
                 Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
                 return false
             }
+        } else if (!ALLOW_OTHER_THEME_SYSTEMS) {
+            Toast.makeText(this, R.string.unauthorized_theme_client, Toast.LENGTH_LONG).show()
+            finish()
+            return false
         }
 
         val returnIntent = Intent()
@@ -131,11 +135,6 @@ class SubstratumLauncher : Activity() {
 
         val theme_hash = getSelfSignature(applicationContext)
         val theme_launch_type = getSelfVerifiedThemeEngines(applicationContext)
-        if (!theme_launch_type!!) {
-            Toast.makeText(this, R.string.unauthorized_theme_client, Toast.LENGTH_LONG).show()
-            finish()
-            return false
-        }
         val theme_debug = BuildConfig.DEBUG
         if (!theme_debug && PIRACY_CHECK) {
             Toast.makeText(this, R.string.unauthorized_debug, Toast.LENGTH_LONG).show()
