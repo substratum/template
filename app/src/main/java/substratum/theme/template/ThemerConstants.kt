@@ -5,7 +5,7 @@ object ThemerConstants {
     val PIRACY_CHECK = false
 
     // Miscellaneous Checks
-    val ALLOW_OTHER_THEME_SYSTEMS = false
+    val ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS = false
     val ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true
     val MINIMUM_SUBSTRATUM_VERSION = 712 // 510 is the final MM build
     // Blacklisted APKs to prevent theme launching

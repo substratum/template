@@ -15,9 +15,9 @@ import com.github.javiersantos.piracychecker.enums.InstallerID
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError
 import com.github.javiersantos.piracychecker.enums.PirateApp
-import substratum.theme.template.ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS
 import substratum.theme.template.ThemerConstants.APK_SIGNATURE_PRODUCTION
 import substratum.theme.template.ThemerConstants.BASE_64_LICENSE_KEY
+import substratum.theme.template.ThemerConstants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
 import substratum.theme.template.ThemerConstants.ENFORCE_AMAZON_APP_STORE_INSTALL
 import substratum.theme.template.ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL
 import substratum.theme.template.ThemerConstants.ENFORCE_INTERNET_CHECK
@@ -116,7 +116,7 @@ class SubstratumLauncher : Activity() {
                 Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
                 return false
             }
-        } else if (!ALLOW_OTHER_THEME_SYSTEMS) {
+        } else if (!ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
             Toast.makeText(this, R.string.unauthorized_theme_client, Toast.LENGTH_LONG).show()
             finish()
             return false

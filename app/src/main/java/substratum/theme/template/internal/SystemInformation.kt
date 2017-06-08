@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.Signature
-import substratum.theme.template.ThemerConstants.ALLOW_OTHER_THEME_SYSTEMS
 import substratum.theme.template.ThemerConstants.BLACKLISTED_APPLICATIONS
 import substratum.theme.template.ThemerConstants.ENABLE_BLACKLISTED_APPLICATIONS
+import substratum.theme.template.ThemerConstants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
 import substratum.theme.template.ThemerConstants.MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.ThemerConstants.OTHER_THEME_SYSTEMS
 
@@ -67,7 +67,7 @@ object SystemInformation {
     }
 
     fun getSelfVerifiedIntentResponse(context: Context): Int? {
-        if (ALLOW_OTHER_THEME_SYSTEMS) {
+        if (ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
             return getSelfSignature(context)
         } else {
             return getSubstratumSignature(context)
@@ -85,7 +85,7 @@ object SystemInformation {
 
     fun getSelfVerifiedThemeEngines(context: Context): Boolean? {
         val isPermitted: Boolean? = OTHER_THEME_SYSTEMS.any { isPackageInstalled(context, it) }
-        if (ALLOW_OTHER_THEME_SYSTEMS) {
+        if (ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
             return isPermitted
         } else if (isPackageInstalled(context, SUBSTRATUM_PACKAGE_NAME)) {
             return (!isPermitted!!)
