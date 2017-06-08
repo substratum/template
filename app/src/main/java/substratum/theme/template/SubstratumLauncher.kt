@@ -122,7 +122,10 @@ class SubstratumLauncher : Activity() {
             return false
         }
 
-        val returnIntent = Intent()
+        var returnIntent = Intent()
+        if (intent.action == "projekt.substratum.GET_KEYS") {
+            returnIntent = Intent("projekt.substratum.RECEIVE_KEYS")
+        }
 
         val theme_name = getString(R.string.ThemeName)
         val theme_author = getString(R.string.ThemeAuthor)
