@@ -28,12 +28,12 @@ import substratum.theme.template.ThemerConstants.SUBSTRATUM_FILTER_CHECK
 import substratum.theme.template.ThemerConstants.THEME_READY_GOOGLE_APPS
 import substratum.theme.template.internal.SystemInformation.SUBSTRATUM_PACKAGE_NAME
 import substratum.theme.template.internal.SystemInformation.checkNetworkConnection
-import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
 import substratum.theme.template.internal.SystemInformation.getSelfSignature
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedIntentResponse
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedPirateTools
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedThemeEngines
 import substratum.theme.template.internal.SystemInformation.getSubstratumUpdatedResponse
+import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
 import substratum.theme.template.internal.SystemInformation.isPackageInstalled
 import substratum.theme.template.internal.TBOConstants.EXTRA_PACKAGE_NAMES
 import substratum.theme.template.internal.TBOConstants.THEME_READY_PACKAGES
