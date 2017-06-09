@@ -87,10 +87,10 @@ task encryptAssets {
             FileInputStream fis = new FileInputStream(it)
             FileOutputStream fos = new FileOutputStream(new File(
                     it.getAbsolutePath().replace("assets", "assets-encrypted")))
-            byte[] buffer = new byte[4096];
-            int n = 0;
+            byte[] buffer = new byte[4096]
+            int n = 0
             while ((n = fis.read(buffer)) != -1) {
-                fos.write(buffer, 0, n);
+                fos.write(buffer, 0, n)
             }
             fis.close()
             fos.close()
@@ -105,7 +105,7 @@ task encryptAssets {
             FileOutputStream fos = new FileOutputStream(path + ".enc")
 
             byte[] input = new byte[64]
-            int bytesRead;
+            int bytesRead
             while ((bytesRead = fis.read(input)) != -1) {
                 byte[] output = cipher.update(input, 0, bytesRead)
                 if (output != null) {
