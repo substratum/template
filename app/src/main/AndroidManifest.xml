@@ -61,6 +61,11 @@
             android:name="Substratum_Plugin"
             android:value="9.0.0"/>
 
+        <!-- Do you support third party theme systems? -->
+        <meta-data
+            android:name="supports_third_party_theme_systems"
+            android:value="@bool/SUPPORTS_THIRD_PARTY_THEME_SYSTEMS" />
+
     </application>
 
 </manifest>

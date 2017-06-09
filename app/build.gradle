@@ -9,6 +9,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 ext {
+
+    // Whether this theme supports third party theme systems
+    SUPPORTS_THIRD_PARTY_SYSTEMS = false
+
     byte[] key = new byte[16]
     new Random().nextBytes(key)
     KEY = key
@@ -30,6 +34,9 @@ android {
         buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
         buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
         buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
+
+        buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "\"" + SUPPORTS_THIRD_PARTY_SYSTEMS + "\""
+        resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
     }
     buildTypes {
         debug {
