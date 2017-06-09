@@ -68,35 +68,51 @@ task encryptAssets {
     }
 
     list.each {
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
-        SecretKey secret = new SecretKeySpec(KEY, "AES")
-        IvParameterSpec iv = new IvParameterSpec(IV_KEY)
 
-        cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
         String path = it.getAbsolutePath().replace("assets", "assets-encrypted")
-        File outFile = new File (path + ".enc")
+        File outFile = new File(path)
         if (outFile.exists()) {
             outFile.delete()
         }
         outFile.getParentFile().mkdirs()
-        FileInputStream fis = new FileInputStream(it)
-        FileOutputStream fos = new FileOutputStream(path + ".enc")
 
-        byte[] input = new byte[64]
-        int bytesRead;
-        while ((bytesRead = fis.read(input)) != -1) {
-            byte[] output = cipher.update(input, 0, bytesRead)
+        if (!it.getAbsolutePath().contains("overlays")) {
+            FileInputStream fis = new FileInputStream(it)
+            FileOutputStream fos = new FileOutputStream(new File(
+                    it.getAbsolutePath().replace("assets", "assets-encrypted")))
+            byte[] buffer = new byte[4096];
+            int n = 0;
+            while ((n = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, n);
+            }
+            fis.close()
+            fos.close()
+        } else {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+            SecretKey secret = new SecretKeySpec(KEY, "AES")
+            IvParameterSpec iv = new IvParameterSpec(IV_KEY)
+
+            cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
+            outFile = new File(path + ".enc")
+            FileInputStream fis = new FileInputStream(it)
+            FileOutputStream fos = new FileOutputStream(path + ".enc")
+
+            byte[] input = new byte[64]
+            int bytesRead;
+            while ((bytesRead = fis.read(input)) != -1) {
+                byte[] output = cipher.update(input, 0, bytesRead)
+                if (output != null) {
+                    fos.write(output)
+                }
+            }
+            byte[] output = cipher.doFinal()
             if (output != null) {
                 fos.write(output)
             }
+            fis.close()
+            fos.flush()
+            fos.close()
         }
-        byte[] output = cipher.doFinal()
-        if (output != null) {
-            fos.write(output)
-        }
-        fis.close()
-        fos.flush()
-        fos.close()
 
         println it.getAbsolutePath()
     }
