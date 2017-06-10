@@ -182,17 +182,30 @@ If you take a look at theme_strings.xml, you will see a <string-array> with name
 
 ## Step 6: Safeguard your theme! Don't let the pirates win!
 
+### Encrypted Assets
+As of template version 10.0.0, assets now are automatically encrypted! If you ever lost your source files for your theme, unfortunately, it is all gone. Thankfully, BitBucket and GitLab support private repos for free (GitHub is paid, or free with student discount)...so keep all your files stored there!
+
+BitBucket: https://bitbucket.org/
+GitLab: https://about.gitlab.com/
+
+### If you want to enable the Substratum theme for other Theme Managers (e.g. Slim)
+In build.gradle, change line 14 from false to true:
+https://github.com/substratum/template/blob/n/app/build.gradle#L14
+
 ### If you don't want to activate AntiPiracy
-Then do NOT change ThemerConstants.java's line 5 from false to true! Simple as that!
+Then do NOT change ThemerConstants.kt's line 5 from false to true! Simple as that!
+https://github.com/substratum/template/blob/n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L5
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 18 (APK_SIGNATURE_PRODUCTION): https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L18
+If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 35 (APK_SIGNATURE_PRODUCTION): https://github.com/substratum/template/blob/n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L35
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 17: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L17
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 34: https://github.com/substratum/template/blob/n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L34
 
-Third, if you would like to enable intensive mode antipiracy (App package blacklist), open up ThemerConstants.java and add as many package names as you want under BLACKLISTED_APPLICATIONS.
+Third, if you would like to enable intensive mode antipiracy (App package blacklist), open up ThemerConstants.kt and add as many package names as you want under BLACKLISTED_APPLICATIONS. Then enable ENABLE_BLACKLISTED_APPLICATIONS on line 12:
+https://github.com/substratum/template/blob/n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L12
 
-Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in ThemerConstants.java for you to simply change true and false!
+Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in ThemerConstants.kt for you to simply change true and false!
+https://github.com/substratum/template/blob/n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L39
 
-# DO NOT SHARE YOUR THEMERCONSTANTS.JAVA FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!
+# DO NOT SHARE YOUR THEMERCONSTANTS.KT FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!
