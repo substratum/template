@@ -66,8 +66,8 @@ dependencies {
 task encryptAssets {
 
     File encryptedAssets = new File(getProjectDir(), "/src/main/assets-encrypted")
-    if (encryptedAssets.exists())
-        encryptedAssets.delete()
+    if (!encryptedAssets.exists())
+        encryptedAssets.mkdirs()
 
     def list = []
 
@@ -123,13 +123,19 @@ task encryptAssets {
             fos.close()
         }
 
-        println it.getAbsolutePath()
+        //println it.getAbsolutePath()
     }
 }
 
 project.afterEvaluate {
     preBuild.dependsOn encryptAssets
 }
+
+gradle.buildFinished {
+    def encryptedAssets = new File(getProjectDir(), "src/main/assets-encrypted")
+    encryptedAssets.deleteDir()
+}
+
 repositories {
     mavenCentral()
 }
