@@ -23,7 +23,5 @@ allprojects {
 }
 
 task clean(type: Delete) {
-    def encryptedAssets = new File(getProjectDir(), "src/main/assets-encrypted")
-    delete encryptedAssets
     delete rootProject.buildDir
 }
