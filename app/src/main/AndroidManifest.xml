@@ -59,7 +59,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="9.0.0"/>
+            android:value="10.0.0"/>
         <meta-data
             android:name="Substratum_Encryption"
             android:value="onCompileVerify"/>

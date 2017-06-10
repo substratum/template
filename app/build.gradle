@@ -122,8 +122,6 @@ task encryptAssets {
             fos.flush()
             fos.close()
         }
-
-        //println it.getAbsolutePath()
     }
 }
 
