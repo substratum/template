@@ -46,6 +46,9 @@
         <meta-data
             android:name="Substratum_Email"
             android:value=""/> <!-- Insert your email for bug reports -->
+        <meta-data
+            android:name="Substratum_Samsung"
+            android:value="false"/>
         <!-- Do you support Stock and Theme Ready Gapps? -> all -->
         <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
         <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
@@ -59,7 +62,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="10.0.0"/>
+            android:value="10.0.1"/>
         <meta-data
             android:name="Substratum_Encryption"
             android:value="onCompileVerify"/>
