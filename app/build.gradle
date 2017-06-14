@@ -118,7 +118,7 @@ task encryptAssets {
             }
         }
     } else {
-        throw new RuntimeException("Found old temporary assets! Did your last build failed?")
+        throw new RuntimeException("Old temporary assets found! Try to do a clean project")
     }
 }
 

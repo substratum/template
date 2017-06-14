@@ -24,4 +24,25 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+    def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
+    if (tempAssets.exists()) {
+        println("cleaning encrypted assets...")
+        def encryptedAssets = new File(getProjectDir(), "src/main/assets")
+        encryptedAssets.deleteDir()
+
+        tempAssets.eachFileRecurse (FileType.FILES) { file ->
+            FileInputStream fis = new FileInputStream(file)
+            File fo = new File(file.getAbsolutePath().replace("assets-temp", "assets"))
+            fo.getParentFile().mkdirs()
+            FileOutputStream fos = new FileOutputStream(fo)
+            byte[] buffer = new byte[4096]
+            int n
+            while ((n = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, n)
+            }
+            fis.close()
+            fos.close()
+        }
+        tempAssets.deleteDir()
+    }
 }
