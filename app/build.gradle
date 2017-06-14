@@ -58,52 +58,57 @@ dependencies {
 }
 
 task encryptAssets {
-    def list = []
-    def dir = new File(getProjectDir(), "/src/main/assets")
-    dir.eachFileRecurse (FileType.FILES) { file ->
-        list << file
+    def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
+    if (!tempAssets.exists()) {
+        def list = []
+        def dir = new File(getProjectDir(), "/src/main/assets")
+        dir.eachFileRecurse(FileType.FILES) { file ->
+            list << file
 
-        FileInputStream fis = new FileInputStream(file)
-        File fo = new File(file.getAbsolutePath().replace("assets", "assets-temp"))
-        fo.getParentFile().mkdirs()
-        FileOutputStream fos = new FileOutputStream(fo)
-        byte[] buffer = new byte[4096]
-        int n
-        while ((n = fis.read(buffer)) != -1) {
-            fos.write(buffer, 0, n)
+            FileInputStream fis = new FileInputStream(file)
+            File fo = new File(file.getAbsolutePath().replace("assets", "assets-temp"))
+            fo.getParentFile().mkdirs()
+            FileOutputStream fos = new FileOutputStream(fo)
+            byte[] buffer = new byte[4096]
+            int n
+            while ((n = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, n)
+            }
+            fis.close()
+            fos.close()
         }
-        fis.close()
-        fos.close()
-    }
 
-    list.each {
-        if (it.getAbsolutePath().contains("overlays")) {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
-            SecretKey secret = new SecretKeySpec(KEY, "AES")
-            IvParameterSpec iv = new IvParameterSpec(IV_KEY)
+        list.each {
+            if (it.getAbsolutePath().contains("overlays")) {
+                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                SecretKey secret = new SecretKeySpec(KEY, "AES")
+                IvParameterSpec iv = new IvParameterSpec(IV_KEY)
 
-            cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
-            FileInputStream fis = new FileInputStream(it)
-            FileOutputStream fos = new FileOutputStream(it.getAbsolutePath() + ".enc")
+                cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
+                FileInputStream fis = new FileInputStream(it)
+                FileOutputStream fos = new FileOutputStream(it.getAbsolutePath() + ".enc")
 
-            byte[] input = new byte[64]
-            int bytesRead
-            while ((bytesRead = fis.read(input)) != -1) {
-                byte[] output = cipher.update(input, 0, bytesRead)
+                byte[] input = new byte[64]
+                int bytesRead
+                while ((bytesRead = fis.read(input)) != -1) {
+                    byte[] output = cipher.update(input, 0, bytesRead)
+                    if (output != null) {
+                        fos.write(output)
+                    }
+                }
+                byte[] output = cipher.doFinal()
                 if (output != null) {
                     fos.write(output)
                 }
-            }
-            byte[] output = cipher.doFinal()
-            if (output != null) {
-                fos.write(output)
-            }
-            fis.close()
-            fos.flush()
-            fos.close()
+                fis.close()
+                fos.flush()
+                fos.close()
 
-            it.delete()
+                it.delete()
+            }
         }
+    } else {
+        throw new RuntimeException("Found old temporary assets! Did your last build failed?")
     }
 }
 
@@ -112,24 +117,26 @@ project.afterEvaluate {
 }
 
 gradle.buildFinished {
-    def encryptedAssets = new File(getProjectDir(), "src/main/assets")
-    encryptedAssets.deleteDir()
-
     def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
-    tempAssets.eachFileRecurse (FileType.FILES) { file ->
-        FileInputStream fis = new FileInputStream(file)
-        File fo = new File(file.getAbsolutePath().replace("assets-temp", "assets"))
-        fo.getParentFile().mkdirs()
-        FileOutputStream fos = new FileOutputStream(fo)
-        byte[] buffer = new byte[4096]
-        int n
-        while ((n = fis.read(buffer)) != -1) {
-            fos.write(buffer, 0, n)
+    if (tempAssets.exists()) {
+        def encryptedAssets = new File(getProjectDir(), "src/main/assets")
+        encryptedAssets.deleteDir()
+
+        tempAssets.eachFileRecurse (FileType.FILES) { file ->
+            FileInputStream fis = new FileInputStream(file)
+            File fo = new File(file.getAbsolutePath().replace("assets-temp", "assets"))
+            fo.getParentFile().mkdirs()
+            FileOutputStream fos = new FileOutputStream(fo)
+            byte[] buffer = new byte[4096]
+            int n
+            while ((n = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, n)
+            }
+            fis.close()
+            fos.close()
         }
-        fis.close()
-        fos.close()
+        tempAssets.deleteDir()
     }
-    tempAssets.deleteDir()
 }
 
 repositories {
