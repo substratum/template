@@ -58,8 +58,9 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (PIRACY_CHECK && BASE_64_LICENSE_KEY.isEmpty())
+            if (PIRACY_CHECK && APK_SIGNATURE_PRODUCTION.isEmpty() && BuildConfig.DEBUG) {
                 Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this))
+            }
 
             piracyChecker = PiracyChecker(this)
             if (ENFORCE_GOOGLE_PLAY_INSTALL)
