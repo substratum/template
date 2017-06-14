@@ -9,6 +9,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 ext {
+    // Whether the theme assets should be encrypted or not
+    SHOULD_ENCRYPT_ASSETS = false
+
     // Whether this theme supports third party theme systems
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
 
@@ -33,7 +36,7 @@ android {
         buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
         buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
         buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
-        resValue "string", "encryption_status", (isDebug() ? "false" : "onCompileVerify")
+        resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
 
         buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
@@ -59,7 +62,7 @@ dependencies {
 }
 
 task encryptAssets {
-    if (isDebug()) {
+    if (!shouldEncrypt()) {
         println("skipping assets encryption...")
         return
     }
@@ -147,9 +150,9 @@ gradle.buildFinished {
     }
 }
 
-boolean isDebug() {
+boolean shouldEncrypt() {
     ArrayList<String> tasks = project.gradle.startParameter.taskNames
-    return Arrays.toString(tasks).toLowerCase().contains("debug")
+    return SHOULD_ENCRYPT_ASSETS && !Arrays.toString(tasks).toLowerCase().contains("debug")
 }
 
 repositories {
