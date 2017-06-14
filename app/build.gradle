@@ -33,6 +33,7 @@ android {
         buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
         buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
         buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
+        resValue "string", "encryption_status", (isDebug() ? "false" : "onCompileVerify")
 
         buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
@@ -58,8 +59,14 @@ dependencies {
 }
 
 task encryptAssets {
+    if (isDebug()) {
+        println("skipping assets encryption...")
+        return
+    }
+
     def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
     if (!tempAssets.exists()) {
+        println("encrypting assets...")
         def list = []
         def dir = new File(getProjectDir(), "/src/main/assets")
         dir.eachFileRecurse(FileType.FILES) { file ->
@@ -119,6 +126,7 @@ project.afterEvaluate {
 gradle.buildFinished {
     def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
     if (tempAssets.exists()) {
+        println("cleaning encrypted assets...")
         def encryptedAssets = new File(getProjectDir(), "src/main/assets")
         encryptedAssets.deleteDir()
 
@@ -137,6 +145,11 @@ gradle.buildFinished {
         }
         tempAssets.deleteDir()
     }
+}
+
+boolean isDebug() {
+    ArrayList<String> tasks = project.gradle.startParameter.taskNames
+    return Arrays.toString(tasks).toLowerCase().contains("debug")
 }
 
 repositories {

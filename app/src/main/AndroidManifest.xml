@@ -65,7 +65,7 @@
             android:value="10.0.1"/>
         <meta-data
             android:name="Substratum_Encryption"
-            android:value="onCompileVerify"/>
+            android:value="@string/encryption_status"/>
 
         <!-- Do you support third party theme systems? -->
         <meta-data
