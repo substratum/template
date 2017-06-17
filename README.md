@@ -1,30 +1,29 @@
-# SubstratumThemeTemplate
+# Substratum Theme Template
 
-The official Substratum Theme Template from the team, for every prospective/current themer who wishes to join the Substratum game!
+The official theme template from the team, for every prospective/current themer who wishes to join the Substratum game!
 
-There are two types of Substratum as of this date (27/7/16)
+There are two types of Substratum as of this date (17/6/17)
   - Substratum OMS
+  - Substratum Samsung
   - Substratum Legacy (RRO)
 
-To get started, first of all, FORK this project on GitHub and open it up with Android Studio (I use Android Studio 2.1.2 and Android Studio 2.2 Preview Canary, although these versions don't matter, you should keep yourself up to date with the latest Google has to offer)
+To get started, first of all, FORK this project on GitHub and open it up with Android Studio (We recommend to keep yourself up to date with the latest Google has to offer)
 
 ## Step 0: DISABLE INSTANT RUN ON YOUR PROJECT!
 
 For more information: http://stackoverflow.com/a/35169716
 
 ## Step 1: Package Naming
-The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you:
-
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/build.gradle
+The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you. Open up [build.gradle](app/build.gradle) and look for this line
 ```
 applicationId "substratum.theme.template"
 ```
-Change this to:
+Change this to anything you want, for instance:
 ```
 applicationId "com.yourname.themename"
 ```
 
-* **Change Package Name in the project structure: (optional)**
+Change Package Name in the project structure: (optional)
 ```
   * Look at the "project panel" in android studio (the one on the left). 
   * In the top right corner you will see a little "gear icon". 
@@ -40,48 +39,36 @@ applicationId "com.yourname.themename"
 
 For more information: http://stackoverflow.com/a/29092698
 
-## Step 2: AndroidManifest Metadatas
-Now you have to pick whether your theme supports OMS or RRO, or both.
-
-Open this file: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/src/main/AndroidManifest.xml
+## Step 2: Theme Properties
+You can control your theme properties such as whether yout theme supports OMS, RRO or both inside
+the theme configuration file: [theme_configurations.xml](app/src/main/res/theme_configurations.xml)
 
 Now configure it to your liking:
 ```
-<meta-data
-    android:name="Substratum_Legacy"
-    android:value="true"/>
-<meta-data
-    android:name="Substratum_Name"
-    android:value="@string/ThemeName"/>
-<meta-data
-    android:name="Substratum_Author"
-    android:value="@string/ThemeAuthor"/>
-<meta-data
-    android:name="Substratum_Email"
-    android:value=""/> <!-- Insert your email for bug reports -->
+<!-- Theme name and author name -->
+<string name="ThemeName">Substratum Theme Template</string>
+<string name="ThemeAuthor">[projekt.] development team</string>
+<!-- Your email for bug reports -->
+<string name="ThemeAuthorEmail"></string>
 <!-- Do you support Stock and Theme Ready Gapps? -> all -->
 <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
 <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
-<meta-data
-    android:name="Substratum_ThemeReady"
-    android:value="all|ready|stock"/> <!-- Only pick one! -->
-<meta-data
-    android:name="Substratum_Wallpapers"
-    android:value="http://pastebin.com/raw/TG4mFdXz"/> <!-- Must be raw -->
+<string name="ThemeReadyRequirement">all</string>
+<!-- Theme wallpaper source (must be raw) -->
+<string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
+<!-- Do your theme support substratum legacy? -->
+<!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
+<!-- from 'false' to 'true' to hide your theme on the Play Store from legacy ROM-->
+<bool name="ThemeSupportLegacy">true</bool>
+<!-- Do your theme support substratum samsung? -->
+<bool name="ThemeSupportSamsung">false</bool>
 ```
-These files link back to the theme_strings.xml inside the res/values folder, here: 
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/src/main/res/values/theme_strings.xml
-
-For wallpapers, make sure you use DIRECT LINKS for everything you see in the pastebin template. I would recommend using pastebin, 
+For wallpapers, make sure you use DIRECT LINKS for everything you see in the pastebin template. We recommend using pastebin, 
 but you could use Google Drive (for the XML file). Pictures must be located in a public area so that people can download them freely.
-```
-<string name="ThemeName">My New Theme</string>
-<string name="ThemeAuthor">Nicholas Chum</string>
-```
 
 ## Step 3: Start theming!
 ### Audio
-To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/audio
+To install system sound effects, you will need to have an audio folder, just like it's listed [here](app/src/main/assets/audio).
 
 You are allowed to add multiple audio files and name them differently so they show up indivually on the spinner dropdown in the app.
 
@@ -100,7 +87,7 @@ StarWarsLockUnlock.zip/notifications/notification.ogg(or mp3)
 ```
 
 ### Boot Animations
-To install boot animations, you will need to have a bootanimations folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/bootanimation
+To install boot animations, you will need to have a bootanimations folder, just like it's listed [here](app/src/main/assets/bootanimation).
 
 You are allowed to add multiple bootanimations and name them differently so they show up individually on the spinner dropdown in the app.
 
@@ -111,7 +98,7 @@ assets/bootanimation/MarvelDC.zip
 ```
 
 ### Fonts
-To install fonts, you will need to have a fonts folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/fonts
+To install fonts, you will need to have a fonts folder, just like it's listed [here](app/src/main/assets/fonts).
 
 You are allowed to add multiple fonts and name them differently so they show up individually on the spinner dropdown in the app.
 
@@ -144,8 +131,7 @@ assets/overlays/projekt.substratum/res/values/colors.xml
 #### Type 1 Overlays
 type1 can be a/b/c, as type1(a/b/c).xml at the ROOT of your overlay, and it does the Arcus way of moving it to res/values/type1(a/b/c).xml to replace Colors, Styles, Dimensions, Bools, Integers, Strings, etc...
 
-An example of how to set up a Type 1 overlay:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/src/main/assets/overlays/android/type1a_PINK.xml
+An example of how to set up a Type 1 overlay can be seen [here](app/src/main/assets/overlays/android/type1a_PINK.xml).
 
 ![Alt text](http://i.imgur.com/sobtTyK.png)
 To adjust these preview colors, ensure that your desired preview color (any name) is at the top of type1(a/b/c)_VARIANT-NAME.xml. This way you get the previews. For example in the link above this picture, the type1a example will display holo_blue_light's #C2185B. This value will work with ?android:attr attributes as well as @android:color/ colors, based on the current framework applied.
@@ -153,59 +139,58 @@ To adjust these preview colors, ensure that your desired preview color (any name
 #### Type 2 Overlays
 type2 is a FOLDER, and they must start with /assets/overlays/overlay_name/type2_FOLDERNAME/ and this is a base extension (means it is NOT dependent on framework). You can have nav bars here, headers, special icons, etc. Type2's show up as the FOURTH SPINNER, if all type1 spinners have been used.
 
-An example of how to set up a Type 2 overlay:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/overlays/android/type2_Gryffindor
+An example of how to set up a Type 2 overlay can be seen [here](app/src/main/assets/overlays/android/type2_Gryffindor).
 
 #### Type 3 Overlays
 type3 is also a FOLDER, but these only show up BASED ON FRAMEWORK. So if you wanted to have a clear theme bundled in with your dark theme, just create a assets/overlays/android/type3_FOLDERNAME which houses ANYTHING a type2 can house, except you can add special files like ^attrs_private.xml. If done correctly, a base spinner will show up at the top of the overlay manager (in theme information and compiling it will cause ANY overlay with a type3_FOLDERNAME spinner inside the overlay to be built automatically.
 
-An example of how to set up a Type 3 overlay from Framework, then another app
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/overlays/android/type3_Translucent%20Theme
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/kt-n/app/src/main/assets/overlays/com.android.settings/type3_TranslucentTheme
+An example of how to set up a Type 3 overlay from Framework [here](app/src/main/assets/overlays/android/type3_TranslucentTheme), then another app [here](app/src/main/assets/overlays/com.android.settings/type3_TranslucentTheme).
 
 #### Renaming Type Spinners
 If you would like to rename the spinner names, you just need to create a file with NO EXTENSION on the root of the overlay folder:
 
-For example, if I wanted to change the type1a spinner's name for a specific overlay, I would put it like this:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/src/main/assets/overlays/android/type1a
+For example, if you want to change the type1a spinner's name for a specific overlay, you could put it like [this](app/src/main/assets/overlays/android/type1a).
 
 ## Step 4: Finalize your theme!
-To get your theme to show up on Substratum, all you need to ensure that your hero image relates to your theme. The hero image DETERMINES the color of the automatic actionbar and nav bar colors based on the (0,0)'th pixel on your image.
-
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/kt-n/app/src/main/res/drawable-xxhdpi/heroimage.png
+To get your theme to show up on Substratum, all you need to ensure that your hero image relates to your theme. The hero image DETERMINES the color of the automatic actionbar and nav bar colors based on the (0,0)'th pixel on your image. Your theme hero image is located [here](app/src/main/res/drawable-xxhdpi/heroimage.png).
 
 If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
 
 ## Step 5: Include a built in changelog for your users!
 
-If you take a look at theme_strings.xml, you will see a <string-array> with name "ThemeChangelog" where you can add your own changelog line by line. Please do not include line breaks unless you really have to. Substratum does this automagically! You can have as many lines as you want, so don't worry about the default 5 lines in the template!
+If you take a look at the aforementioned theme_configurations.xml, you will see a <string-array> with name "ThemeChangelog" where you can add your own changelog line by line. Please do not include line breaks unless you really have to. Substratum does this automagically! You can have as many lines as you want, so don't worry about the default 5 lines in the template!
 
 ## Step 6: Safeguard your theme! Don't let the pirates win!
 
-### Encrypted Assets
-As of template version 10.0.0, assets now are automatically encrypted! If you ever lost your source files for your theme, unfortunately, it is all gone. Thankfully, BitBucket and GitLab support private repos for free (GitHub is paid, or free with student discount)...so keep all your files stored there!
-
-BitBucket: https://bitbucket.org/
-GitLab: https://about.gitlab.com/
-
 ### If you want to enable the Substratum theme for other Theme Managers (e.g. Slim)
-In build.gradle, change line 14 from false to true:
-https://github.com/substratum/template/blob/kt-n/app/build.gradle#L14
+In app build.gradle, change the [SUPPORTS_THIRD_PARTY_SYSTEMS](app/build.gradle#L16) on line 16 of app build.gradle from false to true.
 
 ### If you don't want to activate AntiPiracy
-Then do NOT change ThemerConstants.kt's line 5 from false to true! Simple as that!
-https://github.com/substratum/template/blob/kt-n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L5
+Then you can stop reading and get your theme published! Good luck!
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 35 (APK_SIGNATURE_PRODUCTION): https://github.com/substratum/template/blob/kt-n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L35
+If you are ready to get AntiPiracy set up, all you need to look at is [ThemersConstant.kt](app/src/main/java/substratum/theme/template/ThemerConstants.kt)
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 34: https://github.com/substratum/template/blob/kt-n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L34
+First change the [PIRACY_CHECK](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L5) value on line 5 from false to true.
 
-Third, if you would like to enable intensive mode antipiracy (App package blacklist), open up ThemerConstants.kt and add as many package names as you want under BLACKLISTED_APPLICATIONS. Then enable ENABLE_BLACKLISTED_APPLICATIONS on line 12:
-https://github.com/substratum/template/blob/kt-n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L12
+And you need compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L8) on line 8.
 
-Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in ThemerConstants.kt for you to simply change true and false!
-https://github.com/substratum/template/blob/kt-n/app/src/main/java/substratum/theme/template/ThemerConstants.kt#L39
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L7) on line 7.
 
-# DO NOT SHARE YOUR THEMERCONSTANTS.KT FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!
+Third, if you would like to enable intensive mode antipiracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L27) on line 27. Then enable [ENABLE_BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L26) on line 26.
+
+Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in [ThemerConstants.kt](app/src/main/java/substratum/theme/template/ThemerConstants.kt#L9) for you to simply change true and false!
+
+**DO NOT SHARE YOUR THEMERCONSTANTS.KT FILE IF YOU OPEN SOURCE YOUR THEME AND WANT TO KEEP ANTIPIRACY!**
+
+### Encrypted Assets
+As of template version 10.0.0, the theme assets now can be encrypted! All you need to do is switch the [SHOULD_ENCRYPT_ASSETS](app/build.gradle#L13) in app build.gradle line 13.
+
+But if you ever lost your source files for your theme, unfortunately, it is all gone. Thankfully, BitBucket and GitLab support private repos for free (GitHub is paid, or free with student discount)...so we recommend to keep all your files stored there!
+
+BitBucket: https://bitbucket.org/<br>
+GitLab: https://about.gitlab.com/
+
+### Now what?
+Nothing. Now you're set to publish your theme!

@@ -58,7 +58,7 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (PIRACY_CHECK && APK_SIGNATURE_PRODUCTION.isEmpty() && BuildConfig.DEBUG) {
+            if (PIRACY_CHECK && APK_SIGNATURE_PRODUCTION.isEmpty() && !BuildConfig.DEBUG) {
                 Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this))
             }
 

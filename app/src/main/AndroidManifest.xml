@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="Substratum_Legacy"
-            android:value="true"/>
+            android:value="@bool/ThemeSupportLegacy"/>
         <meta-data
             android:name="Substratum_Name"
             android:value="@string/ThemeName"/>
@@ -45,19 +45,16 @@
             android:value="@string/ThemeAuthor"/>
         <meta-data
             android:name="Substratum_Email"
-            android:value=""/> <!-- Insert your email for bug reports -->
+            android:value="@string/ThemeAuthorEmail"/>
         <meta-data
             android:name="Substratum_Samsung"
-            android:value="false"/>
-        <!-- Do you support Stock and Theme Ready Gapps? -> all -->
-        <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
-        <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+            android:value="@bool/ThemeSupportSamsung"/>
         <meta-data
             android:name="Substratum_ThemeReady"
-            android:value="all|ready|stock"/> <!-- Only pick one! -->
+            android:value="@string/ThemeReadyRequirement"/>
         <meta-data
             android:name="Substratum_Wallpapers"
-            android:value="http://pastebin.com/raw/TG4mFdXz"/>
+            android:value="@string/ThemeWallpaperSource"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
@@ -66,8 +63,6 @@
         <meta-data
             android:name="Substratum_Encryption"
             android:value="@string/encryption_status"/>
-
-        <!-- Do you support third party theme systems? -->
         <meta-data
             android:name="supports_third_party_theme_systems"
             android:value="@bool/SUPPORTS_THIRD_PARTY_THEME_SYSTEMS" />

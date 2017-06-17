@@ -1,0 +1,28 @@
+<resources>
+    <!-- Theme name and author name -->
+    <string name="ThemeName">Substratum Theme Template</string>
+    <string name="ThemeAuthor">[projekt.] development team</string>
+    <!-- Your email for bug reports -->
+    <string name="ThemeAuthorEmail"></string>
+    <!-- Do you support Stock and Theme Ready Gapps? -> all -->
+    <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
+    <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+    <string name="ThemeReadyRequirement">all</string>
+    <!-- Theme wallpaper source (must be raw) -->
+    <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
+    <!-- Do your theme support substratum legacy? -->
+    <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
+    <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
+    <bool name="ThemeSupportLegacy">true</bool>
+    <!-- Do your theme support substratum samsung? -->
+    <bool name="ThemeSupportSamsung">false</bool>
+
+    <!-- Put your theme changelog here -->
+    <string-array name="ThemeChangelog">
+        <item>Change One</item>
+        <item>Change Two</item>
+        <item>Change Three</item>
+        <item>Change Four</item>
+        <item>Change Five</item>
+    </string-array>
+</resources>
