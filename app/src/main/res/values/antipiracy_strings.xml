@@ -10,7 +10,6 @@
     <string name="no">Cancel</string>
     <string name="yes">Confirm</string>
     <string name="unauthorized">This theme located a few piracy tools installed. Please uninstall them to continue.</string>
-    <string name="unauthorized_debug">This theme will not launch with debug signatures.</string>
     <string name="unauthorized_theme_client">This theme does not support the current system!</string>
     <string name="outdated_substratum" formatted="false">This version of %s requires substratum version %s and up! Please upgrade!</string>
 </resources>

@@ -139,12 +139,6 @@ class SubstratumLauncher : Activity() {
 
         val theme_hash = getSelfSignature(applicationContext)
         val theme_launch_type = getSelfVerifiedThemeEngines(applicationContext)
-        val theme_debug = BuildConfig.DEBUG
-        if (!theme_debug && PIRACY_CHECK) {
-            Toast.makeText(this, R.string.unauthorized_debug, Toast.LENGTH_LONG).show()
-            finish()
-            return false
-        }
         val theme_piracy_check = getSelfVerifiedPirateTools(applicationContext)
         if (!theme_piracy_check || SUBSTRATUM_FILTER_CHECK && (!mVerified!!)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
@@ -153,7 +147,7 @@ class SubstratumLauncher : Activity() {
         }
         returnIntent.putExtra("theme_hash", theme_hash)
         returnIntent.putExtra("theme_launch_type", theme_launch_type)
-        returnIntent.putExtra("theme_debug", theme_debug)
+        returnIntent.putExtra("theme_debug", BuildConfig.DEBUG)
         returnIntent.putExtra("theme_piracy_check", theme_piracy_check)
         returnIntent.putExtra("encryption_key", BuildConfig.DECRYPTION_KEY)
         returnIntent.putExtra("iv_encrypt_key", BuildConfig.IV_KEY)
