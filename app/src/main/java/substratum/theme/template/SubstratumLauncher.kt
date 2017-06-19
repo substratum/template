@@ -227,7 +227,7 @@ class SubstratumLauncher : Activity() {
                         // Package not found
                     }
                 }
-            }
+            
 
             for (i in apps.indices) {
                 app_name.append(apps[i])
