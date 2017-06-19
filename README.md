@@ -2,7 +2,7 @@
 
 The official theme template from the team, for every prospective/current themer who wishes to join the Substratum game!
 
-There are two types of Substratum as of this date (17/6/17)
+There are three types of Substratum as of this date (17/6/17)
   - Substratum OMS
   - Substratum Samsung
   - Substratum Legacy (RRO)
