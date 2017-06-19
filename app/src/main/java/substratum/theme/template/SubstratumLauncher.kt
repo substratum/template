@@ -35,7 +35,6 @@ import substratum.theme.template.internal.SystemInformation.getSelfVerifiedTheme
 import substratum.theme.template.internal.SystemInformation.getSubstratumUpdatedResponse
 import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
 import substratum.theme.template.internal.SystemInformation.isPackageInstalled
-import substratum.theme.template.internal.TBOConstants.EXTRA_PACKAGE_NAMES
 import substratum.theme.template.internal.TBOConstants.THEME_READY_PACKAGES
 import java.io.File
 import java.util.*
@@ -214,17 +213,6 @@ class SubstratumLauncher : Activity() {
             val packageManager = this.packageManager
             val app_name = StringBuilder()
 
-            for (packageName in EXTRA_PACKAGE_NAMES) {
-                try {
-                    val appInfo = packageManager.getApplicationInfo(packageName, 0)
-                    if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-                        incomplete = true
-                        apps.add(packageManager.getApplicationLabel(appInfo).toString())
-                    }
-                } catch (e: Exception) {
-                    // Package not found
-                }
-
             }
 
             if (!incomplete) {
@@ -238,19 +226,6 @@ class SubstratumLauncher : Activity() {
                     } catch (e: Exception) {
                         // Package not found
                     }
-
-                }
-                for (packageName in EXTRA_PACKAGE_NAMES) {
-                    try {
-                        val appInfo = packageManager.getApplicationInfo(packageName, 0)
-                        if (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0) {
-                            updated = true
-                            apps.add(packageManager.getApplicationLabel(appInfo).toString())
-                        }
-                    } catch (e: Exception) {
-                        // Package not found
-                    }
-
                 }
             }
 
