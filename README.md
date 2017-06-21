@@ -70,7 +70,7 @@ Now configure it to your liking:
     android:value="http://pastebin.com/raw/TG4mFdXz"/> <!-- Must be raw -->
 ```
 These files link back to the theme_strings.xml inside the res/values folder, here: 
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/values/theme_strings.xml
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/res/values/theme_strings.xml
 
 For wallpapers, make sure you use DIRECT LINKS for everything you see in the pastebin template. I would recommend using pastebin, 
 but you could use Google Drive (for the XML file). Pictures must be located in a public area so that people can download them freely.
