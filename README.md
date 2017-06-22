@@ -15,7 +15,7 @@ For more information: http://stackoverflow.com/a/35169716
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you:
 
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/build.gradle
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/build.gradle
 ```
 applicationId "substratum.theme.template"
 ```
@@ -43,7 +43,7 @@ For more information: http://stackoverflow.com/a/29092698
 ## Step 2: AndroidManifest Metadatas
 Now you have to pick whether your theme supports OMS or RRO, or both.
 
-Open this file: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/AndroidManifest.xml
+Open this file: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/AndroidManifest.xml
 
 Now configure it to your liking:
 ```
@@ -70,7 +70,7 @@ Now configure it to your liking:
     android:value="http://pastebin.com/raw/TG4mFdXz"/> <!-- Must be raw -->
 ```
 These files link back to the theme_strings.xml inside the res/values folder, here: 
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/values/theme_strings.xml
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/res/values/theme_strings.xml
 
 For wallpapers, make sure you use DIRECT LINKS for everything you see in the pastebin template. I would recommend using pastebin, 
 but you could use Google Drive (for the XML file). Pictures must be located in a public area so that people can download them freely.
@@ -81,7 +81,7 @@ but you could use Google Drive (for the XML file). Pictures must be located in a
 
 ## Step 3: Start theming!
 ### Audio
-To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/audio
+To install system sound effects, you will need to have an audio folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/audio
 
 You are allowed to add multiple audio files and name them differently so they show up indivually on the spinner dropdown in the app.
 
@@ -100,7 +100,7 @@ StarWarsLockUnlock.zip/notifications/notification.ogg(or mp3)
 ```
 
 ### Boot Animations
-To install boot animations, you will need to have a bootanimations folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/bootanimation
+To install boot animations, you will need to have a bootanimations folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/bootanimation
 
 You are allowed to add multiple bootanimations and name them differently so they show up individually on the spinner dropdown in the app.
 
@@ -111,7 +111,7 @@ assets/bootanimation/MarvelDC.zip
 ```
 
 ### Fonts
-To install fonts, you will need to have a fonts folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/fonts
+To install fonts, you will need to have a fonts folder, just like it's listed here: https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/fonts
 
 You are allowed to add multiple fonts and name them differently so they show up individually on the spinner dropdown in the app.
 
@@ -145,7 +145,7 @@ assets/overlays/projekt.substratum/res/values/colors.xml
 type1 can be a/b/c, as type1(a/b/c).xml at the ROOT of your overlay, and it does the Arcus way of moving it to res/values/type1(a/b/c).xml to replace Colors, Styles, Dimensions, Bools, Integers, Strings, etc...
 
 An example of how to set up a Type 1 overlay:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/assets/overlays/android/type1a_PINK.xml
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/assets/overlays/android/type1a_PINK.xml
 
 ![Alt text](http://i.imgur.com/sobtTyK.png)
 To adjust these preview colors, ensure that your desired preview color (any name) is at the top of type1(a/b/c)_VARIANT-NAME.xml. This way you get the previews. For example in the link above this picture, the type1a example will display holo_blue_light's #C2185B. This value will work with ?android:attr attributes as well as @android:color/ colors, based on the current framework applied.
@@ -154,25 +154,25 @@ To adjust these preview colors, ensure that your desired preview color (any name
 type2 is a FOLDER, and they must start with /assets/overlays/overlay_name/type2_FOLDERNAME/ and this is a base extension (means it is NOT dependent on framework). You can have nav bars here, headers, special icons, etc. Type2's show up as the FOURTH SPINNER, if all type1 spinners have been used.
 
 An example of how to set up a Type 2 overlay:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/overlays/android/type2_Gryffindor
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/overlays/android/type2_Gryffindor
 
 #### Type 3 Overlays
 type3 is also a FOLDER, but these only show up BASED ON FRAMEWORK. So if you wanted to have a clear theme bundled in with your dark theme, just create a assets/overlays/android/type3_FOLDERNAME which houses ANYTHING a type2 can house, except you can add special files like ^attrs_private.xml. If done correctly, a base spinner will show up at the top of the overlay manager (in theme information and compiling it will cause ANY overlay with a type3_FOLDERNAME spinner inside the overlay to be built automatically.
 
 An example of how to set up a Type 3 overlay from Framework, then another app
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/overlays/android/type3_Translucent%20Theme
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/master/app/src/main/assets/overlays/com.android.settings/type3_TranslucentTheme
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/overlays/android/type3_Translucent%20Theme
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/tree/java-n/app/src/main/assets/overlays/com.android.settings/type3_TranslucentTheme
 
 #### Renaming Type Spinners
 If you would like to rename the spinner names, you just need to create a file with NO EXTENSION on the root of the overlay folder:
 
 For example, if I wanted to change the type1a spinner's name for a specific overlay, I would put it like this:
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/assets/overlays/android/type1a
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/assets/overlays/android/type1a
 
 ## Step 4: Finalize your theme!
 To get your theme to show up on Substratum, all you need to ensure that your hero image relates to your theme. The hero image DETERMINES the color of the automatic actionbar and nav bar colors based on the (0,0)'th pixel on your image.
 
-https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/res/drawable-xxhdpi/heroimage.png
+https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/res/drawable-xxhdpi/heroimage.png
 
 If you have a completely white image, your actionbar and nav bar will change to that color, and the text colors will determine whether the black text is more visible on that color, or a white color.
 
@@ -187,9 +187,9 @@ Then do NOT change ThemerConstants.java's line 5 from false to true! Simple as t
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 18 (APK_SIGNATURE_PRODUCTION): https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L18
+If you are ready to get AntiPiracy set up, you must first compile your theme as a SIGNED production APK from Android Studio (Build -> Compile Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumAntiPiracyLog", and you want to copy and paste that into Line 19 (APK_SIGNATURE_PRODUCTION): https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/java/substratum/theme/template/ThemerConstants.java#L19
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 17: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/master/app/src/main/java/substratum/theme/template/ThemerConstants.java#L17
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it in BASE_64_LICENSE_KEY on line 18: https://github.com/TeamSubstratum/SubstratumThemeTemplate/blob/java-n/app/src/main/java/substratum/theme/template/ThemerConstants.java#L18
 
 Third, if you would like to enable intensive mode antipiracy (App package blacklist), open up ThemerConstants.java and add as many package names as you want under BLACKLISTED_APPLICATIONS.
 
