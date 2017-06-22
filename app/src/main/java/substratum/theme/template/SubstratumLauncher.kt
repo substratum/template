@@ -213,8 +213,6 @@ class SubstratumLauncher : Activity() {
             val packageManager = this.packageManager
             val app_name = StringBuilder()
 
-            }
-
             if (!incomplete) {
                 for (packageName in THEME_READY_PACKAGES) {
                     try {
