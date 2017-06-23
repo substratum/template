@@ -34,6 +34,7 @@ import substratum.theme.template.internal.SystemInformation.getSelfVerifiedPirat
 import substratum.theme.template.internal.SystemInformation.getSelfVerifiedThemeEngines
 import substratum.theme.template.internal.SystemInformation.getSubstratumUpdatedResponse
 import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
+import substratum.theme.template.internal.SystemInformation.isCallingPackageAllowed
 import substratum.theme.template.internal.SystemInformation.isPackageInstalled
 import substratum.theme.template.internal.TBOConstants.THEME_READY_PACKAGES
 import java.io.File
@@ -154,9 +155,14 @@ class SubstratumLauncher : Activity() {
         if (intent.action == "projekt.substratum.THEME") {
             setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
         } else if (intent.action == "projekt.substratum.GET_KEYS") {
-            returnIntent.`package` = intent.getStringExtra("calling_package_name")
+            val callingPackage = intent.getStringExtra("calling_package_name")
+            returnIntent.`package` = callingPackage
             returnIntent.action = "projekt.substratum.RECEIVE_KEYS"
-            sendBroadcast(returnIntent)
+            if (callingPackage != null) {
+                if (isCallingPackageAllowed(callingPackage)) {
+                    sendBroadcast(returnIntent)
+                }
+            }
         }
         finish()
         return true
