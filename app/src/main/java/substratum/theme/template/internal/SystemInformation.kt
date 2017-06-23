@@ -93,6 +93,14 @@ object SystemInformation {
         return false
     }
 
+    fun isCallingPackageAllowed(packageId: String): Boolean {
+        if (packageId == SUBSTRATUM_PACKAGE_NAME) return true
+        if (ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
+            OTHER_THEME_SYSTEMS.filter { packageId == it }.forEach { return true }
+        }
+        return false
+    }
+
     @SuppressLint("PackageManagerGetSignatures")
     private fun getSubstratumSignature(context: Context): Int {
         val sigs: Array<Signature>
