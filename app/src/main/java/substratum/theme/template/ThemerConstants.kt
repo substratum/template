@@ -37,6 +37,7 @@ object ThemerConstants {
             "com.android.protips"
     )
     val OTHER_THEME_SYSTEMS = arrayOf(
-            "com.slimroms.thememanager"
+            "com.slimroms.thememanager",
+            "com.slimroms.omsbackend"
     )
 }
