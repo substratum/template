@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_golden_light">#ff5f004b</color>
+    <color name="primary_lemon_yellow_light">#ffa20909</color>
+    <color name="primary_grass_green_light">#ff009385</color>
+    <color name="primary_charm_purple_light">#ff3c1f60</color>
+    <color name="primary_sky_blue_light">#ff162554</color>
+    <color name="primary_vigour_red_light">#ff66381a</color>
+    <color name="primary_fashion_pink_light">#ff9c27b0</color>
+    <color name="accent_golden_light">#ff5f004b</color>
+    <color name="accent_lemon_yellow_light">#ffa20909</color>
+    <color name="accent_grass_green_light">#ff009385</color>
+    <color name="accent_charm_purple_light">#ff0f0f0f</color>
+    <color name="accent_sky_blue_light">#ff162554</color>
+    <color name="accent_vigour_red_light">#ff66381a</color>
+    <color name="accent_fashion_pink_light">#ffae5083</color>
+    <color name="primary_golden_dark">#ff3F51B5</color>
+    <color name="primary_lemon_yellow_dark">#ffff8c00</color>
+    <color name="primary_grass_green_dark">#ff27e4a0</color>
+    <color name="primary_charm_purple_dark">#ffd1e239</color>
+    <color name="primary_sky_blue_dark">#ff99c99f</color>
+    <color name="primary_vigour_red_dark">#ffe52d55</color>
+    <color name="primary_fashion_pink_dark">#ffbc052d</color>
+    <color name="accent_golden_dark">#ff3F51B5</color>
+    <color name="accent_lemon_yellow_dark">#ffff8c00</color>
+    <color name="accent_grass_green_dark">#ff27e4a0</color>
+    <color name="accent_charm_purple_dark">#ffd1e239</color>
+    <color name="accent_sky_blue_dark">#ff99c99f</color>
+    <color name="accent_vigour_red_dark">#ffe52d55</color>
+    <color name="accent_fashion_pink_dark">#ffbc052d</color>
+</resources>
