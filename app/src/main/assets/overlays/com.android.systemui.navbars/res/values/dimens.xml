@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recents_dismiss_all_button_size">56.0dip</dimen>
+	<dimen name="dismiss_all_button_margin_bottom">18.0dip</dimen>
+</resources>

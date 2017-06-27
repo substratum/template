@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:background="#88000000" android:layout_width="fill_parent" android:layout_height="fill_parent" android:alpha="0.0" android:forceHasOverlappingRendering="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textColor="#ffffffff" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@*com.android.systemui:string/recents_incompatible_app_message" android:drawableTop="@*com.android.systemui:drawable/recents_info_light" android:drawablePadding="8.0dip" />
+</FrameLayout>
