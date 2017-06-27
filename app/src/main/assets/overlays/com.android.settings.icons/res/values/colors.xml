@@ -1,0 +1,6 @@
+<resources>
+  <color name="primary_default_light">@*com.android.settings:color/icon_accent</color>
+  <color name="accent_default_light">@*com.android.settings:color/icon_accent</color>
+  <color name="primary_default_dark">@*com.android.settings:color/icon_accent</color>
+  <color name="accent_default_dark">@*com.android.settings:color/icon_accent</color>
+</resources>
