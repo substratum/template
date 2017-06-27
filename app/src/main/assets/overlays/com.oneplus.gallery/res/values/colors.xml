@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dialog_alert_accent_dark">#ffffffff</color>
+    <color name="entry_page_tab_indicator_dark">#ffffffff</color>
+    <color name="entry_page_tab_text_dark">#8affffff</color>
+    <color name="entry_page_tab_text_selected_dark">#ffffffff</color>
+</resources>
