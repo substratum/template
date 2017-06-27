@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.SettingsBase" parent="@android:style/Theme.Material.Wallpaper">
-        <item name="android:windowBackground">@android:color/background_dark</item>
-        <item name="android:windowShowWallpaper">true</item>
-        <item name="android:statusBarColor">@android:color/holo_blue_dark</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
-</resources>
