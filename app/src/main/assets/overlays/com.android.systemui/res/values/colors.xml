@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="op_user_icon_1">#ff4285f4</color>
+    <color name="switch_thumb_normal_color_dark">#ffbdbdbd</color>
+    <color name="switch_thumb_normal_color_light">#fff1f1f1</color>
+    <color name="switch_thumb_disable_color_dark">#ff616161</color>
+    <color name="switch_thumb_disable_color_light">#ffbdbdbd</color>
+    <color name="switch_track_normal_color_dark">#4cffffff</color>
+    <color name="switch_track_normal_color_light">#42000000</color>
+    <color name="switch_track_disable_color_dark">#19ffffff</color>
+    <color name="switch_track_disable_color_light">#1e000000</color>
+</resources>

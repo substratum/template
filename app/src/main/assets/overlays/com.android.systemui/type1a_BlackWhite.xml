@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="android_system_primary_color">#ff000000</color>
+    <color name="black_system_primary_color">#ff000000</color>
+	
+	<array name="qs_theme_color_white">
+        <item>#ff000000</item>
+        <item>#dd000000</item>
+        <item>#89000000</item>
+        <item>#ffaaaaaa</item>
+        <item>#fffafafa</item>
+        <item>#fffafafa</item>
+        <item>#ffaaaaaa</item>
+        <item>#ff000000</item>
+        <item>#42000000</item>
+        <item>#ff000000</item>
+        <item>#ff000000</item>
+        <item>#ffffffff</item>
+        <item>#fffafafa</item>
+        <item>#dd000000</item>
+        <item>#42000000</item>
+        <item>@color/switch_thumb_disable_color_light</item>
+        <item>@color/switch_track_disable_color_light</item>
+        <item>@color/switch_thumb_normal_color_light</item>
+        <item>@color/switch_track_normal_color_light</item>
+    </array>
+    <array name="qs_theme_color_black">
+        <item>#ffffffff</item>
+        <item>#ddffffff</item>
+        <item>#89ffffff</item>
+        <item>#ffbbbbbb</item>
+        <item>#ff000000</item>
+        <item>#ff000000</item>
+        <item>#ffbbbbbb</item>
+        <item>#ffffffff</item>
+        <item>#42ffffff</item>
+        <item>#ffffffff</item>
+        <item>#ffffffff</item>
+        <item>#ff252728</item>
+        <item>#ff1d1d1d</item>
+        <item>#ddffffff</item>
+        <item>#42ffffff</item>
+        <item>@color/switch_thumb_disable_color_dark</item>
+        <item>@color/switch_track_disable_color_dark</item>
+        <item>@color/switch_thumb_normal_color_dark</item>
+        <item>@color/switch_track_normal_color_dark</item>
+    </array>
+    <array name="qs_theme_color_android">
+        <item>#ffffffff</item>
+        <item>#ddffffff</item>
+        <item>#89ffffff</item>
+        <item>#ffffffff</item>
+        <item>#ff000000</item>
+        <item>#ff000000</item>
+        <item>#ffffffff</item>
+        <item>#ffffffff</item>
+        <item>#89ffffff</item>
+        <item>#ffffffff</item>
+        <item>#ffffffff</item>
+        <item>#ff354150</item>
+        <item>#fffafafa</item>
+        <item>#dd000000</item>
+        <item>#42ffffff</item>
+        <item>@color/switch_thumb_disable_color_dark</item>
+        <item>@color/switch_track_disable_color_dark</item>
+        <item>@color/switch_thumb_normal_color_dark</item>
+        <item>@color/switch_track_normal_color_dark</item>
+	</array>
+</resources>
