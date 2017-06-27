@@ -10,7 +10,7 @@ apply plugin: 'kotlin-android'
 
 ext {
     // Whether the theme assets should be encrypted or not
-    SHOULD_ENCRYPT_ASSETS = false
+    SHOULD_ENCRYPT_ASSETS = true
 
     // Whether this theme supports third party theme systems
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
