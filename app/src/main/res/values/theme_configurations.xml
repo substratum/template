@@ -3,7 +3,7 @@
     <string name="ThemeName">Ozone</string>
     <string name="ThemeAuthor">ungeeked</string>
     <!-- Your email for bug reports -->
-    <string name="marvelousprashant@gmail.com"></string>
+    <string name="ThemeAuthorEmail">marvelousprashant@gmail.com</string>
     <!-- Do you support Stock and Theme Ready Gapps? -> all -->
     <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
     <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
