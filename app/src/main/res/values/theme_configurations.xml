@@ -9,7 +9,7 @@
     <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
     <string name="ThemeReadyRequirement">all</string>
     <!-- Theme wallpaper source (must be raw) -->
-    <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
+    <string name="ThemeWallpaperSource"></string>
     <!-- Do your theme support substratum legacy? -->
     <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
     <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
