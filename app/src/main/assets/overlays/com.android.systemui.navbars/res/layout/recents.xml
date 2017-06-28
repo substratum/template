@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.android.systemui.recents.views.RecentsView android:id="@*com.android.systemui:id/recents_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <ImageButton android:layout_gravity="bottom|center" android:id="@*com.android.systemui:id/recents_dismiss_all_btn" android:background="@*com.android.systemui:drawable/recents_dismiss_all_btn" android:visibility="gone" android:layout_width="@*com.android.systemui:dimen/recents_dismiss_all_button_size" android:layout_height="@*com.android.systemui:dimen/recents_dismiss_all_button_size" android:layout_marginBottom="@*com.android.systemui:dimen/dismiss_all_button_margin_bottom" android:src="@*com.android.systemui:drawable/recents_dismiss_all_icon" android:scaleType="centerInside" android:elevation="30.0dip" />
+    <ViewStub android:layout_gravity="center|top" android:id="@*com.android.systemui:id/incompatible_app_overlay_stub" android:layout="@*com.android.systemui:layout/recents_incompatible_app_overlay" android:inflatedId="@*com.android.systemui:id/incompatible_app_overlay" android:layout_width="fill_parent" android:layout_height="128.0dip" />
+    <ImageView android:layout_gravity="bottom|center" android:id="@*com.android.systemui:id/nav_bar_scrim" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@*com.android.systemui:drawable/recents_lower_gradient" android:scaleType="fitXY" />
+</FrameLayout>

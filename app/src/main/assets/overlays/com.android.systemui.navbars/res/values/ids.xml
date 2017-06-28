@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="recents_view">false</item>
+    <item type="id" name="recents_dismiss_all_btn">false</item>
+    <item type="id" name="incompatible_app_overlay_stub">false</item>
+    <item type="id" name="incompatible_app_overlay">false</item>
+    <item type="id" name="nav_bar_scrim">false</item>
+</resources>

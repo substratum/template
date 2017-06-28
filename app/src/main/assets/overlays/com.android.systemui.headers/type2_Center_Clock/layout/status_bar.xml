@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.systemui.statusbar.phone.PhoneStatusBarView android:orientation="vertical" android:id="@*com.android.systemui:id/status_bar" android:background="@*com.android.systemui:drawable/system_bar_background" android:focusable="false" android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui">
+    <ImageView android:id="@*com.android.systemui:id/notification_lights_out" android:paddingBottom="2.0dip" android:visibility="gone" android:layout_width="@*com.android.systemui:dimen/status_bar_icon_size" android:layout_height="fill_parent" android:src="@*com.android.systemui:drawable/ic_sysbar_lights_out_dot_small" android:scaleType="center" android:paddingStart="6.0dip" />
+    <LinearLayout android:orientation="horizontal" android:id="@*com.android.systemui:id/status_bar_contents" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="6.0dip" android:paddingEnd="6.0dip">
+		<LinearLayout android:orientation="horizontal" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0"> 
+			<TextView android:textSize="14.0dip" android:gravity="center_vertical" android:id="@*com.android.systemui:id/network_label" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:singleLine="true" android:maxLength="@*com.android.systemui:integer/config_operatorNameMaxLength" />
+			<com.android.systemui.statusbar.AlphaOptimizedFrameLayout android:orientation="horizontal" android:id="@*com.android.systemui:id/notification_icon_area" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
+        </LinearLayout>
+		<LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@*com.android.systemui:id/system_icon_area" android:layout_width="wrap_content" android:layout_height="fill_parent" >
+			<TextClock android:textAppearance="@*com.android.systemui:style/TextAppearance.StatusBar.Clock" android:id="@*com.android.systemui:id/clock" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:singleLine="true" android:format12Hour="@*com.android.systemui:string/keyguard_widget_12_hours_format" android:format24Hour="@*com.android.systemui:string/keyguard_widget_24_hours_format" />
+		</LinearLayout>
+		<LinearLayout android:gravity="center|right" android:orientation="horizontal" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" android:layout_alignParentRight="true">
+			<com.android.keyguard.AlphaOptimizedLinearLayout android:orientation="horizontal" android:id="@*com.android.systemui:id/system_icon_area" android:layout_width="wrap_content" android:layout_height="fill_parent">
+				<include layout="@*com.android.systemui:layout/system_icons" />
+			</com.android.keyguard.AlphaOptimizedLinearLayout>
+		</LinearLayout>
+    </LinearLayout>
+    <include android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@*com.android.systemui:layout/highlight_hint_notification_view" />
+    <ViewStub android:id="@*com.android.systemui:id/emergency_cryptkeeper_text" android:layout="@*com.android.systemui:layout/emergency_cryptkeeper_text" android:layout_width="wrap_content" android:layout_height="fill_parent" />
+</com.android.systemui.statusbar.phone.PhoneStatusBarView>

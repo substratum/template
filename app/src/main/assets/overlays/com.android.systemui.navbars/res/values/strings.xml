@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recents_incompatible_app_message">"App doesn't support split screen"</string>
+</resources>

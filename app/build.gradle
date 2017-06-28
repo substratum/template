@@ -10,7 +10,7 @@ apply plugin: 'kotlin-android'
 
 ext {
     // Whether the theme assets should be encrypted or not
-    SHOULD_ENCRYPT_ASSETS = false
+    SHOULD_ENCRYPT_ASSETS = true
 
     // Whether this theme supports third party theme systems
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
@@ -29,11 +29,11 @@ android {
     buildToolsVersion "26.0.0"
 
     defaultConfig {
-        applicationId "substratum.theme.template"
+        applicationId "com.ungeeked.ozone"
         minSdkVersion 24
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 8
+        versionName "3.6"
         buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
         buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
         buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
