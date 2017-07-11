@@ -80,3 +80,4 @@ proguard/
 # Encrypted Assets
 #############################################################################
 app/src/main/assets-encrypted
+app/release/output\.json
