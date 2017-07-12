@@ -41,7 +41,7 @@ For more information: http://stackoverflow.com/a/29092698
 
 ## Step 2: Theme Properties
 You can control your theme properties such as whether yout theme supports OMS, RRO or both inside
-the theme configuration file: [theme_configurations.xml](app/src/main/res/theme_configurations.xml)
+the theme configuration file: [theme_configurations.xml](app/src/main/res/values/theme_configurations.xml)
 
 Now configure it to your liking:
 ```
