@@ -79,5 +79,6 @@ proguard/
 #############################################################################
 # Encrypted Assets
 #############################################################################
-app/src/main/assets-encrypted
+app/src/main/assets-temp
+
 app/release/output\.json
