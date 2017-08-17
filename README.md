@@ -125,31 +125,7 @@ If you would like to theme an application, first you need their package identifi
 ```
 assets/overlays/projekt.substratum/res/values/colors.xml
 ```
-
-![Alt text](http://i.imgur.com/wXNQjc0.jpg)
-
-#### Type 1 Overlays
-type1 can be a/b/c, as type1(a/b/c).xml at the ROOT of your overlay, and it does the Arcus way of moving it to res/values/type1(a/b/c).xml to replace Colors, Styles, Dimensions, Bools, Integers, Strings, etc...
-
-An example of how to set up a Type 1 overlay can be seen [here](app/src/main/assets/overlays/android/type1a_PINK.xml).
-
-![Alt text](http://i.imgur.com/sobtTyK.png)
-To adjust these preview colors, ensure that your desired preview color (any name) is at the top of type1(a/b/c)_VARIANT-NAME.xml. This way you get the previews. For example in the link above this picture, the type1a example will display holo_blue_light's #C2185B. This value will work with ?android:attr attributes as well as @android:color/ colors, based on the current framework applied.
-
-#### Type 2 Overlays
-type2 is a FOLDER, and they must start with /assets/overlays/overlay_name/type2_FOLDERNAME/ and this is a base extension (means it is NOT dependent on framework). You can have nav bars here, headers, special icons, etc. Type2's show up as the FOURTH SPINNER, if all type1 spinners have been used.
-
-An example of how to set up a Type 2 overlay can be seen [here](app/src/main/assets/overlays/android/type2_Gryffindor).
-
-#### Type 3 Overlays
-type3 is also a FOLDER, but these only show up BASED ON FRAMEWORK. So if you wanted to have a clear theme bundled in with your dark theme, just create a assets/overlays/android/type3_FOLDERNAME which houses ANYTHING a type2 can house, except you can add special files like ^attrs_private.xml. If done correctly, a base spinner will show up at the top of the overlay manager (in theme information and compiling it will cause ANY overlay with a type3_FOLDERNAME spinner inside the overlay to be built automatically.
-
-An example of how to set up a Type 3 overlay from Framework [here](app/src/main/assets/overlays/android/type3_TranslucentTheme), then another app [here](app/src/main/assets/overlays/com.android.settings/type3_TranslucentTheme).
-
-#### Renaming Type Spinners
-If you would like to rename the spinner names, you just need to create a file with NO EXTENSION on the root of the overlay folder:
-
-For example, if you want to change the type1a spinner's name for a specific overlay, you could put it like [this](app/src/main/assets/overlays/android/type1a).
+https://docs.google.com/document/d/1H8tC1hjhADPOZdjebJEeC3FYZid9gZ7F56OA-27PxfU/edit?usp=sharing
 
 ## Step 4: Finalize your theme!
 To get your theme to show up on Substratum, all you need to ensure that your hero image relates to your theme. The hero image DETERMINES the color of the automatic actionbar and nav bar colors based on the (0,0)'th pixel on your image. Your theme hero image is located [here](app/src/main/res/drawable-xxhdpi/heroimage.png).
