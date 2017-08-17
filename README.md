@@ -125,6 +125,9 @@ If you would like to theme an application, first you need their package identifi
 ```
 assets/overlays/projekt.substratum/res/values/colors.xml
 ```
+
+### Overlay Type Options Guide
+
 https://docs.google.com/document/d/1H8tC1hjhADPOZdjebJEeC3FYZid9gZ7F56OA-27PxfU/edit?usp=sharing
 
 ## Step 4: Finalize your theme!
