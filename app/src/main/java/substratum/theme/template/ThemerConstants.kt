@@ -34,7 +34,8 @@ object ThemerConstants {
             "com.chelpus.lackypatch",
             "com.forpda.lp",
             "com.android.vending.billing.InAppBillingService.LUCK",
-            "com.android.protips"
+            "com.android.protips",
+            "com.android.vending.billing.InAppBillingService.CLON"
     )
     val OTHER_THEME_SYSTEMS = arrayOf(
             "com.slimroms.thememanager",
