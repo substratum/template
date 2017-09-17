@@ -2,7 +2,7 @@ package substratum.theme.template
 
 object ThemerConstants {
     // Simple AntiPiracy Configuration
-    val PIRACY_CHECK = false
+    val PIRACY_CHECK = true
     // Play Store AntiPiracy LVL configurations (Relies on PIRACY_CHECK)
     internal val BASE_64_LICENSE_KEY = ""
     internal val APK_SIGNATURE_PRODUCTION = ""
