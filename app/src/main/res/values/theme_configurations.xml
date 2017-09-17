@@ -9,7 +9,7 @@
     <!-- Theme wallpaper source -->
     <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
     <bool name="ThemeSupportLegacy">true</bool>
-    <bool name="ThemeSupportSamsung">true</bool>
+    <bool name="ThemeSupportSamsung">false</bool>
 
     <!-- Put your theme changelog here -->
     <string-array name="ThemeChangelog">
