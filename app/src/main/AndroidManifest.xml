@@ -55,11 +55,14 @@
         <meta-data
             android:name="Substratum_Wallpapers"
             android:value="@string/ThemeWallpaperSource"/>
+        <meta-data
+            android:name="Substratum_HeroOverride"
+            android:value="@string/ThemeHeroOverride"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="10.0.3"/>
+            android:value="10.0.4"/>
         <meta-data
             android:name="Substratum_Encryption"
             android:value="@string/encryption_status"/>
