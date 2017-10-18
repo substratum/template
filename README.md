@@ -12,10 +12,14 @@ There are six types of Substratum as of this date (18/10/17)
 
 To get started, first of all, FORK and CLONE this project on GitHub and open it up with Android Studio (We recommend to keep yourself up to date with the latest Google has to offer)
 
-## Step 0: DISABLE INSTANT RUN AND SET RUN CONFIGURATIONS ON YOUR PROJECT!
+## Step 0: PRECONFIGURATIONS!
+Install the latest Android Studio Preview: https://developer.android.com/studio/preview/index.html
 
-Disabling Instant Run: http://stackoverflow.com/a/35169716
-Disabling activity launch on theme: 
+Install NDK, CMAKE and LLDB from the SDK Manager: ![Alt text](https://developer.android.com/studio/images/projects/ndk-install_2-2_2x.png)
+
+Disable Instant Run: http://stackoverflow.com/a/35169716
+
+Disable activity launch on theme: 
   - Click on the above dropdown menu in Android Studio that says `app` (by default there should be an icon of andy with an x on it)
   - Click on `Edit configurations...`
   - Locate "Launch Options" and instead of Default Activity, select Nothing
