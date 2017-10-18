@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Making a dark theme? You know what to do! -->
-    <style name="DialogStyle" parent="@android:style/Theme.Material.Light.Dialog.Alert"/>
+    <style name="DialogStyle" parent="@style/Theme.AppCompat.Light.Dialog.Alert" />
     <!-- Don't touch me, I'm for the theme ready dialog! -->
     <string name="and">and</string>
 </resources>

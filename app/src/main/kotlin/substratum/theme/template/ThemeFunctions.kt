@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.RemoteException
 import android.widget.Toast
 import substratum.theme.template.Constants.BLACKLISTED_APPLICATIONS
-import substratum.theme.template.Constants.ENABLE_BLACKLISTED_APPLICATIONS
 import substratum.theme.template.Constants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
 import substratum.theme.template.Constants.MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.OTHER_THEME_SYSTEMS
@@ -112,11 +111,9 @@ object ThemeFunctions {
     }
 
     fun getSelfVerifiedPirateTools(context: Context): Boolean {
-        if (ENABLE_BLACKLISTED_APPLICATIONS) {
-            BLACKLISTED_APPLICATIONS
-                    .filter { isPackageInstalled(context, it) }
-                    .forEach { return false }
-        }
+        BLACKLISTED_APPLICATIONS
+                .filter { isPackageInstalled(context, it) }
+                .forEach { return false }
         return true
     }
 

@@ -14,16 +14,10 @@ import com.github.javiersantos.piracychecker.enums.InstallerID
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError
 import com.github.javiersantos.piracychecker.enums.PirateApp
-import substratum.theme.template.Constants.APK_SIGNATURE_PRODUCTION
-import substratum.theme.template.Constants.BASE_64_LICENSE_KEY
 import substratum.theme.template.Constants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
-import substratum.theme.template.Constants.ENFORCE_AMAZON_APP_STORE_INSTALL
-import substratum.theme.template.Constants.ENFORCE_GOOGLE_PLAY_INSTALL
-import substratum.theme.template.Constants.ENFORCE_INTERNET_CHECK
 import substratum.theme.template.Constants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.OTHER_THEME_SYSTEMS
-import substratum.theme.template.Constants.PIRACY_CHECK
 import substratum.theme.template.Constants.SUBSTRATUM_FILTER_CHECK
 import substratum.theme.template.Constants.THEME_READY_GOOGLE_APPS
 import substratum.theme.template.Constants.THEME_READY_PACKAGES
@@ -53,7 +47,7 @@ class SubstratumLauncher : Activity() {
     private var piracyChecker: PiracyChecker? = null
 
     private fun calibrateSystem(certified: Boolean, modeLaunch: String?) {
-        if (PIRACY_CHECK && !BuildConfig.DEBUG) {
+        if (getAPStatus() && !BuildConfig.DEBUG) {
             startAntiPiracyCheck(certified, modeLaunch)
         } else {
             quitSelf(certified, modeLaunch)
@@ -64,14 +58,14 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (PIRACY_CHECK && APK_SIGNATURE_PRODUCTION.isEmpty() && !BuildConfig.DEBUG) {
+            if (getAPStatus() && getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
                 Log.e(TAG, PiracyCheckerUtils.getAPKSignature(this))
             }
 
             piracyChecker = PiracyChecker(this)
-            if (ENFORCE_GOOGLE_PLAY_INSTALL)
+            if (getGooglePlayRequirement())
                 piracyChecker!!.enableInstallerId(InstallerID.GOOGLE_PLAY)
-            if (ENFORCE_AMAZON_APP_STORE_INSTALL)
+            if (getAmazonAppStoreRequirement())
                 piracyChecker!!.enableInstallerId(InstallerID.AMAZON_APP_STORE)
 
             piracyChecker!!.callback(object : PiracyCheckerCallback() {
@@ -88,11 +82,11 @@ class SubstratumLauncher : Activity() {
                 }
             })
 
-            if (BASE_64_LICENSE_KEY.isNotEmpty()) {
-                piracyChecker!!.enableGooglePlayLicensing(BASE_64_LICENSE_KEY)
+            if (getBase64Key().isNotEmpty()) {
+                piracyChecker!!.enableGooglePlayLicensing(getBase64Key())
             }
-            if (APK_SIGNATURE_PRODUCTION.isNotEmpty()) {
-                piracyChecker!!.enableSigningCertificate(APK_SIGNATURE_PRODUCTION)
+            if (getAPKSignatureProduction().isNotEmpty()) {
+                piracyChecker!!.enableSigningCertificate(getAPKSignatureProduction())
             }
             piracyChecker!!.start()
         }
@@ -134,7 +128,9 @@ class SubstratumLauncher : Activity() {
 
         val themeHash = getSelfSignature(applicationContext)
         val themeLaunchType = getSelfVerifiedThemeEngines(applicationContext)
-        val themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
+        var themePiracyCheck = false
+        if (getBlacklistedApplications())
+            themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
         if (!themePiracyCheck || SUBSTRATUM_FILTER_CHECK && (!certified)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
             finish()
@@ -165,7 +161,6 @@ class SubstratumLauncher : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // We will ensure that our support is added where it belongs
         val intent = intent
         val action = intent.action
@@ -187,10 +182,10 @@ class SubstratumLauncher : Activity() {
         }
 
         val certified = intent.getBooleanExtra("certified", false)
-        val modeLaunch : String? = intent.getStringExtra("theme_mode")
+        val modeLaunch: String? = intent.getStringExtra("theme_mode")
 
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        if (ENFORCE_INTERNET_CHECK) {
+        if (getInternetCheck()) {
             if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
                 if (THEME_READY_GOOGLE_APPS) {
                     detectThemeReady(certified, modeLaunch)
@@ -285,4 +280,17 @@ class SubstratumLauncher : Activity() {
                     .show()
         }
     }
+
+    // Load up the JNI library
+    init {
+        System.loadLibrary("LoadingProcess")
+    }
+
+    external fun getAPStatus(): Boolean
+    external fun getInternetCheck(): Boolean
+    external fun getGooglePlayRequirement(): Boolean
+    external fun getAmazonAppStoreRequirement(): Boolean
+    external fun getBase64Key(): String
+    external fun getAPKSignatureProduction(): String
+    external fun getBlacklistedApplications(): Boolean
 }

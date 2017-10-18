@@ -61,6 +61,10 @@ android {
                 SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
+
+        ndk {
+            moduleName "LoadingProcess"
+        }
     }
     buildTypes {
         debug {
@@ -71,6 +75,14 @@ android {
             // When you compile an APK as release, your resources and IV keys will be safeguarded
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
         }
     }
 }
@@ -156,7 +168,7 @@ gradle.buildFinished {
         def encryptedAssets = new File(getProjectDir(), "src/main/assets")
         encryptedAssets.deleteDir()
 
-        tempAssets.eachFileRecurse (FileType.FILES) { file ->
+        tempAssets.eachFileRecurse(FileType.FILES) { file ->
             FileInputStream fis = new FileInputStream(file)
             File fo = new File(file.getAbsolutePath().replace("assets-temp", "assets"))
             fo.getParentFile().mkdirs()

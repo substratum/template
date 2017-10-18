@@ -3,16 +3,6 @@ package substratum.theme.template
 import substratum.theme.template.BuildConfig.SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
 
 object Constants {
-    // Simple AntiPiracy Configuration
-    const val PIRACY_CHECK = false
-    // Play Store AntiPiracy LVL configurations (Relies on PIRACY_CHECK)
-    const internal val BASE_64_LICENSE_KEY = ""
-    const internal val APK_SIGNATURE_PRODUCTION = ""
-    // AntiPiracy Library Configurations (Relies on PIRACY_CHECK)
-    const internal val ENFORCE_INTERNET_CHECK = false
-    const internal val ENFORCE_GOOGLE_PLAY_INSTALL = false
-    const internal val ENFORCE_AMAZON_APP_STORE_INSTALL = false
-
     // Theme ready Google apps checker
     const internal val THEME_READY_GOOGLE_APPS = false
     // Dynamic filter that only works on Substratum 627+
@@ -38,7 +28,6 @@ object Constants {
 
     // Blacklisted APKs to prevent theme launching, these include simple regex formatting, without
     // full regex formatting (e.g. com.android. will block everything that starts with com.android.)
-    const val ENABLE_BLACKLISTED_APPLICATIONS = false
     val BLACKLISTED_APPLICATIONS = arrayOf(
             "com.android.vending.billing.InAppBillingService.LOCK",
             "com.android.vending.billing.InAppBillingService.LACK",

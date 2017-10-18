@@ -1,9 +1,7 @@
 <resources>
     <string name="toast_substratum">Please install Substratum before continuing!</string>
-    <string name="toast_substratum_frozen">Substratum is installed, but disabled. Please re-enable Substratum in Settings to continue!</string>
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
     <string name="toast_internet">This theme requires a license check before continuing!</string>
-    <string name="theme_ready_title">Attention!</string>
     <string name="theme_ready_not_detected">Theme Ready Google Apps were not detected on your system.\n\nBy confirming, you agree that you will receive little to no support.</string>
     <string name="theme_ready_updated">Theme Ready Google Apps were detected on your system, but you have %s updated from the Play Store.\n\nPlease uninstall these updates prior to confirming or you agree that you will receive little to no support.</string>
     <string name="no">Cancel</string>
