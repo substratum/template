@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
@@ -15,51 +14,58 @@ import com.github.javiersantos.piracychecker.enums.InstallerID
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerCallback
 import com.github.javiersantos.piracychecker.enums.PiracyCheckerError
 import com.github.javiersantos.piracychecker.enums.PirateApp
-import substratum.theme.template.ThemerConstants.APK_SIGNATURE_PRODUCTION
-import substratum.theme.template.ThemerConstants.BASE_64_LICENSE_KEY
-import substratum.theme.template.ThemerConstants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
-import substratum.theme.template.ThemerConstants.ENFORCE_AMAZON_APP_STORE_INSTALL
-import substratum.theme.template.ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL
-import substratum.theme.template.ThemerConstants.ENFORCE_INTERNET_CHECK
-import substratum.theme.template.ThemerConstants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
-import substratum.theme.template.ThemerConstants.MINIMUM_SUBSTRATUM_VERSION
-import substratum.theme.template.ThemerConstants.PIRACY_CHECK
-import substratum.theme.template.ThemerConstants.SUBSTRATUM_FILTER_CHECK
-import substratum.theme.template.ThemerConstants.THEME_READY_GOOGLE_APPS
-import substratum.theme.template.internal.SystemInformation.SUBSTRATUM_PACKAGE_NAME
-import substratum.theme.template.internal.SystemInformation.checkNetworkConnection
-import substratum.theme.template.internal.SystemInformation.getSelfSignature
-import substratum.theme.template.internal.SystemInformation.getSelfVerifiedIntentResponse
-import substratum.theme.template.internal.SystemInformation.getSelfVerifiedPirateTools
-import substratum.theme.template.internal.SystemInformation.getSelfVerifiedThemeEngines
-import substratum.theme.template.internal.SystemInformation.getSubstratumUpdatedResponse
-import substratum.theme.template.internal.SystemInformation.hasOtherThemeSystem
-import substratum.theme.template.internal.SystemInformation.isCallingPackageAllowed
-import substratum.theme.template.internal.SystemInformation.isPackageInstalled
-import substratum.theme.template.internal.TBOConstants.THEME_READY_PACKAGES
+import substratum.theme.template.Constants.APK_SIGNATURE_PRODUCTION
+import substratum.theme.template.Constants.BASE_64_LICENSE_KEY
+import substratum.theme.template.Constants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS
+import substratum.theme.template.Constants.ENFORCE_AMAZON_APP_STORE_INSTALL
+import substratum.theme.template.Constants.ENFORCE_GOOGLE_PLAY_INSTALL
+import substratum.theme.template.Constants.ENFORCE_INTERNET_CHECK
+import substratum.theme.template.Constants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
+import substratum.theme.template.Constants.MINIMUM_SUBSTRATUM_VERSION
+import substratum.theme.template.Constants.OTHER_THEME_SYSTEMS
+import substratum.theme.template.Constants.PIRACY_CHECK
+import substratum.theme.template.Constants.SUBSTRATUM_FILTER_CHECK
+import substratum.theme.template.Constants.THEME_READY_GOOGLE_APPS
+import substratum.theme.template.Constants.THEME_READY_PACKAGES
+import substratum.theme.template.ThemeFunctions.SUBSTRATUM_PACKAGE_NAME
+import substratum.theme.template.ThemeFunctions.checkNetworkConnection
+import substratum.theme.template.ThemeFunctions.checkSubstratumIntegrity
+import substratum.theme.template.ThemeFunctions.getSelfSignature
+import substratum.theme.template.ThemeFunctions.getSelfVerifiedIntentResponse
+import substratum.theme.template.ThemeFunctions.getSelfVerifiedPirateTools
+import substratum.theme.template.ThemeFunctions.getSelfVerifiedThemeEngines
+import substratum.theme.template.ThemeFunctions.getSubstratumFromPlayStore
+import substratum.theme.template.ThemeFunctions.getSubstratumUpdatedResponse
+import substratum.theme.template.ThemeFunctions.hasOtherThemeSystem
+import substratum.theme.template.ThemeFunctions.isCallingPackageAllowed
+import substratum.theme.template.ThemeFunctions.isPackageInstalled
 import java.io.File
 import java.util.*
 
+@Suppress("ConstantConditionIf") // This needs to be defined by the themer, so suppress!
 class SubstratumLauncher : Activity() {
 
-    private var mVerified: Boolean? = false
+    private var substratumIntentData = "projekt.substratum.THEME"
+    private var getKeysIntent = "projekt.substratum.GET_KEYS"
+    private var receiveKeysIntent = "projekt.substratum.RECEIVE_KEYS"
+    private var themeReadyScript = "/system/addon.d/80-ThemeReady.sh"
+    private var TAG = "SubstratumThemeReport"
     private var piracyChecker: PiracyChecker? = null
-    private var mModeLaunch: String? = ""
 
-    private fun calibrateSystem() {
+    private fun calibrateSystem(certified: Boolean, modeLaunch: String?) {
         if (PIRACY_CHECK && !BuildConfig.DEBUG) {
-            startAntiPiracyCheck()
+            startAntiPiracyCheck(certified, modeLaunch)
         } else {
-            quitSelf()
+            quitSelf(certified, modeLaunch)
         }
     }
 
-    private fun startAntiPiracyCheck() {
+    private fun startAntiPiracyCheck(certified: Boolean, modeLaunch: String?) {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
             if (PIRACY_CHECK && APK_SIGNATURE_PRODUCTION.isEmpty() && !BuildConfig.DEBUG) {
-                Log.e("SubstratumAntiPiracyLog", PiracyCheckerUtils.getAPKSignature(this))
+                Log.e(TAG, PiracyCheckerUtils.getAPKSignature(this))
             }
 
             piracyChecker = PiracyChecker(this)
@@ -70,7 +76,7 @@ class SubstratumLauncher : Activity() {
 
             piracyChecker!!.callback(object : PiracyCheckerCallback() {
                 override fun allow() {
-                    quitSelf()
+                    quitSelf(certified, modeLaunch)
                 }
 
                 override fun dontAllow(error: PiracyCheckerError, pirateApp: PirateApp?) {
@@ -92,22 +98,12 @@ class SubstratumLauncher : Activity() {
         }
     }
 
-    private fun getSubstratumFromPlayStore() {
-        val playURL = "https://play.google.com/store/apps/details?id=projekt.substratum"
-        val i = Intent(Intent.ACTION_VIEW)
-        Toast.makeText(this, getString(R.string.toast_substratum), Toast.LENGTH_SHORT).show()
-        i.data = Uri.parse(playURL)
-        startActivity(i)
-        finish()
-    }
-
-    private fun quitSelf(): Boolean {
+    private fun quitSelf(certified: Boolean, modeLaunch: String?): Boolean {
         if (!hasOtherThemeSystem(this)) {
             if (!isPackageInstalled(applicationContext, SUBSTRATUM_PACKAGE_NAME)) {
-                getSubstratumFromPlayStore()
+                getSubstratumFromPlayStore(this)
                 return false
             }
-
             if (ENFORCE_MINIMUM_SUBSTRATUM_VERSION
                     && !getSubstratumUpdatedResponse(applicationContext)) {
                 val parse = String.format(
@@ -124,40 +120,39 @@ class SubstratumLauncher : Activity() {
         }
 
         var returnIntent = Intent()
-        if (intent.action == "projekt.substratum.GET_KEYS") {
-            returnIntent = Intent("projekt.substratum.RECEIVE_KEYS")
+        if (intent.action == getKeysIntent) {
+            returnIntent = Intent(receiveKeysIntent)
         }
 
-        val theme_name = getString(R.string.ThemeName)
-        val theme_author = getString(R.string.ThemeAuthor)
-        val theme_pid = packageName
-        val theme_mode = mModeLaunch
-        returnIntent.putExtra("theme_name", theme_name)
-        returnIntent.putExtra("theme_author", theme_author)
-        returnIntent.putExtra("theme_pid", theme_pid)
-        returnIntent.putExtra("theme_mode", theme_mode)
+        val themeName = getString(R.string.ThemeName)
+        val themeAuthor = getString(R.string.ThemeAuthor)
+        val themePid = packageName
+        returnIntent.putExtra("theme_name", themeName)
+        returnIntent.putExtra("theme_author", themeAuthor)
+        returnIntent.putExtra("theme_pid", themePid)
+        returnIntent.putExtra("theme_mode", modeLaunch)
 
-        val theme_hash = getSelfSignature(applicationContext)
-        val theme_launch_type = getSelfVerifiedThemeEngines(applicationContext)
-        val theme_piracy_check = getSelfVerifiedPirateTools(applicationContext)
-        if (!theme_piracy_check || SUBSTRATUM_FILTER_CHECK && (!mVerified!!)) {
+        val themeHash = getSelfSignature(applicationContext)
+        val themeLaunchType = getSelfVerifiedThemeEngines(applicationContext)
+        val themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
+        if (!themePiracyCheck || SUBSTRATUM_FILTER_CHECK && (!certified)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
             finish()
             return false
         }
-        returnIntent.putExtra("theme_hash", theme_hash)
-        returnIntent.putExtra("theme_launch_type", theme_launch_type)
+        returnIntent.putExtra("theme_hash", themeHash)
+        returnIntent.putExtra("theme_launch_type", themeLaunchType)
         returnIntent.putExtra("theme_debug", BuildConfig.DEBUG)
-        returnIntent.putExtra("theme_piracy_check", theme_piracy_check)
+        returnIntent.putExtra("theme_piracy_check", themePiracyCheck)
         returnIntent.putExtra("encryption_key", BuildConfig.DECRYPTION_KEY)
         returnIntent.putExtra("iv_encrypt_key", BuildConfig.IV_KEY)
 
-        if (intent.action == "projekt.substratum.THEME") {
+        if (intent.action == substratumIntentData) {
             setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
-        } else if (intent.action == "projekt.substratum.GET_KEYS") {
+        } else if (intent.action == getKeysIntent) {
             val callingPackage = intent.getStringExtra("calling_package_name")
             returnIntent.`package` = callingPackage
-            returnIntent.action = "projekt.substratum.RECEIVE_KEYS"
+            returnIntent.action = receiveKeysIntent
             if (callingPackage != null) {
                 if (isCallingPackageAllowed(callingPackage)) {
                     sendBroadcast(returnIntent)
@@ -171,92 +166,110 @@ class SubstratumLauncher : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // We will ensure that our support is added where it belongs
         val intent = intent
-        mVerified = intent.getBooleanExtra("certified", false)
-        mModeLaunch = intent.getStringExtra("theme_mode")
+        val action = intent.action
+        var verified = false
+        if (action == substratumIntentData) {
+            verified = checkSubstratumIntegrity(this)
+        } else {
+            OTHER_THEME_SYSTEMS
+                    .filter { action.startsWith(prefix = it, ignoreCase = true) }
+                    .forEach { verified = true }
+        }
+        if (!verified) {
+            Log.e(TAG, "This theme does not support the launching theme system. ($action)")
+            Toast.makeText(this, R.string.unauthorized_theme_client, Toast.LENGTH_LONG).show()
+            finish()
+            return
+        } else {
+            Log.d(TAG, "'$action' has been authorized to launch this theme.")
+        }
+
+        val certified = intent.getBooleanExtra("certified", false)
+        val modeLaunch : String? = intent.getStringExtra("theme_mode")
 
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         if (ENFORCE_INTERNET_CHECK) {
             if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
                 if (THEME_READY_GOOGLE_APPS) {
-                    detectThemeReady()
+                    detectThemeReady(certified, modeLaunch)
                 } else {
-                    calibrateSystem()
+                    calibrateSystem(certified, modeLaunch)
                 }
             } else {
-                checkConnection()
+                checkConnection(certified, modeLaunch)
             }
         } else if (THEME_READY_GOOGLE_APPS) {
-            detectThemeReady()
+            detectThemeReady(certified, modeLaunch)
         } else {
-            calibrateSystem()
+            calibrateSystem(certified, modeLaunch)
         }
     }
 
-    private fun checkConnection(): Boolean {
+    private fun checkConnection(certified: Boolean, modeLaunch: String?): Boolean {
         val isConnected = checkNetworkConnection()
-        if (!isConnected!!) {
+        return if (!isConnected!!) {
             Toast.makeText(this, R.string.toast_internet, Toast.LENGTH_LONG).show()
-            return false
+            false
         } else {
             val editor = getPreferences(Context.MODE_PRIVATE).edit()
             editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
             if (THEME_READY_GOOGLE_APPS) {
-                detectThemeReady()
+                detectThemeReady(certified, modeLaunch)
             } else {
-                calibrateSystem()
+                calibrateSystem(certified, modeLaunch)
             }
-            return true
+            true
         }
     }
 
-    private fun detectThemeReady() {
-        val addon = File("/system/addon.d/80-ThemeReady.sh")
+    private fun detectThemeReady(certified: Boolean, modeLaunch: String?) {
+        val addon = File(themeReadyScript)
         if (addon.exists()) {
             val apps = ArrayList<String>()
             var updated = false
-            var incomplete = false
+            val incomplete = false
             val packageManager = this.packageManager
-            val app_name = StringBuilder()
+            val appName = StringBuilder()
 
-            if (!incomplete) {
-                for (packageName in THEME_READY_PACKAGES) {
-                    try {
-                        val appInfo = packageManager.getApplicationInfo(packageName, 0)
-                        if (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0) {
-                            updated = true
-                            apps.add(packageManager.getApplicationLabel(appInfo).toString())
-                        }
-                    } catch (e: Exception) {
-                        // Package not found
+            for (packageName in THEME_READY_PACKAGES) {
+                try {
+                    val appInfo = packageManager.getApplicationInfo(packageName, 0)
+                    if (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0) {
+                        updated = true
+                        apps.add(packageManager.getApplicationLabel(appInfo).toString())
                     }
+                } catch (e: Exception) {
+                    // Package not found
                 }
             }
 
             for (i in apps.indices) {
-                app_name.append(apps[i])
+                appName.append(apps[i])
                 if (i <= apps.size - 3) {
-                    app_name.append(", ")
+                    appName.append(", ")
                 } else if (i == apps.size - 2) {
-                    app_name.append(" ").append(getString(R.string.and)).append(" ")
+                    appName.append(" ")
+                            .append(getString(R.string.and))
+                            .append(" ")
                 }
             }
 
             if (!updated && !incomplete) {
-                calibrateSystem()
+                calibrateSystem(certified, modeLaunch)
             } else {
-                val stringInt = if (incomplete)
-                    R.string.theme_ready_incomplete
-                else
-                    R.string.theme_ready_updated
+                val stringInt = R.string.theme_ready_updated
                 val parse = String.format(getString(stringInt),
-                        app_name)
+                        appName)
 
                 AlertDialog.Builder(this, R.style.DialogStyle)
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle(getString(R.string.ThemeName))
                         .setMessage(parse)
-                        .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem() }
+                        .setPositiveButton(R.string.yes) { _, _ ->
+                            calibrateSystem(certified, modeLaunch)
+                        }
                         .setNegativeButton(R.string.no) { _, _ -> finish() }
                         .setOnCancelListener { finish() }
                         .show()
@@ -266,7 +279,7 @@ class SubstratumLauncher : Activity() {
                     .setIcon(R.mipmap.ic_launcher)
                     .setTitle(getString(R.string.ThemeName))
                     .setMessage(getString(R.string.theme_ready_not_detected))
-                    .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem() }
+                    .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem(certified, modeLaunch) }
                     .setNegativeButton(R.string.no) { _, _ -> finish() }
                     .setOnCancelListener { finish() }
                     .show()

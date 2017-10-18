@@ -9,38 +9,58 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 ext {
-    // Whether the theme assets should be encrypted or not
-    SHOULD_ENCRYPT_ASSETS = false
+    // Whether the theme assets should be encrypted or not,
+    // this makes it harder for pirates and kangers! (DEFAULT: true)
+    SHOULD_ENCRYPT_ASSETS = true
 
-    // Whether this theme supports third party theme systems
+    // Whether this theme supports third party theme systems, we will not be able to help you debug
+    // your themes on external theming systems, so the team will NOT respond to external systems if
+    // there are issues with your theme (DEFAULT: false)
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
 
-    // SUBSTRATUM INTERNAL VALUES: DO NOT TOUCH
-    byte[] key = new byte[16]
-    new Random().nextBytes(key)
-    KEY = key
-    byte[] iv = new byte[16]
-    new Random().nextBytes(iv)
-    IV_KEY = iv
+    // Guard this behind an if statement so we don't have to take a long time for decrypted themes!
+    if (SHOULD_ENCRYPT_ASSETS) {
+        // Encryption values, do not touch as we generate a random key every time you compile!
+        byte[] key = new byte[16]
+        new Random().nextBytes(key)
+        KEY = key
+        byte[] iv = new byte[16]
+        new Random().nextBytes(iv)
+        IV_KEY = iv
+    }
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
+        // If you're planning to change up the package name, ensure you have read the readme
+        // thoroughly!
         applicationId "substratum.theme.template"
+        // We are only supporting Nougat and above, all new changes will incorporate Nougat changes
+        // to the substratum repo rather than anything lower. Keep targetSdkVersion the same.
         minSdkVersion 24
         targetSdkVersion 26
+        // Both versions must be changed to increment on Play Store/user's devices
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
-        buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
-        buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
-        resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
 
-        buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
+        // Themers: Do not touch this, they will only formulate integrity structure of the core
+        //          template
+        buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
+        buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"")
+                .replace("\"", "")
+                .replace("[", "{")
+                .replace("]", "}")
+        buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"")
+                .replace("\"", "")
+                .replace("[", "{")
+                .replace("]", "}")
+        buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" +
+                SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
+        resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
     }
     buildTypes {
         debug {
@@ -48,6 +68,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+            // When you compile an APK as release, your resources and IV keys will be safeguarded
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -62,15 +83,16 @@ dependencies {
     }
 }
 
+// Themers, do not touch this! This is our function to help us encrypt your assets!
 task encryptAssets {
     if (!shouldEncrypt()) {
-        println("skipping assets encryption...")
+        println("Skipping assets encryption...")
         return
     }
 
     def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
     if (!tempAssets.exists()) {
-        println("encrypting assets...")
+        println("Encrypting duplicated assets, don't worry, your original assets are safe...")
         def list = []
         def dir = new File(getProjectDir(), "/src/main/assets")
         dir.eachFileRecurse(FileType.FILES) { file ->
@@ -119,7 +141,7 @@ task encryptAssets {
             }
         }
     } else {
-        throw new RuntimeException("Old temporary assets found! Try to do a clean project")
+        throw new RuntimeException("Old temporary assets found! Try and do a clean project.")
     }
 }
 
@@ -130,7 +152,7 @@ project.afterEvaluate {
 gradle.buildFinished {
     def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
     if (tempAssets.exists()) {
-        println("cleaning encrypted assets...")
+        println("Cleaning duplicated encrypted assets, not your decrypted assets...")
         def encryptedAssets = new File(getProjectDir(), "src/main/assets")
         encryptedAssets.deleteDir()
 

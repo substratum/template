@@ -2,7 +2,8 @@
     <!-- Theme name and author name -->
     <string name="ThemeName">Substratum Theme Template</string>
     <string name="ThemeAuthor">[projekt.] development team</string>
-    <!-- Your email for bug reports -->
+    <!-- Your email for bug reports (DEFAULT: empty) -->
+    <!--suppress CheckTagEmptyBody -->
     <string name="ThemeAuthorEmail"></string>
     <!-- Do you support Stock and Theme Ready Gapps? -> all -->
     <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
@@ -14,15 +15,14 @@
     <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
     <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
     <bool name="ThemeSupportLegacy">true</bool>
-    <!-- Do your theme support substratum samsung? -->
+    <!-- Does your theme support substratum samsung? -->
     <bool name="ThemeSupportSamsung">false</bool>
     <!-- Do you want to override the hero image auto color assignment? -->
     <!-- Don't force anything? -> auto -->
     <!-- Force black/dark icons? -> dark -->
     <!-- Force white/light icons? -> light -->
     <string name="ThemeHeroOverride">auto</string>
-
-    <!-- Put your theme changelog here -->
+    <!-- Put your theme changelog here, each item will be a new bullet point in the sheet -->
     <string-array name="ThemeChangelog">
         <item>Change One</item>
         <item>Change Two</item>
