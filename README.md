@@ -24,6 +24,12 @@ Disable activity launch on theme:
   - Click on `Edit configurations...`
   - Locate "Launch Options" and instead of Default Activity, select Nothing
   - This will now push your theme APK to your device without having to worry about build errors
+  
+Setting up the C++ native build environment:
+  - Right click on your project and click `Link C++ Project with Gradle`
+  - From the drop down, select `ndk-build`
+  - You will then need to specify the `Android.mk` file, located [here](app/src/main/jni/Android.mk)
+  - Done, you're ready!
 
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you. Open up [build.gradle](app/build.gradle) and look for this line
