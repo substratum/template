@@ -77,6 +77,16 @@ Example:
 assets/bootanimation/Sakura.zip
 ```
 
+### Shutdown Animations
+To install shutdown animations, you will need to have a shutdownanimation folder, just like it's listed [here](app/src/main/assets/shutdownanimation).
+
+Just like bootanimations, but only enabled on Oreo based devices and above!
+
+Example:
+```
+assets/shutdownanimation/Sakura.zip
+```
+
 ### Fonts
 To install fonts, you will need to have a fonts folder, just like it's listed [here](app/src/main/assets/fonts).
 
@@ -149,6 +159,15 @@ Always use a version control tool listed below to host your private themes!
 
 BitBucket: https://bitbucket.org/
 GitLab: https://about.gitlab.com/
+
+### Enforcing security
+As of template version 11.0.0, themes have an additional check on the build of substratum your users should be running.
+
+What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
+
+If you would like to enable this feature, all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L94)!
+
+However, this may affect people who build their own versions of Substratum. If you want your theme to work on unofficial versions of Substratum, all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
 
 ### Now what?
 Nothing. Now you're set to publish your theme!

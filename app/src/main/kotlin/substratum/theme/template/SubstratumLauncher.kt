@@ -43,7 +43,7 @@ class SubstratumLauncher : Activity() {
     private var getKeysIntent = "projekt.substratum.GET_KEYS"
     private var receiveKeysIntent = "projekt.substratum.RECEIVE_KEYS"
     private var themeReadyScript = "/system/addon.d/80-ThemeReady.sh"
-    private var TAG = "SubstratumThemeReport"
+    private var tag = "SubstratumThemeReport"
     private var piracyChecker: PiracyChecker? = null
 
     private fun calibrateSystem(certified: Boolean, modeLaunch: String?) {
@@ -59,7 +59,7 @@ class SubstratumLauncher : Activity() {
             piracyChecker!!.start()
         } else {
             if (getAPStatus() && getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
-                Log.e(TAG, PiracyCheckerUtils.getAPKSignature(this))
+                Log.e(tag, PiracyCheckerUtils.getAPKSignature(this))
             }
 
             piracyChecker = PiracyChecker(this)
@@ -166,19 +166,23 @@ class SubstratumLauncher : Activity() {
         val action = intent.action
         var verified = false
         if (action == substratumIntentData) {
-            verified = checkSubstratumIntegrity(this)
+            verified = if (allowThirdPartySubstratumBuilds()) {
+                true
+            } else {
+                checkSubstratumIntegrity(this)
+            }
         } else {
             OTHER_THEME_SYSTEMS
                     .filter { action.startsWith(prefix = it, ignoreCase = true) }
                     .forEach { verified = true }
         }
         if (!verified) {
-            Log.e(TAG, "This theme does not support the launching theme system. ($action)")
+            Log.e(tag, "This theme does not support the launching theme system. ($action)")
             Toast.makeText(this, R.string.unauthorized_theme_client, Toast.LENGTH_LONG).show()
             finish()
             return
         } else {
-            Log.d(TAG, "'$action' has been authorized to launch this theme.")
+            Log.d(tag, "'$action' has been authorized to launch this theme.")
         }
 
         val certified = intent.getBooleanExtra("certified", false)
@@ -286,11 +290,12 @@ class SubstratumLauncher : Activity() {
         System.loadLibrary("LoadingProcess")
     }
 
-    external fun getAPStatus(): Boolean
-    external fun getInternetCheck(): Boolean
-    external fun getGooglePlayRequirement(): Boolean
-    external fun getAmazonAppStoreRequirement(): Boolean
-    external fun getBase64Key(): String
-    external fun getAPKSignatureProduction(): String
-    external fun getBlacklistedApplications(): Boolean
+    private external fun getAPStatus(): Boolean
+    private external fun getInternetCheck(): Boolean
+    private external fun getGooglePlayRequirement(): Boolean
+    private external fun getAmazonAppStoreRequirement(): Boolean
+    private external fun getBase64Key(): String
+    private external fun getAPKSignatureProduction(): String
+    private external fun getBlacklistedApplications(): Boolean
+    private external fun allowThirdPartySubstratumBuilds(): Boolean
 }

@@ -103,10 +103,10 @@ object ThemeFunctions {
     }
 
     fun getSelfVerifiedIntentResponse(context: Context): Int? {
-        if (ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
-            return getSelfSignature(context)
+        return if (ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS) {
+            getSelfSignature(context)
         } else {
-            return getSubstratumSignature(context)
+            getSubstratumSignature(context)
         }
     }
 
@@ -212,7 +212,7 @@ object ThemeFunctions {
             + "edc769811adc2b0496a8a066924af9eeb33f8d57d625a5fa150f7bc18e55")
 
     // Whitelisted signatures
-    val SIGNATURES = arrayOf(
+    private val SIGNATURES = arrayOf(
             SUBSTRATUM_SIGNATURE,
             SUBSTRATUM_CI_SIGNATURE
     )

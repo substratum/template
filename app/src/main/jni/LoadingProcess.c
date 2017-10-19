@@ -79,4 +79,19 @@ Java_substratum_theme_template_SubstratumLauncher_getBlacklistedApplications(JNI
     return JNI_FALSE;
 }
 
+/*
+ * Allow Third Party Substratum Builds
+ *
+ * Change this value to JNI_FALSE if you would like to ban your theme to work on external, non-team
+ * built compilations of substratum
+ *
+ * WARNING: Having this enabled may or may not cause a bunch of issues due to the system not built
+ *          and distributed by an official team member. You will take charge of handling bug reports
+ *          if there are specific bugs unreproducible on the main stream of APKs.
+ */
+JNIEXPORT jboolean JNICALL
+Java_substratum_theme_template_SubstratumLauncher_allowThirdPartySubstratumBuilds(JNIEnv *env) {
+    return JNI_TRUE;
+}
+
 #pragma clang diagnostic pop
