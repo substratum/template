@@ -18,16 +18,13 @@ ext {
     // there are issues with your theme (DEFAULT: false)
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
 
-    // Guard this behind an if statement so we don't have to take a long time for decrypted themes!
-    if (SHOULD_ENCRYPT_ASSETS) {
-        // Encryption values, do not touch as we generate a random key every time you compile!
-        byte[] key = new byte[16]
-        new Random().nextBytes(key)
-        KEY = key
-        byte[] iv = new byte[16]
-        new Random().nextBytes(iv)
-        IV_KEY = iv
-    }
+    // Encryption values, do not touch as we generate a random key every time you compile!
+    byte[] key = new byte[16]
+    new Random().nextBytes(key)
+    KEY = key
+    byte[] iv = new byte[16]
+    new Random().nextBytes(iv)
+    IV_KEY = iv
 }
 
 android {
