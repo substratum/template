@@ -131,7 +131,7 @@ class SubstratumLauncher : Activity() {
         var themePiracyCheck = false
         if (getBlacklistedApplications())
             themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
-        if (!themePiracyCheck || SUBSTRATUM_FILTER_CHECK && (!certified)) {
+        if (themePiracyCheck || (SUBSTRATUM_FILTER_CHECK && !certified)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
             finish()
             return false

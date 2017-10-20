@@ -113,8 +113,8 @@ object ThemeFunctions {
     fun getSelfVerifiedPirateTools(context: Context): Boolean {
         BLACKLISTED_APPLICATIONS
                 .filter { isPackageInstalled(context, it) }
-                .forEach { return false }
-        return true
+                .forEach { return true }
+        return false
     }
 
     fun checkSubstratumIntegrity(context: Context): Boolean {
