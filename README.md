@@ -173,6 +173,8 @@ What this means is that themes can ensure their themes ONLY function with our fu
 
 If you would like to enable this feature, all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L94)!
 
+If you are making a Samsung compatible theme, please ensure to have the option [here](app/src/main/jni/LoadingProcess.c#L89) set to `JNI_TRUE`.
+
 However, this may affect people who build their own versions of Substratum. If you want your theme to work on unofficial versions of Substratum, all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
 
 ### Now what?
