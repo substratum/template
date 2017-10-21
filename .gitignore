@@ -90,3 +90,5 @@ app/release/output\.json
 # C++
 #############################################################################
 app/.externalNativeBuild
+
+GeneratedInformation.h

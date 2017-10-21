@@ -5,18 +5,11 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
+apply from: 'variables.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 ext {
-    // Whether the theme assets should be encrypted or not,
-    // this makes it harder for pirates and kangers! (DEFAULT: true)
-    SHOULD_ENCRYPT_ASSETS = true
-
-    // Whether this theme supports third party theme systems, we will not be able to help you debug
-    // your themes on external theming systems, so the team will NOT respond to external systems if
-    // there are issues with your theme (DEFAULT: false)
-    SUPPORTS_THIRD_PARTY_SYSTEMS = false
 
     // Encryption values, do not touch as we generate a random key every time you compile!
     byte[] key = new byte[16]
@@ -153,13 +146,53 @@ task encryptAssets {
         throw new RuntimeException("Old temporary assets found! Try and do a clean project.")
     }
 }
+/*
+
+static def CBool(boolean b) {
+    if (b) {
+        return "JNI_TRUE"
+    } else {
+        return "JNI_FALSE"
+    }
+}
+*/
+
+ext.CBool = {b ->
+    return b ? "JNI_TRUE" : "JNI_FALSE"
+}
+
+task generatedInformationH {
+
+    def file = new File(getProjectDir(), "src/main/jni/GeneratedInformation.h")
+
+    def fileContent = """
+#include <jni.h>
+
+#define ENABLE_ANTIPIRACY ${CBool(ENABLE_ANTIPIRACY)}
+#define BASE64_LICENSE_KEY "${BASE64_LICENSE_KEY}"
+#define APK_SIGNATURE "${APK_SIGNATURE}"
+#define INTERNET_CHECK ${CBool(INTERNET_CHECK)}
+#define ENFORCE_GOOGLE_PLAY_INSTALL ${CBool(ENFORCE_GOOGLE_PLAY_INSTALL)}
+#define ENFORCE_AMAZON_APP_INSTALL ${CBool(ENFORCE_AMAZON_APP_INSTALL)}
+#define ENFORCE_BLACKLISTED_APKS_CHECK ${CBool(ENFORCE_BLACKLISTED_APKS_CHECK)}
+#define ALLOW_THIRD_PARTY_SUBSTRATUM_BUILD ${CBool(ALLOW_THIRD_PARTY_SUBSTRATUM_BUILD)}
+"""
+
+    if (file.exists()) {
+        file.delete()
+    }
+
+    file << fileContent
+
+
+}
 
 project.afterEvaluate {
-    preBuild.dependsOn encryptAssets
+    preBuild.dependsOn(generatedInformationH, encryptAssets)
 }
 
 gradle.buildFinished {
-    def tempAssets = new File(getProjectDir(), "/src/main/assets-temp")
+    def tempAssets = new File(getProjectDir(), "src/main/assets-temp")
     if (tempAssets.exists()) {
         println("Cleaning duplicated encrypted assets, not your decrypted assets...")
         def encryptedAssets = new File(getProjectDir(), "src/main/assets")
