@@ -171,9 +171,9 @@ As of template version 11.0.0, themes have an additional check on the build of s
 
 What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
 
-If you would like to enable this feature, all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L94)!
+If you would like to disable the default (allow all theme engines by default), all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
 
-If you are making a Samsung compatible theme, please ensure to have the option [here](app/src/main/jni/LoadingProcess.c#L89) set to `JNI_TRUE`.
+### If you are making a Samsung compatible theme, please ensure to have the option [here](app/src/main/jni/LoadingProcess.c#L100) and follow the steps.
 
 However, this may affect people who build their own versions of Substratum. If you want your theme to work on unofficial versions of Substratum, all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
 
