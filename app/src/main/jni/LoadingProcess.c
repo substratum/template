@@ -80,16 +80,6 @@ Java_substratum_theme_template_SubstratumLauncher_getBlacklistedApplications(JNI
 }
 
 /*
- * Enable Samsung theming
- *
- * Change this value to JNI_TRUE if you would like to enable Samsung support check
- */
-JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getSamsungSupport(JNIEnv *env) {
-    return JNI_FALSE;
-}
-
-/*
  * Allow Third Party Substratum Builds
  *
  * Change this value to JNI_FALSE if you would like to ban your theme to work on external, non-team
@@ -101,7 +91,17 @@ Java_substratum_theme_template_SubstratumLauncher_getSamsungSupport(JNIEnv *env)
  */
 JNIEXPORT jboolean JNICALL
 Java_substratum_theme_template_SubstratumLauncher_allowThirdPartySubstratumBuilds(JNIEnv *env) {
-    return Java_substratum_theme_template_SubstratumLauncher_getSamsungSupport(env);
+    return JNI_TRUE;
+}
+
+/*
+ * Enable Samsung theming
+ *
+ * Change Line 94 to JNI_FALSE for official Samsung support!
+ */
+JNIEXPORT jboolean JNICALL
+Java_substratum_theme_template_SubstratumLauncher_getSamsungSupport(JNIEnv *env) {
+    return Java_substratum_theme_template_SubstratumLauncher_allowThirdPartySubstratumBuilds(env);
 }
 
 #pragma clang diagnostic pop
