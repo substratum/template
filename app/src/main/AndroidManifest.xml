@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/DialogStyle"
         tools:node="replace"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:extractNativeLibs="false">
 
         <activity android:name="substratum.theme.template.SubstratumLauncher">
             <intent-filter>
