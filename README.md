@@ -24,12 +24,6 @@ Disable activity launch on theme:
   - Click on `Edit configurations...`
   - Locate "Launch Options" and instead of Default Activity, select Nothing
   - This will now push your theme APK to your device without having to worry about build errors
-  
-Setting up the C++ native build environment:
-  - Right click on your project and click `Link C++ Project with Gradle`
-  - From the drop down, select `ndk-build`
-  - You will then need to specify the `Android.mk` file, located [here](app/src/main/jni/Android.mk)
-  - Done, you're ready!
 
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you. Open up [build.gradle](app/build.gradle) and look for this line
@@ -41,8 +35,10 @@ Change this to anything you want, for instance:
 applicationId "com.yourname.themename"
 ```
 
-Change Package Name in the project structure: (optional)
- http://stackoverflow.com/a/29092698
+Change Package Name in the project structure (optional):
+  - First follow the instructions here http://stackoverflow.com/a/29092698
+  - When you done open [LoadingProcess.c](app/src/main/jni/LoadingProcess.c), and replace all `substratum_theme_template` with your own package name but replace the dots (.) with underscores (_).
+   For instance `com_yourname_themename`
  
 NOTE: If you change your project structure name, the AndroidManifest AND the build.gradle package names must match, or else encrypted assets will break.
 
@@ -146,15 +142,15 @@ Then you can stop reading and get your theme published! Good luck!
 
 If you are ready to get AntiPiracy set up, all you need to look at is [LoadingProcess.c](app/src/main/jni/LoadingProcess.c)!
 
-First change the [getAPStatus](app/src/main/jni/LoadingProcess.c#L12) value on line 12 from `JNI_FALSE` to `JNI_TRUE`.
+First change the [ENABLE_ANTI_PIRACY](app/src/main/jni/LoadingProcess.c#L7) value on line 7 from `JNI_FALSE` to `JNI_TRUE`.
 
-Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/jni/LoadingProcess.c#L25) on line 25, then count the amount of characters you have that you pasted, and replace `000` with the number you got from your counter (http://www.lettercount.com/). This will ensure there is no easy one shot kill crack for your theme!
+Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/jni/LoadingProcess.c#L10) on line 10.
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [getBase64Key](app/src/main/java/substratum/theme/template/Constants.kt#L10) on line 10.
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/java/substratum/theme/template/Constants.kt#L11) on line 11.
 
-Third, if you would like to enable intensive mode antipiracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/Constants.kt#L31) on line 31. Then enable [getBlacklistedApplications](app/src/main/jni/LoadingProcess.c#L79) on line 79.
+Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 14 and lines below it, simply change from `JNI_TRUE` to `JNI_FALSE` and vice versa to make your desired configuration.
 
-Finally, if you would like to change where it checks for piracy such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed in [Constants.kt](app/src/main/jni/LoadingProcess.c#L57-L70) for you to simply change from `JNI_TRUE` and `JNI_FALSE`!
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/Constants.kt#L31) on [Constants.kt](app/src/main/java/substratum/theme/template/Constants.kt) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
 
 **Under no circumstances should you share your LoadingProcess.c file, unless specifically asked by an [official substratum developer!](https://github.com/substratum/documentation#team-info-and-responsibilities)**
 
@@ -171,11 +167,7 @@ As of template version 11.0.0, themes have an additional check on the build of s
 
 What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
 
-If you would like to disable the default (allow all theme engines by default), all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
-
-### If you are making a Samsung compatible theme, please ensure to have the option [here](app/src/main/jni/LoadingProcess.c#L100) and follow the steps.
-
-However, this may affect people who build their own versions of Substratum. If you want your theme to work on unofficial versions of Substratum, all you have to do is to flip `JNI_FALSE` to `JNI_TRUE` [here](app/src/main/jni/LoadingProcess.c#L94)!
+If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L18)!
 
 ### Now what?
 Nothing. Now you're set to publish your theme!

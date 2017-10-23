@@ -5,6 +5,7 @@ import substratum.theme.template.BuildConfig.SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
 object Constants {
     // Theme ready Google apps checker
     const internal val THEME_READY_GOOGLE_APPS = false
+
     // Dynamic filter that only works on Substratum 627+
     // WARNING: Only enable if you are sure you want certification status to pass on Substratum
     //          before launching the theme, or else it will throw an unauthorized toast!

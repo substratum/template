@@ -45,15 +45,6 @@ android {
 
         // Themers: Do not touch this, they will only formulate integrity structure of the core
         //          template
-        buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
-        buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"")
-                .replace("\"", "")
-                .replace("[", "{")
-                .replace("]", "}")
-        buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"")
-                .replace("\"", "")
-                .replace("[", "{")
-                .replace("]", "}")
         buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" +
                 SUPPORTS_THIRD_PARTY_SYSTEMS
         resValue "bool", "SUPPORTS_THIRD_PARTY_THEME_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
@@ -152,6 +143,26 @@ task encryptAssets {
     } else {
         throw new RuntimeException("Old temporary assets found! Try and do a clean project.")
     }
+}
+
+task writeKeys {
+    def KEY_READY = String.valueOf("\"" + KEY + "\"")
+            .replace("\"", "")
+            .replace("[", "{")
+            .replace("]", "}")
+    def IV_KEY_READY = String.valueOf("\"" + IV_KEY + "\"")
+            .replace("\"", "")
+            .replace("[", "{")
+            .replace("]", "}")
+
+    def headerFile = new File(getProjectDir(), "src/main/jni/LoadingProcess.h")
+    headerFile.createNewFile()
+    headerFile.text = """
+#include <jni.h>
+
+jbyte DECRYPTION_KEY[] = ${KEY_READY};
+jbyte IV_KEY[] = ${IV_KEY_READY};
+"""
 }
 
 project.afterEvaluate {
