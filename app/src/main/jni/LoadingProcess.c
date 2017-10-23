@@ -22,7 +22,7 @@ Java_substratum_theme_template_SubstratumLauncher_getAPStatus(JNIEnv *env) {
 JNIEXPORT jstring JNICALL
 Java_substratum_theme_template_SubstratumLauncher_getBase64Key(JNIEnv *env) {
     // TODO: This must be done!
-    char BASE_64_LICENSE_KEY[000] = "";
+    char BASE_64_LICENSE_KEY[1] = "";
     return (*env)->NewStringUTF(env, BASE_64_LICENSE_KEY);
 }
 
@@ -30,12 +30,11 @@ Java_substratum_theme_template_SubstratumLauncher_getBase64Key(JNIEnv *env) {
  * APK Signature Production
  *
  * Insert your release APK's signature in the quotations below!
- * ATTENTION: On line 34, do you see the "28"? If you're disabling antipiracy, change that to 0!
  * All release production signature prefixes have the length of 28!
  */
 JNIEXPORT jstring JNICALL
 Java_substratum_theme_template_SubstratumLauncher_getAPKSignatureProduction(JNIEnv *env) {
-    char APK_SIGNATURE_PRODUCTION[28] = "";
+    char APK_SIGNATURE_PRODUCTION[1] = "";
     return (*env)->NewStringUTF(env, APK_SIGNATURE_PRODUCTION);
 }
 
