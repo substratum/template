@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="notification_mtrl_action_textcolor">#ffffffff</color>
     <color name="notification_mtrl_big_picture_bg">@android:color/holo_purple</color>
     <color name="resolver_list_bg">@android:color/background_dark</color>
     <color name="chooser_grid_bg">@android:color/background_dark</color>
@@ -13,7 +12,6 @@
     <color name="material_blue_grey_800">@android:color/holo_blue_light</color>
     <color name="material_blue_grey_900">@android:color/holo_blue_light</color>
     <color name="material_blue_grey_950">@android:color/holo_blue_dark</color>
-    <color name="notification_icon_bg_color">#00000000</color>
     <color name="holo_red_dark">@android:color/holo_purple</color>
     <color name="holo_orange_dark">@android:color/background_dark</color>
     <color name="background_floating_material_dark">@android:color/holo_purple</color>
@@ -40,7 +38,6 @@
     <color name="holo_green_dark">#ff388e3c</color>
     <color name="holo_red_light">#fff44336</color>
     <color name="holo_orange_light">#ffff9800</color>
-    <color name="transparent">#00000000</color>
     <color name="secondary_text_default_material_light">#ff9e9e9e</color>
     <color name="link_text_material_light">#ff2962ff</color>
     <color name="link_text_material_dark">#ff448aff</color>
@@ -57,12 +54,6 @@
     <color name="timepicker_default_ampm_selected_background_color_holo_light">#ff555555</color>
     <color name="timepicker_default_ampm_selected_background_color_holo_dark">#ff555555</color>
     <color name="timepicker_default_ampm_unselected_background_color_holo_light">
-        @android:color/background_dark
-    </color>
-    <color name="datepicker_default_header_selector_background_holo_light">
-        @android:color/background_dark
-    </color>
-    <color name="datepicker_default_header_selector_background_holo_dark">
         @android:color/background_dark
     </color>
     <color name="datepicker_default_header_dayofweek_background_color_holo_light">#ffffffff</color>

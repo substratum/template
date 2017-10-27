@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Text color of the notification action -->
-    <color name="notification_mtrl_action_textcolor">#ffffff</color>
-
     <!-- background of the picture in the big material notification template -->
     <color name="notification_mtrl_big_picture_bg">@android:color/holo_purple</color>
 
@@ -41,8 +38,6 @@
     <color name="notification_action_color_filter">#ffffff</color>
     <color name="notification_progress_background_color">@android:color/holo_purple</color>
 
-    <color name="notification_icon_bg_color">#00000000</color>
-
     <!-- L -->
 
 
@@ -73,17 +68,10 @@
 
     <color name="holo_green_light">#4CAF50</color>
     <color name="holo_green_dark">#388E3C</color>
-    <color name="transparent">#00000000</color>
 
     <color name="micro_text_light">#dddddd</color>
     <color name="timepicker_default_background_material">@android:color/background_dark</color>
     <color name="timepicker_default_text_color_material">@android:color/white</color>
-    <color name="datepicker_default_header_selector_background_material_light">
-        @android:color/background_dark
-    </color>
-    <color name="datepicker_default_header_selector_background_material_dark">
-        @android:color/background_dark
-    </color>
     <color name="datepicker_default_header_dayofweek_background_color_material_light">#ffffffff
     </color>
     <color name="datepicker_default_normal_text_color_material_light">#ffffffff</color>
