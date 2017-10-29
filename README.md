@@ -162,6 +162,8 @@ Always use a version control tool listed below to host your private themes!
 BitBucket: https://bitbucket.org/
 GitLab: https://about.gitlab.com/
 
+If you want to keep your theme assets unencrypted, just change the value [here](app/build.gradle#L14) to false.
+
 ### Enforcing security
 As of template version 11.0.0, themes have an additional check on the build of substratum your users should be running.
 
