@@ -42,6 +42,7 @@ android {
         // Both versions must be changed to increment on Play Store/user's devices
         versionCode 1
         versionName "1.0"
+        resConfigs "en"
 
         // Themers: Do not touch this, they will only formulate integrity structure of the core
         //          template
