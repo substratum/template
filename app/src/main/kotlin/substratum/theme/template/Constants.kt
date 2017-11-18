@@ -35,6 +35,7 @@ object Constants {
             "cc.madkite.freedom",
             "zone.jasi2169.uretpatcher",
             "uret.jasi2169.patcher",
+            "p.jasi2169.al3",
             "com.dimonvideo.luckypatcher",
             "com.chelpus.lackypatch",
             "com.forpda.lp",
