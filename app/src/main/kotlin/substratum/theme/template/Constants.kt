@@ -40,7 +40,6 @@ object Constants {
             "com.chelpus.lackypatch",
             "com.forpda.lp",
             "com.android.vending.billing.InAppBillingService.LUCK",
-            "com.android.protips",
             "com.android.vending.billing.InAppBillingService.CLON",
             "com.android.vendinc",
             "com.appcake",
