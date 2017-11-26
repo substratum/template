@@ -22,7 +22,6 @@ import substratum.theme.template.Constants.SUBSTRATUM_FILTER_CHECK
 import substratum.theme.template.Constants.THEME_READY_GOOGLE_APPS
 import substratum.theme.template.Constants.THEME_READY_PACKAGES
 import substratum.theme.template.ThemeFunctions.SUBSTRATUM_PACKAGE_NAME
-import substratum.theme.template.ThemeFunctions.checkNetworkConnection
 import substratum.theme.template.ThemeFunctions.checkSubstratumIntegrity
 import substratum.theme.template.ThemeFunctions.getSelfSignature
 import substratum.theme.template.ThemeFunctions.getSelfVerifiedIntentResponse
@@ -206,20 +205,13 @@ class SubstratumLauncher : Activity() {
         }
     }
 
-    private fun checkConnection(certified: Boolean, modeLaunch: String?): Boolean {
-        val isConnected = checkNetworkConnection()
-        return if (!isConnected!!) {
-            Toast.makeText(this, R.string.toast_internet, Toast.LENGTH_LONG).show()
-            false
+    private fun checkConnection(certified: Boolean, modeLaunch: String?) {
+        val editor = getPreferences(Context.MODE_PRIVATE).edit()
+        editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
+        if (THEME_READY_GOOGLE_APPS) {
+            detectThemeReady(certified, modeLaunch)
         } else {
-            val editor = getPreferences(Context.MODE_PRIVATE).edit()
-            editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
-            if (THEME_READY_GOOGLE_APPS) {
-                detectThemeReady(certified, modeLaunch)
-            } else {
-                calibrateSystem(certified, modeLaunch)
-            }
-            true
+            calibrateSystem(certified, modeLaunch)
         }
     }
 
