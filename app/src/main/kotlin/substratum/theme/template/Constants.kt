@@ -30,8 +30,6 @@ object Constants {
     // Blacklisted APKs to prevent theme launching, these include simple regex formatting, without
     // full regex formatting (e.g. com.android. will block everything that starts with com.android.)
     val BLACKLISTED_APPLICATIONS = arrayOf(
-            "com.android.vending.billing.InAppBillingService.LOCK",
-            "com.android.vending.billing.InAppBillingService.LACK",
             "cc.madkite.freedom",
             "zone.jasi2169.uretpatcher",
             "uret.jasi2169.patcher",
@@ -41,6 +39,9 @@ object Constants {
             "com.forpda.lp",
             "com.android.vending.billing.InAppBillingService.LUCK",
             "com.android.vending.billing.InAppBillingService.CLON",
+            "com.android.vending.billing.InAppBillingService.LOCK",
+            "com.android.vending.billing.InAppBillingService.CRAC",
+            "com.android.vending.billing.InAppBillingService.LACK",
             "com.android.vendinc",
             "com.appcake",
             "ac.market.store",

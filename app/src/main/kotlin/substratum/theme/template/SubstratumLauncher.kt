@@ -47,7 +47,7 @@ class SubstratumLauncher : Activity() {
     private var piracyChecker: PiracyChecker? = null
 
     private fun calibrateSystem(certified: Boolean, modeLaunch: String?) {
-        if (getAPStatus() && !BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             startAntiPiracyCheck(certified, modeLaunch)
         } else {
             quitSelf(certified, modeLaunch)
@@ -58,7 +58,7 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (getAPStatus() && getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
+            if (getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
                 Log.e(tag, PiracyCheckerUtils.getAPKSignature(this))
             }
 
@@ -290,7 +290,6 @@ class SubstratumLauncher : Activity() {
         System.loadLibrary("LoadingProcess")
     }
 
-    private external fun getAPStatus(): Boolean
     private external fun getInternetCheck(): Boolean
     private external fun getGooglePlayRequirement(): Boolean
     private external fun getAmazonAppStoreRequirement(): Boolean
