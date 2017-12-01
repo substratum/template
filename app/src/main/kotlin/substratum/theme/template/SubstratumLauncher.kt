@@ -130,7 +130,7 @@ class SubstratumLauncher : Activity() {
         var themePiracyCheck = false
         if (getBlacklistedApplications())
             themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
-        if (themePiracyCheck || (SUBSTRATUM_FILTER_CHECK && !certified)) {
+        if (themePiracyCheck or (SUBSTRATUM_FILTER_CHECK && !certified)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
             finish()
             return false
@@ -164,11 +164,10 @@ class SubstratumLauncher : Activity() {
         val intent = intent
         val action = intent.action
         var verified = false
-        if (action == substratumIntentData) {
-            verified = if (allowThirdPartySubstratumBuilds()) {
-                true
-            } else {
-                checkSubstratumIntegrity(this)
+        if ((action == substratumIntentData) or (action == getKeysIntent)) {
+            verified = when {
+                allowThirdPartySubstratumBuilds() -> true
+                else -> checkSubstratumIntegrity(this)
             }
         } else {
             OTHER_THEME_SYSTEMS
@@ -190,10 +189,9 @@ class SubstratumLauncher : Activity() {
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         if (getInternetCheck()) {
             if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
-                if (THEME_READY_GOOGLE_APPS) {
-                    detectThemeReady(certified, modeLaunch)
-                } else {
-                    calibrateSystem(certified, modeLaunch)
+                when {
+                    THEME_READY_GOOGLE_APPS -> detectThemeReady(certified, modeLaunch)
+                    else -> calibrateSystem(certified, modeLaunch)
                 }
             } else {
                 checkConnection(certified, modeLaunch)
