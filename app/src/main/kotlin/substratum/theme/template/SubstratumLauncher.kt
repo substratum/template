@@ -142,17 +142,27 @@ class SubstratumLauncher : Activity() {
         returnIntent.putExtra("encryption_key", getDecryptionKey())
         returnIntent.putExtra("iv_encrypt_key", getIVKey())
 
+        val callingPackage = intent.getStringExtra("calling_package_name")
+        if (callingPackage == null) {
+            val parse = String.format(
+                    getString(R.string.outdated_substratum),
+                    getString(R.string.ThemeName),
+                    913)
+            Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
+            finish()
+            return false
+        }
+        if (!isCallingPackageAllowed(callingPackage)) {
+            return false
+        } else {
+            returnIntent.`package` = callingPackage
+        }
+
         if (intent.action == substratumIntentData) {
             setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
         } else if (intent.action == getKeysIntent) {
-            val callingPackage = intent.getStringExtra("calling_package_name")
-            returnIntent.`package` = callingPackage
             returnIntent.action = receiveKeysIntent
-            if (callingPackage != null) {
-                if (isCallingPackageAllowed(callingPackage)) {
-                    sendBroadcast(returnIntent)
-                }
-            }
+            sendBroadcast(returnIntent)
         }
         finish()
         return true
