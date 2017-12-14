@@ -150,7 +150,7 @@ Then you would need to go to Play Developer Console. Then access to your app -> 
 
 Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 14 and lines below it, simply change from `JNI_TRUE` to `JNI_FALSE` and vice versa to make your desired configuration.
 
-Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/Constants.kt#L31) on [Constants.kt](app/src/main/java/substratum/theme/template/Constants.kt) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/Constants.kt#L32) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
 
 **Under no circumstances should you share your LoadingProcess.c file, unless specifically asked by an [official substratum developer!](https://github.com/substratum/documentation#team-info-and-responsibilities)**
 
