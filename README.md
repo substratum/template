@@ -146,7 +146,7 @@ First change the [ENABLE_ANTI_PIRACY](app/src/main/jni/LoadingProcess.c#L7) valu
 
 Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/jni/LoadingProcess.c#L10) on line 10.
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/java/substratum/theme/template/Constants.kt#L11) on line 11.
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/jni/LoadingProcess.c#L9)  on line 11.
 
 Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 14 and lines below it, simply change from `JNI_TRUE` to `JNI_FALSE` and vice versa to make your desired configuration.
 
