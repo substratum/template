@@ -147,7 +147,7 @@ class SubstratumLauncher : Activity() {
             val parse = String.format(
                     getString(R.string.outdated_substratum),
                     getString(R.string.ThemeName),
-                    913)
+                    915)
             Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
             finish()
             return false
