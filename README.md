@@ -169,10 +169,6 @@ What this means is that themes can ensure their themes ONLY function with our fu
 
 If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L18)!
 
-Template version 11.5.0 introduces additional caller package verification that requires the use of Substratum version 915
-or higher for your theme to work. Until Substratum is updated on the play store, themers are suggested to use template
-version 11.4.0.
-
 ### Now what?
 Nothing. Now you're set to publish your theme!
 
