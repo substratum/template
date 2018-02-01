@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 	
 	<uses-feature
-        android:name="projekt.substratum.theme"
+        android:name="skittles.gsans.challegram"
         android:required="false" /> <!-- Set to true for OMS-rom only block to be enabled -->
 
     <application
