@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.SettingsBase" parent="@android:style/Theme.Material">
-        <item name="android:statusBarColor">#00000000</item>
-        <item name="android:windowBackground">@android:drawable/status_bar_item_app_background
-        </item>
-        <item name="android:navigationBarColor">@android:color/background_dark</item>
-    </style>
-</resources>

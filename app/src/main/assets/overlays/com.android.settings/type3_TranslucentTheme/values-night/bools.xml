@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Define whether you want Settings Dashboard tiles to load external drawables by default (for example, see the Google shortcut) -->
-    <bool name="config_useExternalDrawables">false</bool>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="holo_blue_light">#ff9c0f5f</color>
-    <color name="holo_blue_dark">#ff8c0d55</color>
-    <color name="holo_blue_bright">#fff2671f</color>
-    <color name="background_dark">#ff160a47</color>
-    <color name="holo_purple">#ff2d2259</color>
-</resources>
