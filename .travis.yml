@@ -4,6 +4,9 @@ env:
   global:
     - COMPILE_SDK_VERSION=27 
     - BUILD_TOOLS_VERSION=27.0.2
+    - NDK_VERSION=r16b
+
+
 
 android:
   components:
@@ -12,7 +15,6 @@ android:
     - tools # Write the second time to update to thes newest as described in the document
     - build-tools-${BUILD_TOOLS_VERSION} # For building
     - android-${COMPILE_SDK_VERSION} # For building
-    - android-${EMULATOR_API} # For testing
 
     - extra-android-m2repository # Support library
 
@@ -20,6 +22,11 @@ android:
 before_install:
   - yes | sdkmanager "platforms;android-27"
   - chmod +x gradlew
+  - wget http://dl.google.com/android/ndk/android-ndk-$NDK_VERSION-linux-x86_64.bin
+  - chmod +x android-ndk-$NDK_VERSION-linux-x86_64.bin
+  - ./android-ndk-$NDK_VERSION-linux-x86_64.bin | egrep -v ^Extracting
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
+  - export PATH=${PATH}:${ANDROID_NDK_HOME}
 
 install:
   - sdkmanager --list || true # Debug / Observation
