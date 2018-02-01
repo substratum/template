@@ -15,16 +15,15 @@ android:
     - tools # Write the second time to update to thes newest as described in the document
     - build-tools-${BUILD_TOOLS_VERSION} # For building
     - android-${COMPILE_SDK_VERSION} # For building
-
     - extra-android-m2repository # Support library
 
 
 before_install:
   - yes | sdkmanager "platforms;android-27"
   - chmod +x gradlew
-  - wget http://dl.google.com/android/ndk/android-ndk-$NDK_VERSION-linux-x86_64.bin
-  - chmod +x android-ndk-$NDK_VERSION-linux-x86_64.bin
-  - ./android-ndk-$NDK_VERSION-linux-x86_64.bin | egrep -v ^Extracting
+  - wget http://dl.google.com/android/ndk/android-ndk-${NDK_VERSION}-linux-x86_64.bin
+  - chmod +x android-ndk-${NDK_VERSION}-linux-x86_64.bin
+  - ./android-ndk-${NDK_VERSION}-linux-x86_64.bin | egrep -v ^Extracting
   - export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
   - export PATH=${PATH}:${ANDROID_NDK_HOME}
 
