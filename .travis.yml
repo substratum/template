@@ -30,4 +30,3 @@ install:
 
 script:
   - ./gradlew assembleRelease
-  - ./gradlew :app:createDebugAndroidTestCoverageReport --info --stacktrace
