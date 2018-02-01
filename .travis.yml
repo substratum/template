@@ -8,3 +8,5 @@ android:
     - extra-google-m2repository
 before_install:
   - yes | sdkmanager "platforms;android-27"
+  licenses:
+    - 'android-sdk-license-.+'
