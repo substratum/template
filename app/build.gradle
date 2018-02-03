@@ -28,8 +28,14 @@ ext {
 }
 
 android {
+
+    lintOptions {
+        tasks.lint.enabled = false
+
+    }
+
     compileSdkVersion 27
-    buildToolsVersion '27.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
