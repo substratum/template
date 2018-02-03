@@ -28,8 +28,6 @@ install:
   - echo y | sdkmanager "platforms;android-27"
   - avdmanager --list || true  # Debug / Observation
 
-
-
 before_deploy:
   - "cp app/build/outputs/apk/debug/app-debug.apk TelegramX-Mods-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
   - "cp app/build/outputs/mapping/debug/mapping.txt proguard-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.txt"
