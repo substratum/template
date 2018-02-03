@@ -36,7 +36,7 @@ deploy:
     skip_cleanup: true
     script: scripts/deploy-telegram.sh
     on:
-      branch: alpha
+      branch: kt-n
 
 notifications:
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
