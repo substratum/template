@@ -29,10 +29,7 @@ install:
   - echo y | sdkmanager 'lldb;3.0'
   - echo y | sdkmanager "platforms;android-27"
   - avdmanager --list || true  # Debug / Observation
-
-before_deploy:
-  - "cp /app/build/outputs/apk/app-debug.apk"
-  - "cp /app/build/outputs/mapping/mapping.txt"
+  
 deploy:
   - provider: script
     skip_cleanup: true
