@@ -29,8 +29,8 @@ install:
   - avdmanager --list || true  # Debug / Observation
 
 before_deploy:
-  - "cp app/build/outputs/apk/debug/app-debug.apk TelegramX-Mods-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
-  - "cp app/build/outputs/mapping/debug/mapping.txt proguard-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.txt"
+  - "cp app/build/outputs/apk/debug/app-debug.apk"
+  - "cp app/build/outputs/mapping/debug/mapping.txt"
 deploy:
   - provider: script
     skip_cleanup: true
