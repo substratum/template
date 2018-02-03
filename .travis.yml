@@ -1,5 +1,5 @@
 language: android
-sudo: true
+sudo: true # y tho
 
 env:
   global:
