@@ -17,6 +17,8 @@ android:
 
 before_install:
   - chmod +x gradlew
+  
+  script: ./gradlew assembleRelease
 
 install:
   - sdkmanager --list || true # Debug / Observation
