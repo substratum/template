@@ -33,6 +33,6 @@ install:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: scripts/deploy-telegram.sh
+    script: "sh scripts/deploy-telegram.sh"
     on:
       branch: kt-n
