@@ -1,7 +1,7 @@
 <resources>
     <!-- Theme name and author name -->
-    <string name="ThemeName">GoogleSans for Telegram X</string>
-    <string name="ThemeAuthor">Skittles9823</string>
+    <string name="ThemeName">Mods for Telegram X</string>
+    <string name="ThemeAuthor">Skittles9823 (and his spaghets)</string>
     <!-- Your email for bug reports (DEFAULT: empty) -->
     <!--suppress CheckTagEmptyBody -->
     <string name="ThemeAuthorEmail"></string>
