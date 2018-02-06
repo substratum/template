@@ -36,6 +36,3 @@ deploy:
     script: scripts/deploy-telegram.sh
     on:
       branch: kt-n
-
-notifications:
-  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
