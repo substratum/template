@@ -1,7 +1,7 @@
 <resources>
     <!-- Theme name and author name -->
-    <string name="ThemeName">Substratum Theme Template</string>
-    <string name="ThemeAuthor">[projekt.] development team</string>
+    <string name="ThemeName">Mods for Telegram X</string>
+    <string name="ThemeAuthor">Skittles9823 (and his spaghets)</string>
     <!-- Your email for bug reports (DEFAULT: empty) -->
     <!--suppress CheckTagEmptyBody -->
     <string name="ThemeAuthorEmail"></string>
@@ -12,13 +12,13 @@
          THEME_READY_GOOGLE_APPS in Constants.kt line 7 to true -->
     <string name="ThemeReadyRequirement">all</string>
     <!-- Theme wallpaper source (must be raw) -->
-    <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
+    <string name="ThemeWallpaperSource"></string>
     <!-- Do your theme support substratum legacy? -->
     <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
     <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
     <bool name="ThemeSupportLegacy">true</bool>
     <!-- Does your theme support substratum samsung? -->
-    <bool name="ThemeSupportSamsung">false</bool>
+    <bool name="ThemeSupportSamsung">true</bool>
     <!-- Do you want to override the hero image auto color assignment? -->
     <!-- Don't force anything? -> auto -->
     <!-- Force black/dark icons? -> dark -->
@@ -26,10 +26,10 @@
     <string name="ThemeHeroOverride">auto</string>
     <!-- Put your theme changelog here, each item will be a new bullet point in the sheet -->
     <string-array name="ThemeChangelog">
-        <item>Change One</item>
-        <item>Change Two</item>
-        <item>Change Three</item>
-        <item>Change Four</item>
-        <item>Change Five</item>
+        <item>Aye</item>
+        <item>Yo</item>
+        <item>First</item>
+        <item>Release</item>
+        <item>Ni🅱🅱a!</item>
     </string-array>
 </resources>

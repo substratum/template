@@ -28,20 +28,31 @@ ext {
 }
 
 android {
+
+    lintOptions {
+        checkReleaseBuilds = false
+
+    }
+
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
         // thoroughly!
-        applicationId "substratum.theme.template"
+        applicationId "skittles.gsans.challegram"
         // We are only supporting Nougat and above, all new changes will incorporate Nougat changes
         // to the substratum repo rather than anything lower. Keep targetSdkVersion the same.
         minSdkVersion 24
         targetSdkVersion 27
         // Both versions must be changed to increment on Play Store/user's devices
-        versionCode 1
-        versionName "1.0"
+        if (System.getenv("TRAVIS") == "true") {
+            versionCode = Integer.valueOf(System.getenv("TRAVIS_BUILD_NUMBER"))
+            versionName = System.getenv("TRAVIS_BUILD_NUMBER")
+        } else {
+            versionCode 1
+            versionName "dev"
+        }
 
         // Themers: Do not touch this, they will only formulate integrity structure of the core
         //          template
@@ -77,7 +88,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.javiersantos:PiracyChecker:1.1'
+    implementation 'com.github.javiersantos:PiracyChecker:1.2'
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version") {
         transitive = true
     }

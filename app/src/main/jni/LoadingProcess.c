@@ -21,7 +21,7 @@ jboolean ALLOW_THIRD_PARTY_SUBSTRATUM_BUILD = JNI_TRUE;
  * APK Signature Production
  */
 JNIEXPORT jstring JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getAPKSignatureProduction(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getAPKSignatureProduction(JNIEnv *env) {
     return (*env)->NewStringUTF(env, APK_SIGNATURE_PRODUCTION);
 }
 
@@ -29,7 +29,7 @@ Java_substratum_theme_template_SubstratumLauncher_getAPKSignatureProduction(JNIE
  * Base 64 License Key
  */
 JNIEXPORT jstring JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getBase64Key(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getBase64Key(JNIEnv *env) {
     return (*env)->NewStringUTF(env, BASE_64_LICENSE_KEY);
 }
 
@@ -37,7 +37,7 @@ Java_substratum_theme_template_SubstratumLauncher_getBase64Key(JNIEnv *env) {
  * Enforce Internet Check
  */
 JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getInternetCheck(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getInternetCheck(JNIEnv *env) {
     return ENABLE_INTERNET_CHECK;
 }
 
@@ -45,7 +45,7 @@ Java_substratum_theme_template_SubstratumLauncher_getInternetCheck(JNIEnv *env) 
  * Enforce Google Play Install
  */
 JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getGooglePlayRequirement(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getGooglePlayRequirement(JNIEnv *env) {
     return REQUIRE_INSTALL_FROM_PLAY_STORE;
 }
 
@@ -53,7 +53,7 @@ Java_substratum_theme_template_SubstratumLauncher_getGooglePlayRequirement(JNIEn
  * Enforce Amazon App Store Install
  */
 JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getAmazonAppStoreRequirement(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getAmazonAppStoreRequirement(JNIEnv *env) {
     return REQUIRE_INSTALL_FROM_AMAZON_STORE;
 }
 
@@ -61,7 +61,7 @@ Java_substratum_theme_template_SubstratumLauncher_getAmazonAppStoreRequirement(J
  * Enable check for Blacklisted APKs
  */
 JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getBlacklistedApplications(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getBlacklistedApplications(JNIEnv *env) {
     return ENABLE_APP_BLACKLIST_CHECK;
 }
 
@@ -73,19 +73,19 @@ Java_substratum_theme_template_SubstratumLauncher_getBlacklistedApplications(JNI
  *          if there are specific bugs unreproducible on the main stream of APKs.
  */
 JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_allowThirdPartySubstratumBuilds(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_allowThirdPartySubstratumBuilds(JNIEnv *env) {
     return ALLOW_THIRD_PARTY_SUBSTRATUM_BUILD;
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getDecryptionKey(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getDecryptionKey(JNIEnv *env) {
     jbyteArray ret = (*env)->NewByteArray(env, 16);
     (*env)->SetByteArrayRegion(env, ret, 0, 16, DECRYPTION_KEY);
     return ret;
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getIVKey(JNIEnv *env) {
+Java_skittles_gsans_challegram_SubstratumLauncher_getIVKey(JNIEnv *env) {
     jbyteArray ret = (*env)->NewByteArray(env, 16);
     (*env)->SetByteArrayRegion(env, ret, 0, 16, IV_KEY);
     return ret;
