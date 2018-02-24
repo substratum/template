@@ -3,8 +3,6 @@ package substratum.theme.template
 import substratum.theme.template.BuildConfig.SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
 
 object Constants {
-    // Theme ready Google apps checker
-    const internal val THEME_READY_GOOGLE_APPS = false
 
     // Dynamic filter that only works on Substratum 627+
     // WARNING: Only enable if you are sure you want certification status to pass on Substratum
@@ -15,17 +13,6 @@ object Constants {
     const val ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true
     const val MINIMUM_SUBSTRATUM_VERSION = 712 // 510 is the final MM build
     const val ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS = SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
-
-    // Theme Ready Packages by Team Blacked Out
-    val THEME_READY_PACKAGES = arrayOf(
-            "com.google.android.gm",
-            "com.google.android.googlequicksearchbox",
-            "com.android.vending",
-            "com.google.android.apps.plus",
-            "com.google.android.talk",
-            "com.google.android.youtube",
-            "com.google.android.inputmethod.latin"
-    )
 
     // Blacklisted APKs to prevent theme launching, these include simple regex formatting, without
     // full regex formatting (e.g. com.android. will block everything that starts with com.android.)

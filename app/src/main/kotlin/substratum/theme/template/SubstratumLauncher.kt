@@ -19,8 +19,6 @@ import substratum.theme.template.Constants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.OTHER_THEME_SYSTEMS
 import substratum.theme.template.Constants.SUBSTRATUM_FILTER_CHECK
-import substratum.theme.template.Constants.THEME_READY_GOOGLE_APPS
-import substratum.theme.template.Constants.THEME_READY_PACKAGES
 import substratum.theme.template.ThemeFunctions.SUBSTRATUM_PACKAGE_NAME
 import substratum.theme.template.ThemeFunctions.checkSubstratumIntegrity
 import substratum.theme.template.ThemeFunctions.getSelfSignature
@@ -41,7 +39,6 @@ class SubstratumLauncher : Activity() {
     private var substratumIntentData = "projekt.substratum.THEME"
     private var getKeysIntent = "projekt.substratum.GET_KEYS"
     private var receiveKeysIntent = "projekt.substratum.RECEIVE_KEYS"
-    private var themeReadyScript = "/system/addon.d/80-ThemeReady.sh"
     private var tag = "SubstratumThemeReport"
     private var piracyChecker: PiracyChecker? = null
 
@@ -200,14 +197,11 @@ class SubstratumLauncher : Activity() {
         if (getInternetCheck()) {
             if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
                 when {
-                    THEME_READY_GOOGLE_APPS -> detectThemeReady(certified, modeLaunch)
                     else -> calibrateSystem(certified, modeLaunch)
                 }
             } else {
                 checkConnection(certified, modeLaunch)
             }
-        } else if (THEME_READY_GOOGLE_APPS) {
-            detectThemeReady(certified, modeLaunch)
         } else {
             calibrateSystem(certified, modeLaunch)
         }
@@ -216,73 +210,7 @@ class SubstratumLauncher : Activity() {
     private fun checkConnection(certified: Boolean, modeLaunch: String?) {
         val editor = getPreferences(Context.MODE_PRIVATE).edit()
         editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
-        if (THEME_READY_GOOGLE_APPS) {
-            detectThemeReady(certified, modeLaunch)
-        } else {
-            calibrateSystem(certified, modeLaunch)
-        }
-    }
-
-    private fun detectThemeReady(certified: Boolean, modeLaunch: String?) {
-        val addon = File(themeReadyScript)
-        if (addon.exists()) {
-            val apps = ArrayList<String>()
-            var updated = false
-            val incomplete = false
-            val packageManager = this.packageManager
-            val appName = StringBuilder()
-
-            for (packageName in THEME_READY_PACKAGES) {
-                try {
-                    val appInfo = packageManager.getApplicationInfo(packageName, 0)
-                    if (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0) {
-                        updated = true
-                        apps.add(packageManager.getApplicationLabel(appInfo).toString())
-                    }
-                } catch (e: Exception) {
-                    // Package not found
-                }
-            }
-
-            for (i in apps.indices) {
-                appName.append(apps[i])
-                if (i <= apps.size - 3) {
-                    appName.append(", ")
-                } else if (i == apps.size - 2) {
-                    appName.append(" ")
-                            .append(getString(R.string.and))
-                            .append(" ")
-                }
-            }
-
-            if (!updated && !incomplete) {
-                calibrateSystem(certified, modeLaunch)
-            } else {
-                val stringInt = R.string.theme_ready_updated
-                val parse = String.format(getString(stringInt),
-                        appName)
-
-                AlertDialog.Builder(this, R.style.DialogStyle)
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setTitle(getString(R.string.ThemeName))
-                        .setMessage(parse)
-                        .setPositiveButton(R.string.yes) { _, _ ->
-                            calibrateSystem(certified, modeLaunch)
-                        }
-                        .setNegativeButton(R.string.no) { _, _ -> finish() }
-                        .setOnCancelListener { finish() }
-                        .show()
-            }
-        } else {
-            AlertDialog.Builder(this, R.style.DialogStyle)
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setTitle(getString(R.string.ThemeName))
-                    .setMessage(getString(R.string.theme_ready_not_detected))
-                    .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem(certified, modeLaunch) }
-                    .setNegativeButton(R.string.no) { _, _ -> finish() }
-                    .setOnCancelListener { finish() }
-                    .show()
-        }
+        calibrateSystem(certified, modeLaunch)
     }
 
     // Load up the JNI library

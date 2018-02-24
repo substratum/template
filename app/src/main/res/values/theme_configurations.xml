@@ -5,12 +5,6 @@
     <!-- Your email for bug reports (DEFAULT: empty) -->
     <!--suppress CheckTagEmptyBody -->
     <string name="ThemeAuthorEmail"></string>
-    <!-- Do you support Stock and Theme Ready Gapps? -> all -->
-    <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
-    <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
-    <!-- If you want to remind your user to use Theme Ready Gapps then change
-         THEME_READY_GOOGLE_APPS in Constants.kt line 7 to true -->
-    <string name="ThemeReadyRequirement">all</string>
     <!-- Theme wallpaper source (must be raw) -->
     <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
     <!-- Do your theme support substratum legacy? -->
