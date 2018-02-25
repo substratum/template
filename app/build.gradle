@@ -52,6 +52,7 @@ android {
 
         ndk {
             moduleName "LoadingProcess"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
         }
     }
     buildTypes {
