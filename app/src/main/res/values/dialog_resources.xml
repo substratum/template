@@ -9,5 +9,6 @@
     <string name="launch_dialog_title">Dialog title</string>
     <string name="launch_dialog_content">Dialog content</string>
     <string name="launch_dialog_positive">OK</string>
-    <string name="launch_dialog_negative"></string>
+    <string name="launch_dialog_negative" />
+    <string name="launch_dialog_negative_url" />
 </resources>

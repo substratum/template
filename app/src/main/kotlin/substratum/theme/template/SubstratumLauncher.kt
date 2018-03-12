@@ -3,6 +3,7 @@ package substratum.theme.template
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
@@ -247,7 +248,14 @@ class SubstratumLauncher : Activity() {
                     }
                 }
         if (getString(R.string.launch_dialog_negative).isNotEmpty()) {
-            dialog.setNegativeButton(R.string.launch_dialog_negative) { _, _ -> finish() }
+            if (getString(R.string.launch_dialog_negative_url).isNotEmpty()) {
+                dialog.setNegativeButton(R.string.launch_dialog_negative) { _, _ ->
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.launch_dialog_negative_url))))
+                    finish()
+                }
+            } else {
+                dialog.setNegativeButton(R.string.launch_dialog_negative) { _, _ -> finish() }
+            }
         }
         dialog.show()
     }
