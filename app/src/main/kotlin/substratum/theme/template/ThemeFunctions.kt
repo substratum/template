@@ -97,11 +97,16 @@ object ThemeFunctions {
         }
     }
 
+    private fun checkPackageRegex(context: Context, stringArray: Array<String>): Boolean {
+        val pm = context.packageManager
+        val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
+        val listOfInstalled = arrayListOf<String>()
+        packages.mapTo(listOfInstalled) { it.packageName }
+        return stringArray.any { listOfInstalled.contains(it) }
+    }
+
     fun getSelfVerifiedPirateTools(context: Context): Boolean {
-        BLACKLISTED_APPLICATIONS
-                .filter { isPackageInstalled(context, it) }
-                .forEach { return true }
-        return false
+        return checkPackageRegex(context, BLACKLISTED_APPLICATIONS)
     }
 
     fun checkSubstratumIntegrity(context: Context): Boolean {
