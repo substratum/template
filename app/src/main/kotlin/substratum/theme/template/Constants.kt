@@ -30,6 +30,7 @@ object Constants {
             "com.chelpus.lackypatch",
             "com.forpda.lp",
             "com.android.vending.billing.InAppBillingService",
+            "com.android.vending.billing.InAppBillingSorvice",
             "com.android.vendinc",
             "com.appcake",
             "ac.market.store",
@@ -45,8 +46,7 @@ object Constants {
             "com.dv.marketmod.installer",
             "org.mobilism.android",
             "com.blackmartalpha",
-            "org.blackmart.market",
-            "com.android.vending.billing.InAppBillingSorvice.COIN"
+            "org.blackmart.market"
     )
 
     // List of other theme systems that are officially unsupported by the team, but fully supported
