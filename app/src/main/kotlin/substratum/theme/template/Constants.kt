@@ -3,8 +3,6 @@ package substratum.theme.template
 import substratum.theme.template.BuildConfig.SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
 
 object Constants {
-    // Theme ready Google apps checker
-    const internal val THEME_READY_GOOGLE_APPS = false
 
     // Dynamic filter that only works on Substratum 627+
     // WARNING: Only enable if you are sure you want certification status to pass on Substratum
@@ -16,31 +14,23 @@ object Constants {
     const val MINIMUM_SUBSTRATUM_VERSION = 712 // 510 is the final MM build
     const val ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGERS = SUPPORTS_THIRD_PARTY_THEME_SYSTEMS
 
-    // Theme Ready Packages by Team Blacked Out
-    val THEME_READY_PACKAGES = arrayOf(
-            "com.google.android.gm",
-            "com.google.android.googlequicksearchbox",
-            "com.android.vending",
-            "com.google.android.apps.plus",
-            "com.google.android.talk",
-            "com.google.android.youtube",
-            "com.google.android.inputmethod.latin"
-    )
+    // Custom message on theme launch, see theme_strings.xml for changing the dialog content
+    // Set SHOW_DIALOG_REPEATEDLY to true if you want the dialog to be showed on every theme launch
+    const val SHOW_LAUNCH_DIALOG = false
+    const val SHOW_DIALOG_REPEATEDLY = false
 
     // Blacklisted APKs to prevent theme launching, these include simple regex formatting, without
     // full regex formatting (e.g. com.android. will block everything that starts with com.android.)
     val BLACKLISTED_APPLICATIONS = arrayOf(
-            "com.android.vending.billing.InAppBillingService.LOCK",
-            "com.android.vending.billing.InAppBillingService.LACK",
             "cc.madkite.freedom",
             "zone.jasi2169.uretpatcher",
             "uret.jasi2169.patcher",
+            "p.jasi2169.al3",
             "com.dimonvideo.luckypatcher",
             "com.chelpus.lackypatch",
             "com.forpda.lp",
-            "com.android.vending.billing.InAppBillingService.LUCK",
-            "com.android.protips",
-            "com.android.vending.billing.InAppBillingService.CLON",
+            "com.android.vending.billing.InAppBillingService",
+            "com.android.vending.billing.InAppBillingSorvice",
             "com.android.vendinc",
             "com.appcake",
             "ac.market.store",

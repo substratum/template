@@ -9,7 +9,7 @@
 	
 	<uses-feature
         android:name="projekt.substratum.theme"
-        android:required="false" /> <!-- Set to true for block to be enabled -->
+        android:required="false" /> <!-- Set to true for OMS-rom only block to be enabled -->
 
     <application
         android:allowBackup="false"
@@ -51,9 +51,6 @@
             android:name="Substratum_Samsung"
             android:value="@bool/ThemeSupportSamsung"/>
         <meta-data
-            android:name="Substratum_ThemeReady"
-            android:value="@string/ThemeReadyRequirement"/>
-        <meta-data
             android:name="Substratum_Wallpapers"
             android:value="@string/ThemeWallpaperSource"/>
         <meta-data
@@ -63,7 +60,7 @@
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="11.1.0"/>
+            android:value="12.1.0"/>
         <meta-data
             android:name="Substratum_Encryption"
             android:value="@string/encryption_status"/>

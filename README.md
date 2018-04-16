@@ -142,17 +142,17 @@ Then you can stop reading and get your theme published! Good luck!
 
 If you are ready to get AntiPiracy set up, all you need to look at is [LoadingProcess.c](app/src/main/jni/LoadingProcess.c)!
 
-First change the [ENABLE_ANTI_PIRACY](app/src/main/jni/LoadingProcess.c#L7) value on line 7 from `JNI_FALSE` to `JNI_TRUE`.
-
 Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/jni/LoadingProcess.c#L10) on line 10.
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/java/substratum/theme/template/Constants.kt#L11) on line 11.
+**NOTE**: If you are planning to make use of [Google Play App Signing](https://developer.android.com/studio/publish/app-signing.html#google-play-app-signing), **DO NOT** fill the `APK_SIGNATURE_PRODUCTION` field in [LoadingProcess.c](app/src/main/jni/LoadingProcess.c).
+
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/jni/LoadingProcess.c#L9)  on line 11.
 
 Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 14 and lines below it, simply change from `JNI_TRUE` to `JNI_FALSE` and vice versa to make your desired configuration.
 
-Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/java/substratum/theme/template/Constants.kt#L31) on [Constants.kt](app/src/main/java/substratum/theme/template/Constants.kt) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/Constants.kt#L32) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
 
-**Under no circumstances should you share your LoadingProcess.c file, unless specifically asked by an [official substratum developer!](https://github.com/substratum/documentation#team-info-and-responsibilities)**
+**Under no circumstances should you share your LoadingProcess.c file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
 
 ### Encrypted Assets
 As of template version 11.0.0, all theme assets are duplicated are encrypted within the APK by default, not your original assets!

@@ -20,19 +20,6 @@ object ThemeFunctions {
 
     val SUBSTRATUM_PACKAGE_NAME = "projekt.substratum"
 
-    fun checkNetworkConnection(): Boolean? {
-        var isConnected = false
-        try {
-            val process = Runtime.getRuntime().exec("/system/bin/ping -c 1 www.google.com")
-            val returnVal = process.waitFor()
-            isConnected = returnVal == 0
-        } catch (e: Exception) {
-            // Suppress error
-        }
-
-        return isConnected
-    }
-
     fun isPackageInstalled(context: Context, package_name: String): Boolean {
         return try {
             val pm = context.packageManager
@@ -110,11 +97,16 @@ object ThemeFunctions {
         }
     }
 
+    private fun checkPackageRegex(context: Context, stringArray: Array<String>): Boolean {
+        val pm = context.packageManager
+        val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
+        val listOfInstalled = arrayListOf<String>()
+        packages.mapTo(listOfInstalled) { it.packageName }
+        return stringArray.any { listOfInstalled.contains(it) }
+    }
+
     fun getSelfVerifiedPirateTools(context: Context): Boolean {
-        BLACKLISTED_APPLICATIONS
-                .filter { isPackageInstalled(context, it) }
-                .forEach { return true }
-        return false
+        return checkPackageRegex(context, BLACKLISTED_APPLICATIONS)
     }
 
     fun checkSubstratumIntegrity(context: Context): Boolean {

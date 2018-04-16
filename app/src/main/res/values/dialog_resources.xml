@@ -2,6 +2,13 @@
 <resources>
     <!-- Making a dark theme? You know what to do! -->
     <style name="DialogStyle" parent="@style/Theme.AppCompat.Light.Dialog.Alert" />
-    <!-- Don't touch me, I'm for the theme ready dialog! -->
-    <string name="and">and</string>
+    <!--
+      ~ Custom dialog message on theme launch.
+      ~ Add word in launch_dialog_negative to add a cancel button on the dialog
+      -->
+    <string name="launch_dialog_title">Dialog title</string>
+    <string name="launch_dialog_content">Dialog content</string>
+    <string name="launch_dialog_positive">OK</string>
+    <string name="launch_dialog_negative" />
+    <string name="launch_dialog_negative_url" />
 </resources>

@@ -29,7 +29,7 @@ ext {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.0'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
@@ -52,6 +52,7 @@ android {
 
         ndk {
             moduleName "LoadingProcess"
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86"
         }
     }
     buildTypes {
@@ -76,9 +77,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.javiersantos:PiracyChecker:1.1'
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version") {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.github.javiersantos:PiracyChecker:1.1'
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version") {
         transitive = true
     }
 }

@@ -3,7 +3,7 @@ package substratum.theme.template
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
@@ -18,11 +18,10 @@ import substratum.theme.template.Constants.ENABLE_KNOWN_THIRD_PARTY_THEME_MANAGE
 import substratum.theme.template.Constants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.Constants.OTHER_THEME_SYSTEMS
+import substratum.theme.template.Constants.SHOW_DIALOG_REPEATEDLY
+import substratum.theme.template.Constants.SHOW_LAUNCH_DIALOG
 import substratum.theme.template.Constants.SUBSTRATUM_FILTER_CHECK
-import substratum.theme.template.Constants.THEME_READY_GOOGLE_APPS
-import substratum.theme.template.Constants.THEME_READY_PACKAGES
 import substratum.theme.template.ThemeFunctions.SUBSTRATUM_PACKAGE_NAME
-import substratum.theme.template.ThemeFunctions.checkNetworkConnection
 import substratum.theme.template.ThemeFunctions.checkSubstratumIntegrity
 import substratum.theme.template.ThemeFunctions.getSelfSignature
 import substratum.theme.template.ThemeFunctions.getSelfVerifiedIntentResponse
@@ -33,8 +32,6 @@ import substratum.theme.template.ThemeFunctions.getSubstratumUpdatedResponse
 import substratum.theme.template.ThemeFunctions.hasOtherThemeSystem
 import substratum.theme.template.ThemeFunctions.isCallingPackageAllowed
 import substratum.theme.template.ThemeFunctions.isPackageInstalled
-import java.io.File
-import java.util.*
 
 @Suppress("ConstantConditionIf") // This needs to be defined by the themer, so suppress!
 class SubstratumLauncher : Activity() {
@@ -42,12 +39,11 @@ class SubstratumLauncher : Activity() {
     private var substratumIntentData = "projekt.substratum.THEME"
     private var getKeysIntent = "projekt.substratum.GET_KEYS"
     private var receiveKeysIntent = "projekt.substratum.RECEIVE_KEYS"
-    private var themeReadyScript = "/system/addon.d/80-ThemeReady.sh"
     private var tag = "SubstratumThemeReport"
     private var piracyChecker: PiracyChecker? = null
 
     private fun calibrateSystem(certified: Boolean, modeLaunch: String?) {
-        if (getAPStatus() && !BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             startAntiPiracyCheck(certified, modeLaunch)
         } else {
             quitSelf(certified, modeLaunch)
@@ -58,7 +54,7 @@ class SubstratumLauncher : Activity() {
         if (piracyChecker != null) {
             piracyChecker!!.start()
         } else {
-            if (getAPStatus() && getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
+            if (getAPKSignatureProduction().isEmpty() && !BuildConfig.DEBUG) {
                 Log.e(tag, PiracyCheckerUtils.getAPKSignature(this))
             }
 
@@ -131,7 +127,7 @@ class SubstratumLauncher : Activity() {
         var themePiracyCheck = false
         if (getBlacklistedApplications())
             themePiracyCheck = getSelfVerifiedPirateTools(applicationContext)
-        if (themePiracyCheck || (SUBSTRATUM_FILTER_CHECK && !certified)) {
+        if (themePiracyCheck or (SUBSTRATUM_FILTER_CHECK && !certified)) {
             Toast.makeText(this, R.string.unauthorized, Toast.LENGTH_LONG).show()
             finish()
             return false
@@ -143,17 +139,27 @@ class SubstratumLauncher : Activity() {
         returnIntent.putExtra("encryption_key", getDecryptionKey())
         returnIntent.putExtra("iv_encrypt_key", getIVKey())
 
+        val callingPackage = intent.getStringExtra("calling_package_name")
+        if (callingPackage == null) {
+            val parse = String.format(
+                    getString(R.string.outdated_substratum),
+                    getString(R.string.ThemeName),
+                    915)
+            Toast.makeText(this, parse, Toast.LENGTH_SHORT).show()
+            finish()
+            return false
+        }
+        if (!isCallingPackageAllowed(callingPackage)) {
+            return false
+        } else {
+            returnIntent.`package` = callingPackage
+        }
+
         if (intent.action == substratumIntentData) {
             setResult(getSelfVerifiedIntentResponse(applicationContext)!!, returnIntent)
         } else if (intent.action == getKeysIntent) {
-            val callingPackage = intent.getStringExtra("calling_package_name")
-            returnIntent.`package` = callingPackage
             returnIntent.action = receiveKeysIntent
-            if (callingPackage != null) {
-                if (isCallingPackageAllowed(callingPackage)) {
-                    sendBroadcast(returnIntent)
-                }
-            }
+            sendBroadcast(returnIntent)
         }
         finish()
         return true
@@ -165,11 +171,14 @@ class SubstratumLauncher : Activity() {
         val intent = intent
         val action = intent.action
         var verified = false
-        if (action == substratumIntentData) {
-            verified = if (allowThirdPartySubstratumBuilds()) {
-                true
-            } else {
-                checkSubstratumIntegrity(this)
+        val certified = intent.getBooleanExtra("certified", false)
+        val modeLaunch: String? = intent.getStringExtra("theme_mode")
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        if ((action == substratumIntentData) or (action == getKeysIntent)) {
+            verified = when {
+                allowThirdPartySubstratumBuilds() -> true
+                else -> checkSubstratumIntegrity(this)
             }
         } else {
             OTHER_THEME_SYSTEMS
@@ -185,104 +194,70 @@ class SubstratumLauncher : Activity() {
             Log.d(tag, "'$action' has been authorized to launch this theme.")
         }
 
-        val certified = intent.getBooleanExtra("certified", false)
-        val modeLaunch: String? = intent.getStringExtra("theme_mode")
-
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        if (getInternetCheck()) {
-            if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
-                if (THEME_READY_GOOGLE_APPS) {
-                    detectThemeReady(certified, modeLaunch)
+        if (SHOW_LAUNCH_DIALOG) run {
+            if (SHOW_DIALOG_REPEATEDLY) {
+                showDialog(certified, modeLaunch)
+                sharedPref.edit().remove("dialog_showed").apply()
+            } else if (!sharedPref.getBoolean("dialog_showed", false)) {
+                showDialog(certified, modeLaunch)
+                sharedPref.edit().putBoolean("dialog_showed", true).apply()
+            } else {
+                if (getInternetCheck()) {
+                    if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
+                        calibrateSystem(certified, modeLaunch)
+                    } else {
+                        checkConnection(certified, modeLaunch)
+                    }
                 } else {
                     calibrateSystem(certified, modeLaunch)
                 }
+            }
+        } else if (getInternetCheck()) {
+            if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
+                calibrateSystem(certified, modeLaunch)
             } else {
                 checkConnection(certified, modeLaunch)
             }
-        } else if (THEME_READY_GOOGLE_APPS) {
-            detectThemeReady(certified, modeLaunch)
         } else {
             calibrateSystem(certified, modeLaunch)
         }
     }
 
-    private fun checkConnection(certified: Boolean, modeLaunch: String?): Boolean {
-        val isConnected = checkNetworkConnection()
-        return if (!isConnected!!) {
-            Toast.makeText(this, R.string.toast_internet, Toast.LENGTH_LONG).show()
-            false
-        } else {
-            val editor = getPreferences(Context.MODE_PRIVATE).edit()
-            editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
-            if (THEME_READY_GOOGLE_APPS) {
-                detectThemeReady(certified, modeLaunch)
-            } else {
-                calibrateSystem(certified, modeLaunch)
-            }
-            true
-        }
+    private fun checkConnection(certified: Boolean, modeLaunch: String?) {
+        val editor = getPreferences(Context.MODE_PRIVATE).edit()
+        editor.putInt("last_version", BuildConfig.VERSION_CODE).apply()
+        calibrateSystem(certified, modeLaunch)
     }
 
-    private fun detectThemeReady(certified: Boolean, modeLaunch: String?) {
-        val addon = File(themeReadyScript)
-        if (addon.exists()) {
-            val apps = ArrayList<String>()
-            var updated = false
-            val incomplete = false
-            val packageManager = this.packageManager
-            val appName = StringBuilder()
-
-            for (packageName in THEME_READY_PACKAGES) {
-                try {
-                    val appInfo = packageManager.getApplicationInfo(packageName, 0)
-                    if (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0) {
-                        updated = true
-                        apps.add(packageManager.getApplicationLabel(appInfo).toString())
-                    }
-                } catch (e: Exception) {
-                    // Package not found
-                }
-            }
-
-            for (i in apps.indices) {
-                appName.append(apps[i])
-                if (i <= apps.size - 3) {
-                    appName.append(", ")
-                } else if (i == apps.size - 2) {
-                    appName.append(" ")
-                            .append(getString(R.string.and))
-                            .append(" ")
-                }
-            }
-
-            if (!updated && !incomplete) {
-                calibrateSystem(certified, modeLaunch)
-            } else {
-                val stringInt = R.string.theme_ready_updated
-                val parse = String.format(getString(stringInt),
-                        appName)
-
-                AlertDialog.Builder(this, R.style.DialogStyle)
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setTitle(getString(R.string.ThemeName))
-                        .setMessage(parse)
-                        .setPositiveButton(R.string.yes) { _, _ ->
+    private fun showDialog(certified: Boolean, modeLaunch: String?) {
+        val dialog = AlertDialog.Builder(this, R.style.DialogStyle)
+                .setCancelable(false)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTitle(R.string.launch_dialog_title)
+                .setMessage(R.string.launch_dialog_content)
+                .setPositiveButton(R.string.launch_dialog_positive) { _, _ ->
+                    val sharedPref = getPreferences(Context.MODE_PRIVATE)
+                    if (getInternetCheck()) {
+                        if (sharedPref.getInt("last_version", 0) == BuildConfig.VERSION_CODE) {
                             calibrateSystem(certified, modeLaunch)
+                        } else {
+                            checkConnection(certified, modeLaunch)
                         }
-                        .setNegativeButton(R.string.no) { _, _ -> finish() }
-                        .setOnCancelListener { finish() }
-                        .show()
+                    } else {
+                        calibrateSystem(certified, modeLaunch)
+                    }
+                }
+        if (getString(R.string.launch_dialog_negative).isNotEmpty()) {
+            if (getString(R.string.launch_dialog_negative_url).isNotEmpty()) {
+                dialog.setNegativeButton(R.string.launch_dialog_negative) { _, _ ->
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.launch_dialog_negative_url))))
+                    finish()
+                }
+            } else {
+                dialog.setNegativeButton(R.string.launch_dialog_negative) { _, _ -> finish() }
             }
-        } else {
-            AlertDialog.Builder(this, R.style.DialogStyle)
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setTitle(getString(R.string.ThemeName))
-                    .setMessage(getString(R.string.theme_ready_not_detected))
-                    .setPositiveButton(R.string.yes) { _, _ -> calibrateSystem(certified, modeLaunch) }
-                    .setNegativeButton(R.string.no) { _, _ -> finish() }
-                    .setOnCancelListener { finish() }
-                    .show()
         }
+        dialog.show()
     }
 
     // Load up the JNI library
@@ -290,7 +265,6 @@ class SubstratumLauncher : Activity() {
         System.loadLibrary("LoadingProcess")
     }
 
-    private external fun getAPStatus(): Boolean
     private external fun getInternetCheck(): Boolean
     private external fun getGooglePlayRequirement(): Boolean
     private external fun getAmazonAppStoreRequirement(): Boolean

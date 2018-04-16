@@ -4,9 +4,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
-// Change this value to JNI_TRUE to enable anti piracy
-jboolean ENABLE_ANTI_PIRACY = JNI_TRUE;
-
 // Make sure to fill in those values if you enable anti piracy
 char APK_SIGNATURE_PRODUCTION[] = ""; // Signature string value from release key
 char BASE_64_LICENSE_KEY[] = ""; // Base64 license key from Google Play Console
@@ -19,16 +16,6 @@ jboolean REQUIRE_INSTALL_FROM_AMAZON_STORE = JNI_FALSE;
 
 // Change this value to JNI_FALSE to block users from using your theme with third party substratum build
 jboolean ALLOW_THIRD_PARTY_SUBSTRATUM_BUILD = JNI_TRUE;
-
-/*
- * Piracy Check
- *
- * Change this value to JNI_TRUE if you would like to enable anti piracy
- */
-JNIEXPORT jboolean JNICALL
-Java_substratum_theme_template_SubstratumLauncher_getAPStatus(JNIEnv *env) {
-    return ENABLE_ANTI_PIRACY;
-}
 
 /*
  * APK Signature Production
