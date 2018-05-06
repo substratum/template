@@ -1,0 +1,23 @@
+ext {
+    // Whether the theme assets should be encrypted or not,
+    // this makes it harder for pirates and kangers! (DEFAULT: true)
+    SHOULD_ENCRYPT_ASSETS = true
+
+    // Whether this theme supports third party theme systems, we will not be able to help you debug
+    // your themes on external theming systems, so the team will NOT respond to external systems if
+    // there are issues with your theme (DEFAULT: false)
+    SUPPORTS_THIRD_PARTY_SYSTEMS = false
+
+    // Play Store AntiPiracy LVL configurations
+    BASE_64_LICENSE_KEY = null
+    APK_SIGNATURE_PRODUCTION = null
+
+    // Piracy library configurations
+    ENABLE_APP_BLACKLIST_CHECK = false
+    ENFORCE_INTERNET_CHECK = false
+    ENFORCE_GOOGLE_PLAY_INSTALL = false
+    ENFORCE_AMAZON_APP_STORE_INSTALL = false
+
+    // Allow third party substratum builds
+    ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS = true
+}

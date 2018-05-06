@@ -2,20 +2,19 @@
 
 The official theme template from the team, for every prospective/current themer who wishes to join the Substratum game!
 
-There are six types of Substratum as of this date (18/10/17)
+There are seven types of Substratum as of this date (06/05/18)
   - Substratum OMS (3/7) (Marshmallow) [Marshmallow has been deprecated since 510, but it is still available]
   - Substratum OMS (7) (Nougat)
   - Substratum Dynamic Overlays (Stock Oreo) [Will require a rooted device, or Andromeda installed]
   - Substratum Dynamic Overlays (Oreo)
   - Substratum Samsung (RRO-OMS fusion) [Will require a device with the samsung plugin]
+  - Substratum Samsung Oreo (OMS-RRO fusion) [Will require a device with the andromeda plugin]
   - Substratum Legacy (RRO) [Rooted]
 
 To get started, first of all, FORK and CLONE this project on GitHub and open it up with Android Studio (We recommend to keep yourself up to date with the latest Google has to offer)
 
 ## Step 0: PRECONFIGURATIONS!
 Install the latest Android Studio Preview: https://developer.android.com/studio/preview/index.html
-
-Install NDK, CMAKE and LLDB from the SDK Manager: ![Alt text](https://developer.android.com/studio/images/projects/ndk-install_2-2_2x.png)
 
 Disable Instant Run: http://stackoverflow.com/a/35169716
 
@@ -36,10 +35,8 @@ applicationId "com.yourname.themename"
 ```
 
 Change Package Name in the project structure (optional):
-  - First follow the instructions here http://stackoverflow.com/a/29092698
-  - When you done open [LoadingProcess.c](app/src/main/jni/LoadingProcess.c), and replace all `substratum_theme_template` with your own package name but replace the dots (.) with underscores (_).
-   For instance `com_yourname_themename`
- 
+  - Just follow the instructions listed brilliantly here http://stackoverflow.com/a/29092698
+
 NOTE: If you change your project structure name, the AndroidManifest AND the build.gradle package names must match, or else encrypted assets will break.
 
 ## Step 2: Theme Properties
@@ -133,26 +130,26 @@ If you take a look at the aforementioned theme_configurations.xml, you will see 
 ## Step 6: Safeguard your theme! Don't let the pirates win!
 
 ### If you want to enable the Substratum theme for other Theme Managers (e.g. Slim)
-In app build.gradle, change the [SUPPORTS_THIRD_PARTY_SYSTEMS](app/build.gradle#L19) on line 19 of your app's build.gradle from false to true.
+In ThemerConstants.gradle, change the [SUPPORTS_THIRD_PARTY_SYSTEMS](app/ThemerConstants.gradle#L9) on line 9.
 
 ### If you don't want to activate AntiPiracy
 Then you can stop reading and get your theme published! Good luck!
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, all you need to look at is [LoadingProcess.c](app/src/main/jni/LoadingProcess.c)!
+If you are ready to get AntiPiracy set up, all you need to look at is [ThemerConstants.gradle](app/ThemerConstants.gradle)!
 
-Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/src/main/jni/LoadingProcess.c#L10) on line 10.
+Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/ThemerConstants.gradle#L13) on line 13.
 
-**NOTE**: If you are planning to make use of [Google Play App Signing](https://developer.android.com/studio/publish/app-signing.html#google-play-app-signing), **DO NOT** fill the `APK_SIGNATURE_PRODUCTION` field in [LoadingProcess.c](app/src/main/jni/LoadingProcess.c).
+**NOTE**: If you are planning to make use of [Google Play App Signing](https://developer.android.com/studio/publish/app-signing.html#google-play-app-signing), **DO NOT** fill the `APK_SIGNATURE_PRODUCTION` field in [ThemerConstants.gradle](app/ThemerConstants.gradle).
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/src/main/jni/LoadingProcess.c#L9)  on line 11.
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/ThemerConstants.gradle#L12)  on line 12.
 
-Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 14 and lines below it, simply change from `JNI_TRUE` to `JNI_FALSE` and vice versa to make your desired configuration.
+Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 16 and lines below it, simply change from `true` to `false` and vice versa to make your desired configuration.
 
-Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/Constants.kt#L32) line 31. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/src/main/jni/LoadingProcess.c#L14) on [LoadingProcess.c](app/src/main/jni/LoadingProcess.c) line 12.
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/AdvancedConstants.kt#L21) line 21. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/ThemerConstants.gradle#L16) on line 16.
 
-**Under no circumstances should you share your LoadingProcess.c file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
+**Under no circumstances should you share your ThemerConstants.gradle file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
 
 ### Encrypted Assets
 As of template version 11.0.0, all theme assets are duplicated are encrypted within the APK by default, not your original assets!
@@ -162,14 +159,14 @@ Always use a version control tool listed below to host your private themes!
 BitBucket: https://bitbucket.org/
 GitLab: https://about.gitlab.com/
 
-If you want to keep your theme assets unencrypted, just change the value [here](app/build.gradle#L14) to false.
+If you want to keep your theme assets unencrypted, just change the value [here](app/ThemerConstants.gradle#L4) to false.
 
 ### Enforcing security
 As of template version 11.0.0, themes have an additional check on the build of substratum your users should be running.
 
 What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
 
-If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `JNI_TRUE` to `JNI_FALSE` [here](app/src/main/jni/LoadingProcess.c#L18)!
+If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `true` to `false` [here](app/ThemerConstants.gradle#L22)!
 
 ### Now what?
 Nothing. Now you're set to publish your theme!
