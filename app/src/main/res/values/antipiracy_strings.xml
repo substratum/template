@@ -8,5 +8,6 @@
     <string name="yes">Confirm</string>
     <string name="unauthorized">This theme located a few piracy tools installed. Please uninstall them to continue.</string>
     <string name="unauthorized_theme_client">This theme does not support the current theming system, please use an official client or an official test client available on Telegram!</string>
+    <string name="unauthorized_theme_client_hijack" formatted="false">Theme was attempted to be hijacked by \'%s\'</string>
     <string name="outdated_substratum" formatted="false">This version of %s requires substratum version %s and up! Please upgrade!</string>
 </resources>

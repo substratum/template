@@ -18,6 +18,7 @@ import com.github.javiersantos.piracychecker.enums.PiracyCheckerError
 import com.github.javiersantos.piracychecker.enums.PirateApp
 import substratum.theme.template.AdvancedConstants.ENFORCE_MINIMUM_SUBSTRATUM_VERSION
 import substratum.theme.template.AdvancedConstants.MINIMUM_SUBSTRATUM_VERSION
+import substratum.theme.template.AdvancedConstants.ORGANIZATION_THEME_SYSTEMS
 import substratum.theme.template.AdvancedConstants.OTHER_THEME_SYSTEMS
 import substratum.theme.template.AdvancedConstants.SHOW_DIALOG_REPEATEDLY
 import substratum.theme.template.AdvancedConstants.SHOW_LAUNCH_DIALOG
@@ -34,6 +35,16 @@ import substratum.theme.template.ThemeFunctions.hasOtherThemeSystem
 import substratum.theme.template.ThemeFunctions.isCallingPackageAllowed
 import substratum.theme.template.ThemeFunctions.isPackageInstalled
 
+/**
+ * NOTE TO THEMERS
+ *
+ * This class is a TEMPLATE of how you should be launching themes. As long as you keep the structure
+ * of launching themes the same, you can avoid easy script crackers by changing how
+ * functions/methods are coded, as well as boolean variable placement.
+ *
+ * The more you play with this the harder it would be to decompile and crack!
+ */
+
 class SubstratumLauncher : Activity() {
 
     private var substratumIntentData = "projekt.substratum.THEME"
@@ -43,7 +54,7 @@ class SubstratumLauncher : Activity() {
     private var piracyChecker: PiracyChecker? = null
 
     private fun calibrateSystem(certified: Boolean) {
-        if (!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) { // Themers may want to change this for release builds!
             startAntiPiracyCheck(certified)
         } else {
             quitSelf(certified)
@@ -166,6 +177,28 @@ class SubstratumLauncher : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Reject all other apps trying to hijack the theme first
+        val caller = callingActivity.packageName
+        var callerVerified = false
+
+        val themeSystems: MutableList<String> = mutableListOf()
+        themeSystems.addAll(ORGANIZATION_THEME_SYSTEMS)
+        themeSystems.addAll(OTHER_THEME_SYSTEMS)
+        themeSystems
+                .filter { caller.startsWith(prefix = it, ignoreCase = true) }
+                .forEach { callerVerified = true }
+        if (!callerVerified) {
+            Log.e(tag, "This theme does not support the launching theme system. [HIJACK] ($caller)")
+            val hijackString =
+                    String.format(getString(R.string.unauthorized_theme_client_hijack), caller)
+            Toast.makeText(this, hijackString, Toast.LENGTH_LONG).show()
+            finish()
+            return
+        } else {
+            Log.d(tag, "'$caller' has been authorized to launch this theme. (Phase 1)")
+        }
+
         // We will ensure that our support is added where it belongs
         val intent = intent
         val action = intent.action
@@ -189,7 +222,7 @@ class SubstratumLauncher : Activity() {
             finish()
             return
         } else {
-            Log.d(tag, "'$action' has been authorized to launch this theme.")
+            Log.d(tag, "'$action' has been authorized to launch this theme. (Phase 2)")
         }
 
         if (SHOW_LAUNCH_DIALOG) run {
