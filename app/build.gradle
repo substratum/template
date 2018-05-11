@@ -38,8 +38,8 @@ android {
         // Themers: Do not touch this, they will only formulate integrity structure of the core
         //          template
         buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
-        buildConfigField "String", "BASE_64_LICENSE_KEY", "" + BASE_64_LICENSE_KEY
-        buildConfigField "String", "APK_SIGNATURE_PRODUCTION", "" + APK_SIGNATURE_PRODUCTION
+        buildConfigField "String", "BASE_64_LICENSE_KEY", "\"" + BASE_64_LICENSE_KEY + "\""
+        buildConfigField "String", "APK_SIGNATURE_PRODUCTION", "\"" + APK_SIGNATURE_PRODUCTION + "\""
         buildConfigField "boolean", "ENABLE_APP_BLACKLIST_CHECK", "" + ENABLE_APP_BLACKLIST_CHECK
         buildConfigField "boolean", "ENFORCE_INTERNET_CHECK", "" + ENFORCE_INTERNET_CHECK
         buildConfigField "boolean", "ENFORCE_GOOGLE_PLAY_INSTALL", "" + ENFORCE_GOOGLE_PLAY_INSTALL
