@@ -9,8 +9,8 @@ ext {
     SUPPORTS_THIRD_PARTY_SYSTEMS = false
 
     // Play Store AntiPiracy LVL configurations
-    BASE_64_LICENSE_KEY = null
-    APK_SIGNATURE_PRODUCTION = null
+    BASE_64_LICENSE_KEY = ""
+    APK_SIGNATURE_PRODUCTION = ""
 
     // Piracy library configurations
     ENABLE_APP_BLACKLIST_CHECK = false
