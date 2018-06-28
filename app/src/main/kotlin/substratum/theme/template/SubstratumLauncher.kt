@@ -179,15 +179,17 @@ class SubstratumLauncher : Activity() {
         super.onCreate(savedInstanceState)
 
         // Reject all other apps trying to hijack the theme first
-        val caller = callingActivity.packageName
+        val caller = callingActivity?.packageName
         var callerVerified = false
 
         val themeSystems: MutableList<String> = mutableListOf()
         themeSystems.addAll(ORGANIZATION_THEME_SYSTEMS)
         themeSystems.addAll(OTHER_THEME_SYSTEMS)
-        themeSystems
-                .filter { caller.startsWith(prefix = it, ignoreCase = true) }
-                .forEach { callerVerified = true }
+        if (caller != null) {
+            themeSystems
+                    .filter { caller.startsWith(prefix = it, ignoreCase = true) }
+                    .forEach { callerVerified = true }
+        }
         if (!callerVerified) {
             Log.e(tag, "This theme does not support the launching theme system. [HIJACK] ($caller)")
             val hijackString =
