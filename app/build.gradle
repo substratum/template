@@ -10,7 +10,7 @@ apply plugin: 'kotlin-android'
 apply from: 'ThemerConstants.gradle'
 
 ext {
-    // Encryption values, do not touch as we generate a random key every time you compile!
+    // Themers: DO NOT MODIFY
     byte[] key = new byte[16]
     new Random().nextBytes(key)
     KEY = key
@@ -30,36 +30,37 @@ android {
         // We are only supporting Nougat and above, all new changes will incorporate Nougat changes
         // to the substratum repo rather than anything lower. Keep targetSdkVersion the same.
         minSdkVersion 24
-        targetSdkVersion 28
         // Both versions must be changed to increment on Play Store/user's devices
         versionCode 2
         versionName "2.0"
 
-        // Themers: Do not touch this, they will only formulate integrity structure of the core
-        //          template
+        // Themers: DO NOT MODIFY
         buildConfigField "boolean", "SUPPORTS_THIRD_PARTY_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS
-        buildConfigField "String", "BASE_64_LICENSE_KEY", "\"" + BASE_64_LICENSE_KEY + "\""
-        buildConfigField "String", "APK_SIGNATURE_PRODUCTION", "\"" + APK_SIGNATURE_PRODUCTION + "\""
         buildConfigField "boolean", "ENABLE_APP_BLACKLIST_CHECK", "" + ENABLE_APP_BLACKLIST_CHECK
-        buildConfigField "boolean", "ENFORCE_INTERNET_CHECK", "" + ENFORCE_INTERNET_CHECK
-        buildConfigField "boolean", "ENFORCE_GOOGLE_PLAY_INSTALL", "" + ENFORCE_GOOGLE_PLAY_INSTALL
-        buildConfigField "boolean", "ENFORCE_AMAZON_APP_STORE_INSTALL", "" + ENFORCE_AMAZON_APP_STORE_INSTALL
         buildConfigField "boolean", "ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS", "" + ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS
-        resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
-
         buildConfigField "String", "IV_KEY", "\"" + IV_KEY + "\""
         buildConfigField "byte[]", "DECRYPTION_KEY", String.valueOf("\"" + KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
         buildConfigField "byte[]", "IV_KEY", String.valueOf("\"" + IV_KEY + "\"").replace("\"", "").replace("[", "{").replace("]", "}")
+        resValue "string", "encryption_status", (shouldEncrypt() ? "onCompileVerify" : "false")
     }
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Themers: DO NOT MODIFY
+            buildConfigField "boolean", "ENFORCE_GOOGLE_PLAY_INSTALL", "false"
+            buildConfigField "String", "BASE_64_LICENSE_KEY", "\"\""
+            buildConfigField "String", "APK_SIGNATURE_PRODUCTION", "\"\""
         }
         release {
-            // When you compile an APK as release, your resources and IV keys will be safeguarded
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Themers: DO NOT MODIFY
+            buildConfigField "boolean", "ENFORCE_GOOGLE_PLAY_INSTALL", "" + ENFORCE_GOOGLE_PLAY_INSTALL
+            buildConfigField "String", "BASE_64_LICENSE_KEY", "\"" + BASE_64_LICENSE_KEY + "\""
+            buildConfigField "String", "APK_SIGNATURE_PRODUCTION", "\"" + APK_SIGNATURE_PRODUCTION + "\""
         }
     }
     sourceSets {
@@ -69,13 +70,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.javiersantos:PiracyChecker:1.2.3'
+    implementation 'com.github.javiersantos:PiracyChecker:1.2.4'
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version") {
         transitive = true
     }
 }
 
-// Themers, do not touch this! This is our function to help us encrypt your assets!
+// Themers: DO NOT MODIFY ANYTHING BELOW
 task encryptAssets {
     if (!shouldEncrypt()) {
         println("Skipping assets encryption...")
@@ -168,8 +169,4 @@ gradle.buildFinished {
 boolean shouldEncrypt() {
     ArrayList<String> tasks = project.gradle.startParameter.taskNames
     return SHOULD_ENCRYPT_ASSETS && Arrays.toString(tasks).toLowerCase().contains("release")
-}
-
-repositories {
-    mavenCentral()
 }

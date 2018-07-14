@@ -1,13 +1,6 @@
 <resources>
-    <string name="toast_substratum">Please install Substratum before continuing!</string>
     <string name="toast_unlicensed">This copy of %s is not licensed!</string>
-    <string name="toast_internet">This theme requires a license check before continuing!</string>
-    <string name="theme_ready_not_detected">Theme Ready Google Apps were not detected on your system.\n\nBy confirming, you agree that you will receive little to no support.</string>
-    <string name="theme_ready_updated">Theme Ready Google Apps were detected on your system, but you have %s updated from the Play Store.\n\nPlease uninstall these updates prior to confirming or you agree that you will receive little to no support.</string>
-    <string name="no">Cancel</string>
-    <string name="yes">Confirm</string>
     <string name="unauthorized">This theme located a few piracy tools installed. Please uninstall them to continue.</string>
     <string name="unauthorized_theme_client">This theme does not support the current theming system, please use an official client or an official test client available on Telegram!</string>
     <string name="unauthorized_theme_client_hijack" formatted="false">Theme was attempted to be hijacked by \'%s\'</string>
-    <string name="outdated_substratum" formatted="false">This version of %s requires substratum version %s and up! Please upgrade!</string>
 </resources>

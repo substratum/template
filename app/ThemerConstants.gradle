@@ -14,9 +14,7 @@ ext {
 
     // Piracy library configurations
     ENABLE_APP_BLACKLIST_CHECK = false
-    ENFORCE_INTERNET_CHECK = false
     ENFORCE_GOOGLE_PLAY_INSTALL = false
-    ENFORCE_AMAZON_APP_STORE_INSTALL = false
 
     // Allow third party substratum builds
     ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS = true

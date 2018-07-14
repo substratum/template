@@ -1,158 +1,57 @@
 package substratum.theme.template
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.Signature
-import android.net.Uri
 import android.os.RemoteException
-import android.widget.Toast
 import substratum.theme.template.AdvancedConstants.BLACKLISTED_APPLICATIONS
-import substratum.theme.template.AdvancedConstants.MINIMUM_SUBSTRATUM_VERSION
+import substratum.theme.template.AdvancedConstants.ORGANIZATION_THEME_SYSTEMS
 import substratum.theme.template.AdvancedConstants.OTHER_THEME_SYSTEMS
 
 @Suppress("ConstantConditionIf")
 object ThemeFunctions {
 
-    val SUBSTRATUM_PACKAGE_NAME = "projekt.substratum"
-
-    fun isPackageInstalled(context: Context, package_name: String): Boolean {
-        return try {
-            val pm = context.packageManager
-            val ai = context.packageManager.getApplicationInfo(package_name, 0)
-            pm.getPackageInfo(package_name, PackageManager.GET_ACTIVITIES)
-            ai.enabled
-        } catch (e: Exception) {
-            false
+    fun isCallingPackageAllowed(packageId: String): Boolean {
+        if (BuildConfig.SUPPORTS_THIRD_PARTY_SYSTEMS) {
+            OTHER_THEME_SYSTEMS.contains(packageId)
         }
+        return ORGANIZATION_THEME_SYSTEMS.contains(packageId)
     }
 
-    @SuppressLint("PackageManagerGetSignatures")
-    private fun checkSubstratumIntegrity(context: Context,
-                                         packageName: String?): Boolean {
-        return try {
-            val pm = context.packageManager
-            val pi = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            if (pi.signatures != null
-                    && pi.signatures.size == 1
-                    && ((SIGNATURES[0] == pi.signatures[0]) ||
-                            (SIGNATURES[1] == pi.signatures[0]))) {
-                return true
-            }
-            false
-        } catch (e: RemoteException) {
-            false
-        }
-    }
-
-    fun getSubstratumFromPlayStore(activity: Activity) {
-        val playURL = "https://play.google.com/store/apps/details?id=projekt.substratum"
-        val i = Intent(Intent.ACTION_VIEW)
-        Toast.makeText(
-                activity,
-                activity.getString(R.string.toast_substratum),
-                Toast.LENGTH_SHORT
-        ).show()
-        i.data = Uri.parse(playURL)
-        activity.startActivity(i)
-        activity.finishAffinity()
-    }
-
-    fun hasOtherThemeSystem(context: Context): Boolean {
-        try {
-            val pm = context.packageManager
-            for (s: String in OTHER_THEME_SYSTEMS) {
-                val ai = pm.getApplicationInfo(s, 0)
-                pm.getPackageInfo(s, PackageManager.GET_ACTIVITIES)
-                return ai.enabled
-            }
-        } catch (e: Exception) {
-        }
-        return false
-    }
-
-    fun getSubstratumUpdatedResponse(context: Context): Boolean {
-        try {
-            val packageInfo = context.applicationContext.packageManager
-                    .getPackageInfo(SUBSTRATUM_PACKAGE_NAME, 0)
-            if (packageInfo.versionCode >= MINIMUM_SUBSTRATUM_VERSION) {
-                return true
-            }
-        } catch (e: Exception) {
-            // Suppress warning
-        }
-
-        return false
-    }
-
-    fun getSelfVerifiedIntentResponse(context: Context): Int? {
-        return if (BuildConfig.SUPPORTS_THIRD_PARTY_SYSTEMS) {
-            getSelfSignature(context)
-        } else {
-            getSubstratumSignature(context)
-        }
-    }
-
-    private fun checkPackageRegex(context: Context, stringArray: Array<String>): Boolean {
+    fun getSelfVerifiedPirateTools(context: Context): Boolean {
         val pm = context.packageManager
         val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
         val listOfInstalled = arrayListOf<String>()
         packages.mapTo(listOfInstalled) { it.packageName }
-        return stringArray.any { listOfInstalled.contains(it) }
+        return BLACKLISTED_APPLICATIONS.any { listOfInstalled.contains(it) }
     }
 
-    fun getSelfVerifiedPirateTools(context: Context): Boolean {
-        return checkPackageRegex(context, BLACKLISTED_APPLICATIONS)
-    }
-
-    fun checkSubstratumIntegrity(context: Context): Boolean {
-        SIGNATURES
-                .filter { checkSubstratumIntegrity(context, SUBSTRATUM_PACKAGE_NAME) }
-                .forEach { return true }
-        return false
-    }
-
-    fun getSelfVerifiedThemeEngines(context: Context): Boolean? {
-        val isPermitted: Boolean? = OTHER_THEME_SYSTEMS.any { isPackageInstalled(context, it) }
-        if (BuildConfig.SUPPORTS_THIRD_PARTY_SYSTEMS) {
-            return isPermitted
-        } else if (isPackageInstalled(context, SUBSTRATUM_PACKAGE_NAME)) {
-            return (!isPermitted!!)
-        }
-        return false
-    }
-
-    fun isCallingPackageAllowed(packageId: String): Boolean {
-        if (packageId == SUBSTRATUM_PACKAGE_NAME) return true
-        if (BuildConfig.SUPPORTS_THIRD_PARTY_SYSTEMS) {
-            OTHER_THEME_SYSTEMS.filter { packageId == it }.forEach { return true }
-        }
-        return false
-    }
-
+    @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
-    private fun getSubstratumSignature(context: Context): Int {
-        val sigs: Array<Signature>
-        try {
-            sigs = context.packageManager.getPackageInfo(
-                    SUBSTRATUM_PACKAGE_NAME,
-                    PackageManager.GET_SIGNATURES
-            ).signatures
-            return sigs[0].hashCode()
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-
-        return 0
+    fun checkApprovedSignature(context: Context, packageName: String): Boolean {
+        SIGNATURES.filter {
+            try {
+                val pm = context.packageManager
+                val pi = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+                if (pi.signatures != null && pi.signatures.size == 1
+                        && ((SIGNATURES[0] == pi.signatures[0]) ||
+                                (SIGNATURES[1] == pi.signatures[0]))) {
+                    return true
+                }
+                return false
+            } catch (e: RemoteException) {
+                return false
+            }
+        }.forEach { return true }
+        return false
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
     fun getSelfSignature(context: Context): Int {
-        val sigs: Array<Signature>
         try {
-            sigs = context.packageManager.getPackageInfo(
+            val sigs = context.packageManager.getPackageInfo(
                     context.packageName,
                     PackageManager.GET_SIGNATURES
             ).signatures

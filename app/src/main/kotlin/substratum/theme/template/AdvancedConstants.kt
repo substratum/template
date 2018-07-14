@@ -2,15 +2,6 @@ package substratum.theme.template
 
 object AdvancedConstants {
 
-    // Dynamic filter that only works on Substratum 627+
-    // WARNING: Only enable if you are sure you want certification status to pass on Substratum
-    //          before launching the theme, or else it will throw an unauthorized toast!
-    const internal val SUBSTRATUM_FILTER_CHECK = false
-
-    // Miscellaneous Checks
-    const val ENFORCE_MINIMUM_SUBSTRATUM_VERSION = true
-    const val MINIMUM_SUBSTRATUM_VERSION = 712 // 510 is the final MM build
-
     // Custom message on theme launch, see theme_strings.xml for changing the dialog content
     // Set SHOW_DIALOG_REPEATEDLY to true if you want the dialog to be showed on every theme launch
     const val SHOW_LAUNCH_DIALOG = false
