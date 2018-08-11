@@ -20,8 +20,8 @@ ext {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
@@ -30,7 +30,7 @@ android {
         // We are only supporting Nougat and above, all new changes will incorporate Nougat changes
         // to the substratum repo rather than anything lower. Keep targetSdkVersion the same.
         minSdkVersion 24
-        targetSdkVersion 27
+        targetSdkVersion 28
         // Both versions must be changed to increment on Play Store/user's devices
         versionCode 2
         versionName "2.0"
