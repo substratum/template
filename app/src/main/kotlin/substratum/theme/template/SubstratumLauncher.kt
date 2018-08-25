@@ -264,7 +264,7 @@ class SubstratumLauncher : Activity() {
 
     private fun showDialog(certified: Boolean) {
         val dialog = AlertDialog.Builder(this, R.style.DialogStyle)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setIcon(R.mipmap.ic_launcher)
                 .setTitle(R.string.launch_dialog_title)
                 .setMessage(R.string.launch_dialog_content)
