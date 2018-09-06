@@ -43,7 +43,8 @@ object AdvancedConstants {
             "com.dv.marketmod.installer",
             "org.mobilism.android",
             "com.blackmartalpha",
-            "org.blackmart.market"
+            "org.blackmart.market",
+            "com.happymod.apk"
     )
 
     // List of all organization theming systems officially supported by the team
