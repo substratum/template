@@ -21,7 +21,7 @@ ext {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
