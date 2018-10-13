@@ -35,7 +35,7 @@ applicationId "com.yourname.themename"
 ```
 
 Change Package Name in the project structure (optional):
-  - Just follow the instructions listed brilliantly here http://stackoverflow.com/a/29092698
+  - Just follow the instructions listed brilliantly [here](http://stackoverflow.com/a/29092698)
 
 NOTE: If you change your project structure name, the AndroidManifest AND the build.gradle package names must match, or else encrypted assets will break.
 
@@ -147,7 +147,7 @@ Then you would need to go to Play Developer Console. Then access to your app -> 
 
 Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 16 and lines below it, simply change from `true` to `false` and vice versa to make your desired configuration.
 
-Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/AdvancedConstants.kt#L21) line 21. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/ThemerConstants.gradle#L16) on line 16.
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/AdvancedConstants.kt#L12) on line 12. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/ThemerConstants.gradle#L16) on line 16.
 
 **Under no circumstances should you share your ThemerConstants.gradle file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
 
@@ -166,7 +166,7 @@ As of template version 11.0.0, themes have an additional check on the build of s
 
 What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
 
-If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `true` to `false` [here](app/ThemerConstants.gradle#L22)!
+If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `true` to `false` [here](app/ThemerConstants.gradle#L20)!
 
 ### Now what?
 Nothing. Now you're set to publish your theme!
