@@ -41,6 +41,7 @@ object AdvancedConstants {
     // List of all organization theming systems officially supported by the team
     val ORGANIZATION_THEME_SYSTEMS = arrayOf(
             "projekt.substratum",
+            "projekt.substratum.debug",
             "projekt.substratum.lite",
             "projekt.themer"
     )
