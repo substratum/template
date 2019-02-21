@@ -1,29 +1,25 @@
 <resources>
     <!-- Theme name and author name -->
-    <string name="ThemeName">Substratum Template</string>
-    <string name="ThemeAuthor">Projekt Development</string>
+    <string name="ThemeName">Substratum Experiments</string>
+    <string name="ThemeAuthor">TGX03</string>
     <!-- Your email for bug reports (DEFAULT: empty) -->
     <!--suppress CheckTagEmptyBody -->
-    <string name="ThemeAuthorEmail"></string>
+    <string name="ThemeAuthorEmail">tgx03@web.de</string>
     <!-- Theme wallpaper source (must be raw) -->
-    <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
+    <string name="ThemeWallpaperSource"></string>
     <!-- Do your theme support substratum legacy? -->
     <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
     <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
     <bool name="ThemeSupportLegacy">true</bool>
     <!-- Does your theme support substratum samsung? -->
-    <bool name="ThemeSupportSamsung">false</bool>
+    <bool name="ThemeSupportSamsung">true</bool>
     <!-- Do you want to override the hero image auto color assignment? -->
     <!-- Don't force anything? -> auto -->
     <!-- Force black/dark icons? -> dark -->
     <!-- Force white/light icons? -> light -->
-    <string name="ThemeHeroOverride">auto</string>
+    <string name="ThemeHeroOverride">dark</string>
     <!-- Put your theme changelog here, each item will be a new bullet point in the sheet -->
     <string-array name="ThemeChangelog">
-        <item>Change One</item>
-        <item>Change Two</item>
-        <item>Change Three</item>
-        <item>Change Four</item>
-        <item>Change Five</item>
+        <item>Move to Github</item>
     </string-array>
 </resources>

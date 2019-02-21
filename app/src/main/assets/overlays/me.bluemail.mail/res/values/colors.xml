@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg1_dark">#ff000000</color>
+    <color name="white_dark">#ff000000</color>
+    <color name="lockscr_dark_color_settings_bg">#ff000000</color>
+    <color name="folder_explorer_dark_list_bg">#ff000000</color>
+    <color name="folder_explorer_dark_pager_title_bg">#ff000000</color>
+    <color name="conversation_list_view_bg_dark">#ff000000</color>
+</resources>
