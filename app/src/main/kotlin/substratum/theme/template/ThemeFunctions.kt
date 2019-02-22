@@ -1,4 +1,4 @@
-package substratum.theme.template
+package de.tgx03.overlays
 
 import android.annotation.SuppressLint
 import android.content.Context
