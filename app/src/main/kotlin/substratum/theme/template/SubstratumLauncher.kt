@@ -1,6 +1,6 @@
 @file:Suppress("ConstantConditionIf")
 
-package substratum.theme.template
+package de.tgx03.overlays
 
 import android.app.Activity
 import android.content.Context
@@ -17,10 +17,10 @@ import substratum.theme.template.AdvancedConstants.ORGANIZATION_THEME_SYSTEMS
 import substratum.theme.template.AdvancedConstants.OTHER_THEME_SYSTEMS
 import substratum.theme.template.AdvancedConstants.SHOW_DIALOG_REPEATEDLY
 import substratum.theme.template.AdvancedConstants.SHOW_LAUNCH_DIALOG
-import substratum.theme.template.ThemeFunctions.checkApprovedSignature
-import substratum.theme.template.ThemeFunctions.getSelfSignature
-import substratum.theme.template.ThemeFunctions.getSelfVerifiedPirateTools
-import substratum.theme.template.ThemeFunctions.isCallingPackageAllowed
+import de.tgx03.overlays.ThemeFunctions.checkApprovedSignature
+import de.tgx03.overlays.ThemeFunctions.getSelfSignature
+import de.tgx03.overlays.ThemeFunctions.getSelfVerifiedPirateTools
+import de.tgx03.overlays.ThemeFunctions.isCallingPackageAllowed
 
 /**
  * NOTE TO THEMERS
