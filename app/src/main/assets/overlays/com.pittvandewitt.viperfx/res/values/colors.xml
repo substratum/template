@@ -1,8 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="primaryColor">#ff000000</color>
-    <color name="primaryLightColor">#ff000000</color>
-    <color name="primaryDarkColor">#ff000000</color>
-    <color name="secondaryColor">#ff000000</color>
-    <color name="dialogBackgroundColor">#ff111111</color>
-</resources>
+<?xml version="1.0" encoding="utf-8"?><resources>    <color name="primaryColor">#ff000000</color>    <color name="primaryLightColor">#ff000000</color>    <color name="primaryDarkColor">#ff000000</color>    <color name="dialogBackgroundColor">#ff111111</color></resources>
