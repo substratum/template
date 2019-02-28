@@ -20,7 +20,6 @@
     <string name="ThemeHeroOverride">dark</string>
     <!-- Put your theme changelog here, each item will be a new bullet point in the sheet -->
     <string-array name="ThemeChangelog">
-        <item>New logos</item>
-        <item>Added Viper4Android</item>
+        <item>Fixed New WhatsApp</item>
     </string-array>
 </resources>
