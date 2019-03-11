@@ -1,8 +1,0 @@
-<resources>
-    <color name="background_floating_material_light">#ff000000</color>
-    <color name="cardview_light_background">#ff000000</color>
-    <color name="design_default_color_background">#ff000000</color>
-    <color name="design_snackbar_background_color">#ff000000</color>
-    <color name="placeholder_logo_background_color">#ff000000</color>
-    <color name="tap_game_background">#ff000000</color>
-</resources>
