@@ -21,5 +21,7 @@
     <!-- Put your theme changelog here, each item will be a new bullet point in the sheet -->
     <string-array name="ThemeChangelog">
         <item>Update for Tellonym</item>
+        <item>Update for WhatsApp</item>
+        <item>Resizing of WhatsApp Emojis</item>
     </string-array>
 </resources>
