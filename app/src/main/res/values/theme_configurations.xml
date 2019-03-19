@@ -8,8 +8,8 @@
     <!-- Theme wallpaper source (must be raw) -->
     <string name="ThemeWallpaperSource">http://pastebin.com/raw/TG4mFdXz</string>
     <!-- Do your theme support substratum legacy? -->
-    <!-- If you choose not to support legacy, then change line 12 in AndroidManifest.xml -->
-    <!-- from 'false' to 'true' to hide your theme on the Play Store from any stock ROM-->
+    <!-- If you choose not to support legacy, then change the following line from -->
+    <!-- 'true' to 'false' to hide your theme on the Play Store from any stock ROM-->
     <bool name="ThemeSupportLegacy">true</bool>
     <!-- Does your theme support substratum samsung? -->
     <bool name="ThemeSupportSamsung">false</bool>
