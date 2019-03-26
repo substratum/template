@@ -26,4 +26,5 @@
         <item>Change Four</item>
         <item>Change Five</item>
     </string-array>
+    <bool name="ThemeHideDefaultType3Option">true</bool>
 </resources>
