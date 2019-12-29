@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="DualToneLightTheme">
-        <item name="android:fillColor">#ffffffff</item>
-    </style>
-    <style name="DualToneDarkTheme">
-        <item name="android:fillColor">#7a000000</item>
-    </style>
-</resources>
