@@ -1,4 +1,4 @@
-package substratum.theme.template
+package com.erdemozdemir98.pideplus
 
 object AdvancedConstants {
 
