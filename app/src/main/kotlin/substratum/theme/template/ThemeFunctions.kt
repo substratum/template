@@ -43,7 +43,7 @@ object ThemeFunctions {
             } catch (e: RemoteException) {
                 return false
             }
-        }.forEach { return true }
+        }.forEach { _ -> return true }
         return false
     }
 
