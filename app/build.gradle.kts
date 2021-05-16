@@ -48,7 +48,7 @@ android {
         buildConfigField("String", "IV_KEY", "\"$ivKey\"")
         buildConfigField("byte[]", "DECRYPTION_KEY", key.joinToString(prefix = "{", postfix = "}"))
         buildConfigField("byte[]", "IV_KEY", ivKey.joinToString(prefix = "{", postfix = "}"))
-        resValue("string", "encryption_status", (if(shouldEncrypt()) "onCompileVerify" else "false"))
+        resValue("string", "encryption_status", if (shouldEncrypt()) "onCompileVerify" else "false")
     }
     buildTypes {
         getByName("debug") {
