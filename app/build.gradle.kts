@@ -42,12 +42,12 @@ android {
         versionName = "2.0"
 
         // Themers: DO NOT MODIFY
-        buildConfigField("boolean", "SUPPORTS_THIRD_PARTY_SYSTEMS", "" + SUPPORTS_THIRD_PARTY_SYSTEMS)
-        buildConfigField("boolean", "ENABLE_APP_BLACKLIST_CHECK", "" + ENABLE_APP_BLACKLIST_CHECK)
-        buildConfigField("boolean", "ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS", "" + ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS)
+        buildConfigField("boolean", "SUPPORTS_THIRD_PARTY_SYSTEMS", "$SUPPORTS_THIRD_PARTY_SYSTEMS")
+        buildConfigField("boolean", "ENABLE_APP_BLACKLIST_CHECK", "$ENABLE_APP_BLACKLIST_CHECK")
+        buildConfigField("boolean", "ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS", "$ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS")
         buildConfigField("String", "IV_KEY", "\"$ivKey\"")
-        buildConfigField("byte[]", "DECRYPTION_KEY", "\"$key\"".replace("\"", "").replace("[", "{").replace("]", "}"))
-        buildConfigField("byte[]", "IV_KEY", "\"$ivKey\"".replace("\"", "").replace("[", "{").replace("]", "}"))
+        buildConfigField("byte[]", "DECRYPTION_KEY", key.joinToString(prefix = "{", postfix = "}"))
+        buildConfigField("byte[]", "IV_KEY", ivKey.joinToString(prefix = "{", postfix = "}"))
         resValue("string", "encryption_status", (if(shouldEncrypt()) "onCompileVerify" else "false"))
     }
     buildTypes {
