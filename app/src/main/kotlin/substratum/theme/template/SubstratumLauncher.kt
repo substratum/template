@@ -81,7 +81,7 @@ class SubstratumLauncher : Activity() {
         } else {
             OTHER_THEME_SYSTEMS
                     .filter { action?.startsWith(prefix = it, ignoreCase = true) ?: false }
-                    .forEach { verified = true }
+                    .forEach { _ -> verified = true }
         }
         if (!verified) {
             Log.e(tag, "This theme does not support the launching theme system. ($action)")
@@ -145,7 +145,7 @@ class SubstratumLauncher : Activity() {
                         returnIntent.putExtra("encryption_key", BuildConfig.DECRYPTION_KEY)
                         returnIntent.putExtra("iv_encrypt_key", BuildConfig.IV_KEY)
 
-                        val callingPackage = intent.getStringExtra("calling_package_name")
+                        val callingPackage = intent.getStringExtra("calling_package_name")!!
                         if (!isCallingPackageAllowed(callingPackage)) {
                             finish()
                         } else {
