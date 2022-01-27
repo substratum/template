@@ -5,6 +5,7 @@ import ThemerConstants.ENABLE_APP_BLACKLIST_CHECK
 import ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL
 import ThemerConstants.SHOULD_ENCRYPT_ASSETS
 import ThemerConstants.SUPPORTS_THIRD_PARTY_SYSTEMS
+import Util.cleanEncryptedAssets
 import Util.copyEncryptedTo
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -145,25 +146,7 @@ project.afterEvaluate {
 }
 
 gradle.buildFinished {
-    val tempAssets = File(projectDir, "/src/main/assets-temp")
-    if (tempAssets.exists()) {
-        println("Cleaning duplicated encrypted assets, not your decrypted assets...")
-
-        // Delete encrypted assets
-        File(projectDir, "src/main/assets").deleteRecursively()
-
-        tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
-            val fo = File(file.absolutePath.replace("assets-temp", "assets"))
-            fo.parentFile.mkdirs()
-
-            FileInputStream(file).use { fis ->
-                FileOutputStream(fo).use { fos ->
-                    fis.copyTo(fos, bufferSize = 4096)
-                }
-            }
-        }
-        tempAssets.deleteRecursively()
-    }
+    cleanEncryptedAssets(projectDir)
 }
 
 fun shouldEncrypt(): Boolean {

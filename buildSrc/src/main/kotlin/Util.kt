@@ -1,5 +1,4 @@
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 import javax.crypto.Cipher
 
 object Util {
@@ -21,6 +20,28 @@ object Util {
         val output = cipher.doFinal()
         if (output != null) {
             out.write(output)
+        }
+    }
+
+    fun cleanEncryptedAssets(projectDir: File) {
+        val tempAssets = File(projectDir, "/src/main/assets-temp")
+        if (tempAssets.exists()) {
+            println("Cleaning duplicated encrypted assets, not your decrypted assets...")
+            File(projectDir, "src/main/assets").deleteRecursively()
+
+            tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
+                val fo = File(file.absolutePath.replace("assets-temp", "assets"))
+                    .apply {
+                        parentFile.mkdirs()
+                    }
+
+                FileInputStream(file).use { fis ->
+                    FileOutputStream(fo).use { fos ->
+                        fis.copyTo(fos, bufferSize = 4096)
+                    }
+                }
+            }
+            tempAssets.deleteRecursively()
         }
     }
 
