@@ -99,7 +99,7 @@ tasks.register("encryptAssets") {
         val list = mutableListOf<File>()
 
         // Encrypt every single file in the assets dir recursively
-        File(projectDir, "/src/main/assets").listFiles()?.filter { it.isFile }?.forEach { file ->
+        File(projectDir, "/src/main/assets").walkTopDown().filter { it.isFile }.forEach { file ->
             list.add(file)
 
             val fo = File(file.absolutePath.replace("assets", "assets-temp"))
@@ -152,7 +152,7 @@ gradle.buildFinished {
         // Delete encrypted assets
         File(projectDir, "src/main/assets").delete()
 
-        tempAssets.listFiles()?.filter { it.isFile }?.forEach { file ->
+        tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
             val fo = File(file.absolutePath.replace("assets-temp", "assets"))
             fo.parentFile.mkdirs()
 

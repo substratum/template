@@ -30,7 +30,7 @@ tasks.register<Delete>("clean") {
 
         File(projectDir, "src/main/assets").delete()
 
-        tempAssets.listFiles()?.filter { it.isFile }?.forEach { file ->
+        tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
             val fo = File(file.absolutePath.replace("assets-temp", "assets"))
                 .apply {
                     parentFile.mkdirs()
