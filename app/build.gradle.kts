@@ -150,7 +150,7 @@ gradle.buildFinished {
         println("Cleaning duplicated encrypted assets, not your decrypted assets...")
 
         // Delete encrypted assets
-        File(projectDir, "src/main/assets").delete()
+        File(projectDir, "src/main/assets").deleteRecursively()
 
         tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
             val fo = File(file.absolutePath.replace("assets-temp", "assets"))
@@ -162,7 +162,7 @@ gradle.buildFinished {
                 }
             }
         }
-        tempAssets.delete()
+        tempAssets.deleteRecursively()
     }
 }
 

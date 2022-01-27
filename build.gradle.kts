@@ -28,7 +28,7 @@ tasks.register<Delete>("clean") {
     if (tempAssets.exists()) {
         println("cleaning encrypted assets...")
 
-        File(projectDir, "src/main/assets").delete()
+        File(projectDir, "src/main/assets").deleteRecursively()
 
         tempAssets.walkTopDown().filter { it.isFile }.forEach { file ->
             val fo = File(file.absolutePath.replace("assets-temp", "assets"))
@@ -42,7 +42,7 @@ tasks.register<Delete>("clean") {
                 }
             }
         }
-        tempAssets.delete()
+        tempAssets.deleteRecursively()
     }
 }
 
