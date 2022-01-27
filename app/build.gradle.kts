@@ -93,7 +93,7 @@ tasks.register("encryptAssets") {
     }
 
     // Check if temp assets exist
-    if (File(projectDir, "/src/main/assets-temp").exists()) {
+    if (!File(projectDir, "/src/main/assets-temp").exists()) {
         println("Encrypting duplicated assets, don't worry, your original assets are safe...")
 
         val list = mutableListOf<File>()
