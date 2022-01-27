@@ -28,15 +28,15 @@ val ivKey = ByteArray(16).apply {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 30
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
         // thoroughly!
-        applicationId("substratum.theme.template")
+        applicationId = "substratum.theme.template"
         // We are only supporting Nougat and above, all new changes will incorporate Nougat changes
         // to the substratum repo rather than anything lower. Keep targetSdkVersion the same.
-        minSdkVersion(24)
+        minSdk = 24
         // Both versions must be changed to increment on Play Store/user's devices
         versionCode = 2
         versionName = "2.0"
@@ -81,7 +81,7 @@ dependencies {
     //implementation(fileTree(include = ["*.jar"], dir = "libs"))
     implementation("com.github.javiersantos:PiracyChecker:1.2.5")
     implementation(kotlin("stdlib-jdk8"))
-    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
 }
 
 // Themers: DO NOT MODIFY ANYTHING BELOW
