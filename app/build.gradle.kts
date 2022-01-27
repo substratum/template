@@ -5,30 +5,31 @@ import ThemerConstants.ENABLE_APP_BLACKLIST_CHECK
 import ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL
 import ThemerConstants.SHOULD_ENCRYPT_ASSETS
 import ThemerConstants.SUPPORTS_THIRD_PARTY_SYSTEMS
-
-import java.util.Random
+import Util.copyEncryptedTo
 import java.io.FileInputStream
 import java.io.FileOutputStream
-
+import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
 }
 
+// Themers: DO NOT MODIFY
 val key = ByteArray(16).apply {
     Random().nextBytes(this)
 }
 
+// Themers: DO NOT MODIFY
 val ivKey = ByteArray(16).apply {
     Random().nextBytes(this)
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
 
     defaultConfig {
         // If you're planning to change up the package name, ensure you have read the readme
@@ -80,7 +81,7 @@ android {
 dependencies {
     //implementation(fileTree(include = ["*.jar"], dir = "libs"))
     implementation("com.github.javiersantos:PiracyChecker:1.2.5")
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib-jdk8", version = Constants.kotlinVersion))
     implementation("androidx.appcompat:appcompat:1.4.1")
 }
 
@@ -91,52 +92,43 @@ tasks.register("encryptAssets") {
         return@register
     }
 
-    val tempAssets = File(projectDir, "/src/main/assets-temp")
-    if (!tempAssets.exists()) {
+    // Check if temp assets exist
+    if (File(projectDir, "/src/main/assets-temp").exists()) {
         println("Encrypting duplicated assets, don't worry, your original assets are safe...")
+
         val list = mutableListOf<File>()
-        val dir = File(projectDir, "/src/main/assets")
-        dir.listFiles()?.filter { it.isFile }?.forEach { file ->
+
+        // Encrypt every single file in the assets dir recursively
+        File(projectDir, "/src/main/assets").listFiles()?.filter { it.isFile }?.forEach { file ->
             list.add(file)
 
-            val fis = FileInputStream(file)
             val fo = File(file.absolutePath.replace("assets", "assets-temp"))
-            fo.parentFile.mkdirs()
-            val fos = FileOutputStream(fo)
-            val buffer = ByteArray(4096)
-            var n: Int
-            while (fis.read(buffer).also { n = it } != -1) {
-                fos.write(buffer, 0, n)
+                .apply {
+                    parentFile.mkdirs()
+                }
+
+            FileInputStream(file).use { fis ->
+                FileOutputStream(fo).use { fos ->
+                    fis.copyTo(fos, bufferSize = 4096)
+                }
             }
-            fis.close()
-            fos.close()
         }
 
         list.forEach { file ->
             if (file.absolutePath.contains("overlays")) {
-                val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
                 val secret = SecretKeySpec(key, "AES")
                 val iv = IvParameterSpec(ivKey)
 
-                cipher.init(Cipher.ENCRYPT_MODE, secret, iv)
-                val fis = FileInputStream(file)
-                val fos =  FileOutputStream(file.absolutePath + ".enc")
+                val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                    .apply {
+                        init(Cipher.ENCRYPT_MODE, secret, iv)
+                    }
 
-                val input = ByteArray(64)
-                var bytesRead: Int
-                while (fis.read(input).also {bytesRead = it } != -1) {
-                    val output = cipher.update(input, 0, bytesRead)
-                    if (output != null) {
-                        fos.write(output)
+                FileInputStream(file).use { fis ->
+                    FileOutputStream(file.absolutePath + ".enc").use { fos ->
+                        fis.copyEncryptedTo(fos, cipher, bufferSize = 64)
                     }
                 }
-                val output = cipher.doFinal()
-                if (output != null) {
-                    fos.write(output)
-                }
-                fis.close()
-                fos.flush()
-                fos.close()
 
                 file.delete()
             }
@@ -147,7 +139,7 @@ tasks.register("encryptAssets") {
 }
 
 project.afterEvaluate {
-    tasks.named("preBuild"){
+    tasks.named("preBuild") {
         dependsOn("encryptAssets")
     }
 }
@@ -156,21 +148,19 @@ gradle.buildFinished {
     val tempAssets = File(projectDir, "/src/main/assets-temp")
     if (tempAssets.exists()) {
         println("Cleaning duplicated encrypted assets, not your decrypted assets...")
-        val encryptedAssets = File(projectDir, "src/main/assets")
-        encryptedAssets.delete()
 
-        tempAssets.listFiles()?.filter{ it.isFile }?.forEach { file ->
-            val fis = FileInputStream(file)
+        // Delete encrypted assets
+        File(projectDir, "src/main/assets").delete()
+
+        tempAssets.listFiles()?.filter { it.isFile }?.forEach { file ->
             val fo = File(file.absolutePath.replace("assets-temp", "assets"))
             fo.parentFile.mkdirs()
-            val fos = FileOutputStream(fo)
-            val buffer = ByteArray(4096)
-            var n: Int
-            while (fis.read(buffer).also { n = it } != -1) {
-                fos.write(buffer, 0, n)
+
+            FileInputStream(file).use { fis ->
+                FileOutputStream(fo).use { fos ->
+                    fis.copyTo(fos, bufferSize = 4096)
+                }
             }
-            fis.close()
-            fos.close()
         }
         tempAssets.delete()
     }
@@ -178,5 +168,5 @@ gradle.buildFinished {
 
 fun shouldEncrypt(): Boolean {
     val tasks = project.gradle.startParameter.taskNames
-    return SHOULD_ENCRYPT_ASSETS && tasks.joinToString { it.toLowerCase() }.contains("release")
+    return SHOULD_ENCRYPT_ASSETS && tasks.joinToString().contains("release", ignoreCase = true)
 }
