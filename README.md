@@ -27,11 +27,11 @@ Disable activity launch on theme:
 ## Step 1: Package Naming
 The FIRST thing you need to change is the package identifier (the name the app identifies as) to something more meaningful to you. Open up [build.gradle.kts](app/build.gradle.kts) and look for this line
 ```kt
-applicationId("substratum.theme.template")
+applicationId = "substratum.theme.template"
 ```
 Change this to anything you want, for instance:
 ```kt
-applicationId("com.yourname.themename")
+applicationId = "com.yourname.themename"
 ```
 
 Change Package Name in the project structure (optional):
@@ -130,26 +130,26 @@ If you take a look at the aforementioned theme_configurations.xml, you will see 
 ## Step 6: Safeguard your theme! Don't let the pirates win!
 
 ### If you want to enable the Substratum theme for other Theme Managers (e.g. Slim)
-In ThemerConstants.gradle, change the [SUPPORTS_THIRD_PARTY_SYSTEMS](app/ThemerConstants.gradle#L9) on line 9.
+In ThemerConstants.kt, change the [SUPPORTS_THIRD_PARTY_SYSTEMS](buildSrc/src/main/kotlin/ThemerConstants.kt#L8) on line 8.
 
 ### If you don't want to activate AntiPiracy
 Then you can stop reading and get your theme published! Good luck!
 
 ### Getting started with AntiPiracy
 
-If you are ready to get AntiPiracy set up, all you need to look at is [ThemerConstants.gradle](app/ThemerConstants.gradle)!
+If you are ready to get AntiPiracy set up, all you need to look at is [ThemerConstants.kt](buildSrc/src/main/kotlin/ThemerConstants.kt)!
 
-Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](app/ThemerConstants.gradle#L13) on line 13.
+Compile your theme as a SIGNED release APK from Android Studio (Build -> Generate Signed APK). Then launch the signed apk on your device and your log will spit out an error log under the name "SubstratumThemeReport", and you want to copy and paste that into [APK_SIGNATURE_PRODUCTION](buildSrc/src/main/kotlin/ThemerConstants.kt#L12) on line 12.
 
-**NOTE**: If you are planning to make use of [Google Play App Signing](https://developer.android.com/studio/publish/app-signing.html#google-play-app-signing), **DO NOT** fill the `APK_SIGNATURE_PRODUCTION` field in [ThemerConstants.gradle](app/ThemerConstants.gradle).
+**NOTE**: If you are planning to make use of [Google Play App Signing](https://developer.android.com/studio/publish/app-signing.html#google-play-app-signing), **DO NOT** fill the `APK_SIGNATURE_PRODUCTION` field in [ThemerConstants.kt](buildSrc/src/main/kotlin/ThemerConstants.kt).
 
-Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](app/ThemerConstants.gradle#L12)  on line 12.
+Then you would need to go to Play Developer Console. Then access to your app -> Services and APIs, generate a new API key for your app and then paste it into [BASE_64_LICENSE_KEY](buildSrc/src/main/kotlin/ThemerConstants.kt#L11) on line 12.
 
 Third, if  you would like to change where it checks for various things such as Amazon App Store Enforcement or Play Store Enforcement, you have options listed on line 16 and lines below it, simply change from `true` to `false` and vice versa to make your desired configuration.
 
-Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/AdvancedConstants.kt#L12) on line 12. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](app/ThemerConstants.gradle#L16) on line 16.
+Finally, if you would like to enable intensive mode anti-piracy (App package blacklist), add as many package names as you want under [BLACKLISTED_APPLICATIONS](app/src/main/kotlin/substratum/theme/template/AdvancedConstants.kt#L12) on line 12. Then make sure to enable [ENABLE_APP_BLACKLIST_CHECK](buildSrc/src/main/kotlin/ThemerConstants.kt#L15) on line 15.
 
-**Under no circumstances should you share your ThemerConstants.gradle file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
+**Under no circumstances should you share your ThemerConstants.kt file, unless specifically asked by an [official substratum developer](https://github.com/substratum/documentation#team-info-and-responsibilities)**!
 
 ### Encrypted Assets
 As of template version 11.0.0, all theme assets are duplicated are encrypted within the APK by default, not your original assets!
@@ -159,14 +159,14 @@ Always use a version control tool listed below to host your private themes!
 BitBucket: https://bitbucket.org/
 GitLab: https://about.gitlab.com/
 
-If you want to keep your theme assets unencrypted, just change the value [here](app/ThemerConstants.gradle#L4) to false.
+If you want to keep your theme assets unencrypted, just change the value [here](buildSrc/src/main/kotlin/ThemerConstants.kt#L3) to false.
 
 ### Enforcing security
 As of template version 11.0.0, themes have an additional check on the build of substratum your users should be running.
 
 What this means is that themes can ensure their themes ONLY function with our full release cycle with debug and Play Store releases.
 
-If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `true` to `false` [here](app/ThemerConstants.gradle#L20)!
+If you would like to enable this feature (only allow your theme to be used with official substratum builds), all you have to do is to flip `true` to `false` [here](buildSrc/src/main/kotlin/ThemerConstants.kt#L19)!
 
 ### Now what?
 Nothing. Now you're set to publish your theme!
