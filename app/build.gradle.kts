@@ -5,14 +5,19 @@ import ThemerConstants.ENABLE_APP_BLACKLIST_CHECK
 import ThemerConstants.ENFORCE_GOOGLE_PLAY_INSTALL
 import ThemerConstants.SHOULD_ENCRYPT_ASSETS
 import ThemerConstants.SUPPORTS_THIRD_PARTY_SYSTEMS
+
+import Util.assets
 import Util.cleanEncryptedAssets
 import Util.copyEncryptedTo
+import Util.generateRandomByteArray
+import Util.tempAssets
+import Util.twistAsset
+
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.util.*
 import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import javax.crypto.spec.IvParameterSpec
 
 plugins {
     id("com.android.application")
@@ -20,14 +25,8 @@ plugins {
 }
 
 // Themers: DO NOT MODIFY
-val key = ByteArray(16).apply {
-    Random().nextBytes(this)
-}
-
-// Themers: DO NOT MODIFY
-val ivKey = ByteArray(16).apply {
-    Random().nextBytes(this)
-}
+val secretKey = generateRandomByteArray()
+val ivKey = generateRandomByteArray()
 
 android {
     compileSdk = 31
@@ -47,8 +46,7 @@ android {
         buildConfigField("boolean", "SUPPORTS_THIRD_PARTY_SYSTEMS", "$SUPPORTS_THIRD_PARTY_SYSTEMS")
         buildConfigField("boolean", "ENABLE_APP_BLACKLIST_CHECK", "$ENABLE_APP_BLACKLIST_CHECK")
         buildConfigField("boolean", "ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS", "$ALLOW_THIRD_PARTY_SUBSTRATUM_BUILDS")
-        buildConfigField("String", "IV_KEY", "\"$ivKey\"")
-        buildConfigField("byte[]", "DECRYPTION_KEY", key.joinToString(prefix = "{", postfix = "}"))
+        buildConfigField("byte[]", "DECRYPTION_KEY", secretKey.joinToString(prefix = "{", postfix = "}"))
         buildConfigField("byte[]", "IV_KEY", ivKey.joinToString(prefix = "{", postfix = "}"))
         resValue("string", "encryption_status", if (shouldEncrypt()) "onCompileVerify" else "false")
     }
@@ -80,10 +78,10 @@ android {
 }
 
 dependencies {
-    //implementation(fileTree(include = ["*.jar"], dir = "libs"))
-    implementation("com.github.javiersantos:PiracyChecker:1.2.5")
     implementation(kotlin("stdlib-jdk8", version = Constants.kotlinVersion))
+
     implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.github.javiersantos:PiracyChecker:1.2.5")
 }
 
 // Themers: DO NOT MODIFY ANYTHING BELOW
@@ -94,43 +92,27 @@ tasks.register("encryptAssets") {
     }
 
     // Check if temp assets exist
-    if (!File(projectDir, "/src/main/assets-temp").exists()) {
+    if (!projectDir.tempAssets.exists()) {
         println("Encrypting duplicated assets, don't worry, your original assets are safe...")
 
-        val list = mutableListOf<File>()
+        val secretKeySpec = SecretKeySpec(secretKey, "AES")
+        val ivParameterSpec = IvParameterSpec(ivKey)
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+            .apply {
+                init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
+            }
 
         // Encrypt every single file in the assets dir recursively
-        File(projectDir, "/src/main/assets").walkTopDown().filter { it.isFile }.forEach { file ->
-            list.add(file)
+        projectDir.assets.walkTopDown().filter { it.isFile }.forEach { file ->
+            file.twistAsset("assets", "assets-temp")
 
-            val fo = File(file.absolutePath.replace("assets", "assets-temp"))
-                .apply {
-                    parentFile.mkdirs()
-                }
-
-            FileInputStream(file).use { fis ->
-                FileOutputStream(fo).use { fos ->
-                    fis.copyTo(fos, bufferSize = 4096)
-                }
-            }
-        }
-
-        list.forEach { file ->
+            //Encrypt assets
             if (file.absolutePath.contains("overlays")) {
-                val secret = SecretKeySpec(key, "AES")
-                val iv = IvParameterSpec(ivKey)
-
-                val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
-                    .apply {
-                        init(Cipher.ENCRYPT_MODE, secret, iv)
-                    }
-
                 FileInputStream(file).use { fis ->
-                    FileOutputStream(file.absolutePath + ".enc").use { fos ->
+                    FileOutputStream("${file.absolutePath}.enc").use { fos ->
                         fis.copyEncryptedTo(fos, cipher, bufferSize = 64)
                     }
                 }
-
                 file.delete()
             }
         }
@@ -146,7 +128,7 @@ project.afterEvaluate {
 }
 
 gradle.buildFinished {
-    cleanEncryptedAssets(projectDir)
+    projectDir.cleanEncryptedAssets()
 }
 
 fun shouldEncrypt(): Boolean {
